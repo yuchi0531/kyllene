@@ -142,7 +142,7 @@ class StorageStartupTest {
 }
 
 /** Every language the desktop app's catalogue has, as system locales. */
-internal val LANGUAGES = listOf("en", "de", "fr", "es", "pt-BR", "zh-CN", "hu")
+internal val LANGUAGES = listOf("en", "de", "fr", "es", "pt-BR", "zh-CN", "hu", "ja")
 
 /** Runs [block] with the system language set to [tag], as a user's would be, and puts the old one back. */
 internal fun withLocale(tag: String, block: () -> Unit) {

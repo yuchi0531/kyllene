@@ -92,7 +92,12 @@ internal fun MessengerEdge(model: AssistantPanelModel, modifier: Modifier = Modi
         var last = withFrameNanos { it }
         while (true) {
             withFrameNanos { now ->
-                phase.floatValue = (phase.floatValue + (now - last) / 1e9f * currentSpeed) % 1f
+                // Once the edge has settled (speed has a small positive minimum) there is no useful motion to
+                // draw: stop advancing the phase so Canvas stops rebuilding the 72-stop gradient every frame.
+                // `last` keeps advancing, so when the speed grows again the trail resumes without a jump.
+                if (currentSpeed > SETTLED_SPEED) {
+                    phase.floatValue = (phase.floatValue + (now - last) / 1e9f * currentSpeed) % 1f
+                }
                 last = now
             }
         }
@@ -130,5 +135,7 @@ internal val AccentPalette.edge: EdgeColors
     get() = EdgeColors(light.accent, dark.text, lerp(Color.White, dark.text, 0.22f))
 private const val STOPS = 72
 private const val TAIL = 0.32f
+/** At or below this speed (laps/sec) the edge is treated as settled and the phase stops advancing. */
+private const val SETTLED_SPEED = 0.15f
 private val CORNER = 36.dp
 private val LAYERS = listOf(28.dp to 0.18f, 12.dp to 0.4f, 4.dp to 1f)

@@ -4,6 +4,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
 import kotlin.test.assertFalse
+import kotlin.test.assertNotNull
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -44,6 +45,14 @@ class GatewayUrlTest {
     fun blankIsRejected() {
         assertFailsWith<InvalidGatewayUrlException> { GatewayUrl.parse("   ") }
         assertNull(GatewayUrl.parseOrNull(""))
+    }
+
+    @Test
+    fun hostsTheHttpEngineCannotUseAreRejected() {
+        // Ktor accepts these names, then OkHttp throws while building the request: fail at the input instead.
+        assertNull(GatewayUrl.parseOrNull("https://vault.yuchi0531.xn--moe)-tc4c"))
+        assertNotNull(GatewayUrl.parse("https://xn--strae-oqa.de").value)
+        assertNotNull(GatewayUrl.parse("http://[::1]:9119").value)
     }
 
     @Test

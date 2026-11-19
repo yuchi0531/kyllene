@@ -43,7 +43,7 @@ import dev.hermeskotlin.designsystem.LocalDesktopLayout
 import dev.hermeskotlin.designsystem.LocalDesignWords
 import dev.hermeskotlin.ui.components.rememberDesignWords
 import dev.hermeskotlin.designsystem.PureBlack
-import dev.hermeskotlin.designsystem.hermesTheme
+import dev.hermeskotlin.designsystem.appTheme
 import dev.hermeskotlin.designsystem.components.LocalCodeWrap
 import dev.hermeskotlin.designsystem.components.LocalGlow
 import dev.hermeskotlin.designsystem.components.LocalOpenModals
@@ -193,7 +193,7 @@ fun App(
             took = { chat, screen -> AgentScreens.took(screen, chat, screensGot) },
         )
     }
-    ProvideAppLanguage(settings.language) { hermesTheme(palette)(schemeFor(settings, dark)) {
+    ProvideAppLanguage(settings.language) { appTheme(settings.look, palette)(schemeFor(settings, dark)) {
         val ground = Theme[colors][background]
         LaunchedEffect(ground) { onBackground(ground) }
         CompositionLocalProvider(
@@ -300,7 +300,7 @@ fun HeraldTheme(content: @Composable () -> Unit) {
     val density = LocalDensity.current
     // Each window's own count of its open dialogs.
     val modals = remember { OpenModals() }
-    ProvideAppLanguage(settings.language) { hermesTheme(palette)(schemeFor(settings, isDark(settings))) {
+    ProvideAppLanguage(settings.language) { appTheme(settings.look, palette)(schemeFor(settings, isDark(settings))) {
         // As the app's own window has them: text size, code wrap, glow and the desktop's layout. The zoom is the
         // caller's to put under its title bar.
         CompositionLocalProvider(

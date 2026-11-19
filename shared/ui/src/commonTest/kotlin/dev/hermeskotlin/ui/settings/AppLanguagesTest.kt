@@ -59,7 +59,7 @@ class AppLanguagesTest {
     @Test
     fun eachLanguageNamesItsResourceFolder() {
         assertEquals(
-            listOf("values", "values-de", "values-fr", "values-es", "values-pt-rBR", "values-zh-rCN", "values-hu"),
+            listOf("values", "values-de", "values-fr", "values-es", "values-pt-rBR", "values-zh-rCN", "values-hu", "values-ja"),
             AppLanguages.map { it.resourceFolder },
         )
     }

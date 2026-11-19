@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The Inbox (cron job reports, its folders, groups and follow page) and the assistant panel over other apps.
+    inbox_ for the Inbox, assistant_ for the panel.
+-->
+<resources>
+    <!-- A message, then the gateway's own reason after it ("Couldn’t send." and why). -->
+    <string name="inbox_then_detail">%1$s %2$s</string>
+    <string name="inbox_title">受信トレイ</string>
+    <string name="inbox_all">すべて</string>
+    <string name="inbox_other">その他</string>
+    <string name="inbox_failed">失敗</string>
+    <string name="inbox_failed_at">失敗 · %1$s</string>
+    <string name="inbox_from_jobs">フォロー中のジョブから</string>
+    <plurals name="inbox_unread_from_jobs">
+        <item quantity="one">未読%1$d件 · フォロー中のジョブから</item>
+        <item quantity="other">未読%1$d件 · フォロー中のジョブから</item>
+    </plurals>
+    <plurals name="inbox_reports_from">
+        <item quantity="one">%2$sから%1$d件のレポート</item>
+        <item quantity="other">%2$sから%1$d件のレポート</item>
+    </plurals>
+    <plurals name="inbox_reports_in">
+        <item quantity="one">%2$sに%1$d件のレポート</item>
+        <item quantity="other">%2$sに%1$d件のレポート</item>
+    </plurals>
+    <plurals name="inbox_reports_in_no_group">
+        <item quantity="one">グループなしのレポートが%1$d件</item>
+        <item quantity="other">グループなしのレポートが%1$d件</item>
+    </plurals>
+    <string name="inbox_mark_all_read">すべて既読にする</string>
+    <string name="inbox_folders_and_groups">フォルダとグループ</string>
+    <string name="inbox_choose_jobs">ジョブを選択</string>
+    <string name="inbox_load_failed_title">受信トレイを読み込めませんでした</string>
+    <string name="inbox_load_failed">受信トレイを読み込めませんでした。</string>
+    <string name="inbox_load_more_failed">これ以上読み込めませんでした。</string>
+    <string name="inbox_not_connected">ゲートウェイに接続されていません。</string>
+    <string name="inbox_no_failed_runs">失敗した実行はありません</string>
+    <string name="inbox_no_failed_runs_detail">受信トレイのすべての実行は正常でした。</string>
+    <string name="inbox_empty">まだ何もありません</string>
+    <string name="inbox_empty_detail">朝のブリーフィングのように、ここに表示したいレポートのジョブを選んでください。それぞれ通知を受け取ることも、静かに届けることもできます。</string>
+    <string name="inbox_mark_read">既読にする</string>
+    <string name="inbox_mark_unread">未読にする</string>
+    <string name="inbox_unread">未読</string>
+    <plurals name="inbox_unread_count">
+        <item quantity="one">未読%1$d件</item>
+        <item quantity="other">未読%1$d件</item>
+    </plurals>
+    <string name="inbox_folder">フォルダ</string>
+    <string name="inbox_mark_folder_read">フォルダを既読にする</string>
+    <string name="inbox_rename">名前を変更</string>
+    <string name="inbox_ask_about_this">これについて尋ねる</string>
+    <string name="inbox_continue_its_chat">チャットを続ける</string>
+    <string name="inbox_open_its_chat">チャットを開く</string>
+    <string name="inbox_copy">コピー</string>
+    <string name="inbox_copy_report">レポートをコピー</string>
+    <string name="inbox_open_named">%1$sを開く</string>
+    <string name="inbox_more_for_named">%1$sのその他の操作</string>
+    <string name="inbox_read_named">%1$sを読む</string>
+    <string name="inbox_more_for_report">このレポートのその他の操作</string>
+    <plurals name="inbox_reports">
+        <item quantity="one">レポート%1$d件</item>
+        <item quantity="other">レポート%1$d件</item>
+    </plurals>
+    <plurals name="inbox_recent_reports">
+        <item quantity="one">最近のレポートが%1$d件</item>
+        <item quantity="other">最近のレポートが%1$d件</item>
+    </plurals>
+    <plurals name="inbox_failed_count">
+        <item quantity="one">失敗%1$d件</item>
+        <item quantity="other">失敗%1$d件</item>
+    </plurals>
+    <string name="inbox_failed_runs">失敗した実行</string>
+    <string name="inbox_open_failed_runs">失敗した実行を開く</string>
+    <string name="inbox_needs_push">受信トレイには「どこでも通知」が必要です。この機能が、ゲートウェイにどのスマートフォンかを伝えます。</string>
+    <string name="inbox_needs_plugin">ゲートウェイのherald-pushプラグインには、受信トレイ用の%1$sが必要です。設定でアップデートしてください。</string>
+    <string name="inbox_open_settings">設定を開く</string>
+    <string name="inbox_loading">読み込み中…</string>
+    <string name="inbox_try_again">再試行</string>
+    <string name="inbox_older_reports">古いレポート</string>
+    <string name="inbox_note_offline_phone">このレポートの冒頭のみがスマートフォンに保存されています。残りを読むにはゲートウェイに接続してください。</string>
+    <string name="inbox_note_offline_computer">このレポートの冒頭のみがコンピューターに保存されています。残りを読むにはゲートウェイに接続してください。</string>
+    <string name="inbox_note_gone_phone">このレポートの冒頭のみがスマートフォンに保存されています。ゲートウェイにはもう保存されていません。</string>
+    <string name="inbox_note_gone_computer">このレポートの冒頭のみがコンピューターに保存されています。ゲートウェイにはもう保存されていません。</string>
+    <string name="inbox_note_failed_phone">このレポートの冒頭のみがスマートフォンに保存されています。残りをゲートウェイから送信できませんでした。</string>
+    <string name="inbox_note_failed_computer">このレポートの冒頭のみがコンピューターに保存されています。残りをゲートウェイから送信できませんでした。</string>
+    <string name="inbox_kept_on_phone">このスマートフォンに保存</string>
+    <string name="inbox_kept_on_computer">このコンピューターに保存</string>
+    <string name="inbox_new_group">新しいグループ</string>
+    <string name="inbox_opens_on">受信トレイを開いた時の表示</string>
+    <string name="inbox_layout_folders">フォルダ</string>
+    <string name="inbox_layout_one_list">1つのリスト</string>
+    <string name="inbox_folders_are">フォルダの表示</string>
+    <string name="inbox_chips_show">チップの表示</string>
+    <string name="inbox_mode_each_job">ジョブごと</string>
+    <string name="inbox_mode_my_groups">マイグループ</string>
+    <string name="inbox_groups_hint">上のフォルダボタンでグループを作成し、ジョブを追加してください。それまではチップに各ジョブが表示されます。</string>
+    <string name="inbox_groups">グループ</string>
+    <string name="inbox_jobs">ジョブ</string>
+    <string name="inbox_rename_hint_phone">鉛筆アイコンは、このスマートフォン上のジョブの名前を変更します。チップとカードに反映されます。チップを長押ししても変更できます。</string>
+    <string name="inbox_rename_hint_computer">鉛筆アイコンは、このコンピューター上のジョブの名前を変更します。チップとカードに反映されます。チップを右クリックしても変更できます。</string>
+    <string name="inbox_no_jobs_yet">ジョブのレポートが受信トレイに届くと、ここに表示されます。</string>
+    <string name="inbox_no_group">グループなし</string>
+    <string name="inbox_group">グループ</string>
+    <string name="inbox_rename_job">ジョブの名前を変更</string>
+    <string name="inbox_rename_job_detail_phone">このスマートフォンでのみ変更されます。ゲートウェイでは%1$sのままです。</string>
+    <string name="inbox_rename_job_detail_computer">このコンピューターでのみ変更されます。ゲートウェイでは%1$sのままです。</string>
+    <string name="inbox_reset">リセット</string>
+    <string name="inbox_save">保存</string>
+    <string name="inbox_create">作成</string>
+    <string name="inbox_group_name_taken">その名前のグループはすでにあります。</string>
+    <string name="inbox_group_name_reserved">「%1$s」はグループに属さないジョブのフォルダです。別の名前を選んでください。</string>
+    <string name="inbox_group_too_many">これ以上グループは作成できません。</string>
+    <string name="inbox_rename_group">グループの名前を変更</string>
+    <string name="inbox_new_group_detail">仕事用や個人用など。下のリストからジョブを追加してください。</string>
+    <string name="inbox_group_name">グループ名</string>
+    <plurals name="inbox_job_count">
+        <item quantity="one">ジョブ%1$d個</item>
+        <item quantity="other">ジョブ%1$d個</item>
+    </plurals>
+    <string name="inbox_rename_named">%1$sの名前を変更</string>
+    <string name="inbox_remove_named">%1$sを削除</string>
+    <string name="inbox_choose_group_for">%1$sのグループを選択</string>
+    <string name="inbox_follow_title">受信トレイのジョブ</string>
+    <string name="inbox_follow_subtitle_phone">各ジョブのレポートがこのスマートフォンでどう扱われるか</string>
+    <string name="inbox_follow_subtitle_computer">各ジョブのレポートがこのコンピューターでどう扱われるか</string>
+    <string name="inbox_all_jobs">すべてのジョブ</string>
+    <string name="inbox_all_jobs_detail">すべてのジョブと、今後作成されるジョブをまとめて設定します。通知のないジョブは表示されません。個別のジョブは下でオフにできます。</string>
+    <string name="inbox_all_off">すべてオフ</string>
+    <string name="inbox_all_in_inbox">すべて受信トレイへ</string>
+    <string name="inbox_all_notify">すべて通知</string>
+    <string name="inbox_failures">ジョブが失敗したら通知する</string>
+    <string name="inbox_failures_detail">フォローしていないジョブも含め、失敗したすべての実行について通知します。</string>
+    <string name="inbox_follow_off">オフ</string>
+    <string name="inbox_follow_notify">通知</string>
+    <string name="inbox_save_needs_all_jobs_plugin">保存できませんでした。すべてオンにする操作とジョブのオフ切り替えには、ゲートウェイのプラグイン%1$sが必要です。設定でアップデートしてください。</string>
+    <string name="inbox_save_plugin_too_old">保存できませんでした。ゲートウェイのherald-pushプラグインが古すぎて受信トレイに対応していません。設定でアップデートしてください。</string>
+    <string name="inbox_save_failed_because">保存できませんでした：%1$s</string>
+    <string name="inbox_save_failed">保存できませんでした。</string>
+    <string name="inbox_save_unknown">保存されたかどうか確認できませんでした。%1$s</string>
+    <string name="inbox_plugin_too_old">ゲートウェイのherald-pushプラグインが古すぎて受信トレイに対応していません。</string>
+    <string name="inbox_following_failed">このスマートフォンでフォローしている内容を読み取れませんでした。</string>
+    <string name="inbox_following_offline">このスマートフォンでフォローしている内容を見るには、ゲートウェイに接続してください。</string>
+    <string name="inbox_change_offline">これを変更するには、ゲートウェイに接続してください。</string>
+    <string name="inbox_jobs_load_failed">ジョブを読み込めませんでした。</string>
+    <string name="inbox_report_not_here_phone">そのレポートはスマートフォンに保存されていません。リストの下の方にあるかもしれません。</string>
+    <string name="inbox_report_not_here_computer">そのレポートはコンピューターに保存されていません。リストの下の方にあるかもしれません。</string>
+    <string name="inbox_ask_offline">このレポートについて質問するにはゲートウェイに接続してください。スマートフォンには冒頭のみ保存されています。</string>
+    <string name="inbox_ask_gone">ゲートウェイにはこのレポートがもう保存されていないため、冒頭についてのみ質問できます。</string>
+    <string name="inbox_ask_failed">ゲートウェイからレポート全体を取得できませんでした。しばらくしてからもう一度お試しください。</string>
+    <string name="inbox_copied_start_offline">レポートの冒頭をコピーしました。残りを取得するにはゲートウェイに接続してください。</string>
+    <string name="inbox_copied_start_gone">レポートの冒頭をコピーしました。残りはゲートウェイに保存されていません。</string>
+    <string name="inbox_copied_start_failed">レポートの冒頭をコピーしました。残りをゲートウェイから送信できませんでした。</string>
+    <string name="inbox_copied_truncated">ゲートウェイが送信する範囲のレポートをコピーしました。最初の48 KBまでです。</string>
+    <string name="inbox_copied">レポートをコピーしました。</string>
+
+    <string name="assistant_not_signed_in">サインインしていません</string>
+    <string name="assistant_circle_part">画面の一部を丸で囲む</string>
+    <string name="assistant_open_in_app">Kylleneで開く</string>
+    <string name="assistant_close">閉じる</string>
+    <string name="assistant_sign_in">画面について質問するには、KylleneでHermesゲートウェイにサインインしてください。</string>
+    <string name="assistant_open_app">Kylleneを開く</string>
+    <string name="assistant_listening">聞き取り中…</string>
+    <string name="assistant_transcribing">話した内容を文字起こし中…</string>
+    <string name="assistant_connecting">Hermesに接続中…</string>
+    <string name="assistant_ask_circled">囲んだ部分について質問する</string>
+    <string name="assistant_ask_follow_up">追加で質問する</string>
+    <string name="assistant_ask_screen">画面について質問する</string>
+    <string name="assistant_ask_hermes">Hermesに質問する</string>
+    <string name="assistant_leave_screen_out">画面を含めない</string>
+    <string name="assistant_include_screen">画面を含める</string>
+    <string name="assistant_this_screen">この画面</string>
+    <string name="assistant_include_this_screen">この画面を含めますか？</string>
+    <string name="assistant_reading_screen">画面を読み取り中…</string>
+    <string name="assistant_text_only">テキストのみ</string>
+    <string name="assistant_screenshot">スクリーンショット</string>
+    <string name="assistant_add">追加</string>
+    <string name="assistant_cant_see_screen">Kylleneは画面を認識できません</string>
+    <string name="assistant_turn_on_screen_text">「画面のテキストを使用」をオンにしてください</string>
+    <string name="assistant_what_you_circled">囲んだ内容</string>
+    <string name="assistant_circled">囲み済み</string>
+    <string name="assistant_circle_again">もう一度囲む</string>
+    <string name="assistant_remove_circled">囲んだ部分を削除</string>
+    <string name="assistant_your_screen">あなたの画面</string>
+    <string name="assistant_circle_hint">質問したい部分を囲むかタップしてください</string>
+    <string name="assistant_stop_circling">囲みを終了</string>
+</resources>

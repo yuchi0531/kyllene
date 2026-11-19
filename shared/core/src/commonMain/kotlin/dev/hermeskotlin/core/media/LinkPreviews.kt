@@ -61,8 +61,12 @@ private val ABSOLUTE_WEB_URL = Regex("""^https?://[^/?#\\\s:@]""", RegexOption.I
 internal fun webUrl(value: String): Url? = value.takeIf { ABSOLUTE_WEB_URL.containsMatchIn(it) }
     ?.let { runCatching { Url(it) }.getOrNull() }?.takeIf {
         it.protocol.name in setOf("https", "http") && it.host.isNotBlank() && it.user.isNullOrEmpty() && it.password.isNullOrEmpty() &&
-            publicHost(it.host)
+            // Ktor accepts names OkHttp then refuses (an `)` in a punycode label, for one): never fetch those.
+            WEB_HOST.matches(it.host.lowercase()) && publicHost(it.host)
     }
+
+/** DNS names, including `xn--` labels, that the HTTP engine can turn into a request. */
+private val WEB_HOST = Regex("""^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*\.?$|\[[0-9a-f:.]+\]""")
 
 private val LOCAL_SUFFIXES = listOf(".localhost", ".local", ".internal", ".lan", ".home.arpa")
 

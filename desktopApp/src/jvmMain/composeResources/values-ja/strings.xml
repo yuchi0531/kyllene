@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The desktop app’s own words, in English: the tray, the quick entry, its notifications, the storage prompt
+    and the browser pages. The screens inside the window read shared/ui’s catalogue. See docs/i18n.md.
+-->
+<resources>
+    <!-- The tray icon’s menu. -->
+    <string name="tray_open">Kyllene を開く</string>
+    <string name="tray_new_chat">新しいチャット</string>
+    <string name="tray_quick_entry">クイック入力</string>
+    <string name="tray_quit">Kyllene を終了</string>
+
+    <!-- The quick entry over other apps (Ctrl+Shift+Space). -->
+    <string name="quick_entry_window_title">Kyllene クイック入力</string>
+    <string name="quick_entry_new_chat">新しいチャット</string>
+    <string name="quick_entry_this_chat">このチャット</string>
+    <string name="quick_entry_field">Hermes に質問</string>
+    <string name="quick_entry_placeholder">Hermes に何でも質問…</string>
+    <string name="quick_entry_keys">Enter で送信 · Tab で切り替え · Esc で閉じる</string>
+
+    <!-- System notifications while the window isn’t in use. -->
+    <string name="notice_reply_failed">Hermes で問題が発生しました</string>
+    <string name="notice_replied">Hermes が返信しました</string>
+    <string name="notice_reply_in">返信が届きました。</string>
+    <string name="notice_approval">承認が必要です</string>
+    <string name="notice_question">Hermes から質問があります</string>
+    <string name="notice_needs_you">Hermes があなたの対応を待っています</string>
+    <string name="notice_approve_once">一度だけ承認</string>
+    <string name="notice_deny">拒否</string>
+
+    <!-- The prompt when the settings’ storage won’t open at start-up. -->
+    <string name="storage_title">Kyllene のストレージ</string>
+    <string name="storage_folder">設定フォルダー:</string>
+    <string name="storage_retry">再試行</string>
+    <string name="storage_start_fresh">新規で開始</string>
+    <string name="storage_quit">終了</string>
+    <string name="storage_with_start_fresh">%1$s「新規で開始」はそのファイルを別の名前で保存し、Kyllene をログアウトした状態で開きます。</string>
+    <string name="storage_unavailable">Kyllene がストレージキーを取得できませんでした。デスクトップのキーリングをアンロックし、Secret ポータルが利用できることを確認してから、再試行してください。</string>
+    <string name="storage_cancelled">ストレージのアンロックがキャンセルされました。再試行してアンロックしてください。既存のデータは保持されています。</string>
+    <string name="storage_corrupt">Kyllene が暗号化された設定を開けませんでした。正常なバックアップを復元するか、元のアプリケーション ID を使用してください。既存のデータは保持されています。</string>
+    <string name="storage_version">この設定形式には別のバージョンの Kyllene が必要です。既存のデータは保持されています。</string>
+    <string name="storage_read">Kyllene が設定を読み取れないか、ファイルが 16 MiB を超えています。再試行する前にファイルへのアクセスを確認してください。</string>
+    <string name="storage_write">Kyllene が設定の保存または整理を完了できませんでした。既存のコピーは保持されています。再試行する前にディスク容量とファイルアクセスを確認してください。</string>
+    <string name="storage_uncertain">Kyllene が設定の保存を確認できませんでした。ファイルアクセスを確認し、再試行するか、終了して再起動してから変更してください。</string>
+    <string name="storage_changed">このウィンドウの外で設定が変更されました。保存する前に Kyllene を終了して再起動し、設定を読み込み直してください。</string>
+    <string name="storage_legacy">競合する、または未完了の古い設定が見つかりました。既存のファイルは保持されています。再試行する前に、終了して古いコピーを解決してください。</string>
+    <string name="storage_unsupported">Kyllene が Flatpak のアプリケーション ID を確認できませんでした。再試行する前にインストールを確認してください。平文でのフォールバックは利用できません。</string>
+
+    <!-- Widgets and plugin pages in the app’s own browser. -->
+    <string name="web_widget_no_browser">ウィジェットを表示するブラウザーを起動できませんでした。</string>
+    <string name="web_widget_failed">このウィジェットを表示できませんでした。</string>
+    <string name="web_close_page">ページを閉じる</string>
+    <string name="web_page_failed">ページを開けませんでした。</string>
+    <string name="web_try_again">再試行</string>
+</resources>

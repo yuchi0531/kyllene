@@ -129,3 +129,123 @@ internal fun darkColors(
     successSoft to Palette.Success.copy(alpha = 0.13f),
     warningSoft to Palette.Warning.copy(alpha = 0.13f),
 )
+
+/**
+ * shadcn/ui-inspired neutral (zinc) palette. Deliberately separate from [Palette]: the shadcn look is a
+ * selectable second style, not a re-skin of Hermes. Tokens mirror [lightColors]/[darkColors] exactly.
+ */
+internal object Shadcn {
+    val LightBackground = Color(0xFFFAFAFA)
+    val DarkBackground = Color(0xFF09090B)
+
+    val LightSurface = Color(0xFFFFFFFF)
+    val DarkSurface = Color(0xFF18181B)
+
+    val LightSurface2 = Color(0xFFF4F4F5) // zinc-100
+    val DarkSurface2 = Color(0xFF27272A) // zinc-800
+    val LightSurface3 = Color(0xFFE4E4E7) // zinc-200
+    val DarkSurface3 = Color(0xFF3F3F46) // zinc-700
+
+    val LightWell = Color(0xFFF4F4F5) // zinc-100
+    val DarkWell = Color(0xFF27272A) // zinc-800
+
+    val LightThumb = Color(0xFFFFFFFF)
+    val DarkThumb = Color(0xFF3F3F46) // zinc-700
+
+    val LightStroke = Color(0xFFE4E4E7) // zinc-200
+    val DarkStroke = Color(0xFF3F3F46) // zinc-700
+    val LightStrokeStrong = Color(0xFFD4D4D8) // zinc-300
+    val DarkStrokeStrong = Color(0xFF52525B) // zinc-600
+
+    val LightText = Color(0xFF18181B) // zinc-900
+    val DarkText = Color(0xFFFAFAFA) // zinc-50
+    val LightTextSecondary = Color(0xFF52525B) // zinc-600
+    val DarkTextSecondary = Color(0xFFA1A1AA) // zinc-400
+    val LightTextTertiary = Color(0xFF71717A) // zinc-500
+    val DarkTextTertiary = Color(0xFF71717A) // zinc-500
+    val LightTextMuted = Color(0xFFA1A1AA) // zinc-400
+    val DarkTextMuted = Color(0xFF52525B) // zinc-600
+
+    // shadcn's primary is the near-black/near-white neutral, independent of the app's accent palette.
+    val LightPrimary = Color(0xFF18181B)
+    val DarkPrimary = Color(0xFFFAFAFA)
+    val LightOnPrimary = Color.White
+    val DarkOnPrimary = Color(0xFF18181B)
+
+    val DangerLight = Color(0xFFDC2626) // red-600
+    val DangerDark = Color(0xFFEF4444) // red-500
+    val SuccessLight = Color(0xFF16A34A) // green-600
+    val SuccessDark = Color(0xFF22C55E) // green-500
+    val WarningLight = Color(0xFFD97706) // amber-600
+    val WarningDark = Color(0xFFF59E0B) // amber-500
+
+    val LightRing = Color(0xFFA1A1AA) // zinc-400
+    val DarkRing = Color(0xFF71717A) // zinc-500
+}
+
+internal fun shadcnLightColors() = mapOf(
+    background to Shadcn.LightBackground,
+    surface to Shadcn.LightSurface,
+    surface2 to Shadcn.LightSurface2,
+    surface3 to Shadcn.LightSurface3,
+    well to Shadcn.LightWell,
+    thumb to Shadcn.LightThumb,
+    surfaceElevated to Shadcn.LightSurface,
+    input to Shadcn.LightWell,
+    sidebar to Shadcn.LightBackground,
+    userBubble to Shadcn.LightPrimary,
+    userBubbleStroke to Shadcn.LightPrimary,
+    onUserBubble to Shadcn.LightOnPrimary,
+    text to Shadcn.LightText,
+    textSecondary to Shadcn.LightTextSecondary,
+    textTertiary to Shadcn.LightTextTertiary,
+    textMuted to Shadcn.LightTextMuted,
+    accent to Shadcn.LightPrimary,
+    onAccent to Shadcn.LightOnPrimary,
+    accentText to Shadcn.LightPrimary,
+    accentSoft to Shadcn.LightPrimary.copy(alpha = 0.08f),
+    inverse to Shadcn.LightPrimary,
+    onInverse to Shadcn.LightOnPrimary,
+    stroke to Shadcn.LightStroke,
+    strokeStrong to Shadcn.LightStrokeStrong,
+    danger to Shadcn.DangerLight,
+    success to Shadcn.SuccessLight,
+    warning to Shadcn.WarningLight,
+    dangerSoft to Shadcn.DangerLight.copy(alpha = 0.10f),
+    successSoft to Shadcn.SuccessLight.copy(alpha = 0.10f),
+    warningSoft to Shadcn.WarningLight.copy(alpha = 0.10f),
+)
+
+/** Dark and pure black share every shadcn role but the ground they sit on. */
+internal fun shadcnDarkColors(bg: Color = Shadcn.DarkBackground) = mapOf(
+    background to bg,
+    surface to Shadcn.DarkSurface,
+    surface2 to Shadcn.DarkSurface2,
+    surface3 to Shadcn.DarkSurface3,
+    well to Shadcn.DarkWell,
+    thumb to Shadcn.DarkThumb,
+    surfaceElevated to Shadcn.DarkSurface,
+    input to Shadcn.DarkWell,
+    sidebar to bg,
+    userBubble to Shadcn.DarkPrimary,
+    userBubbleStroke to Shadcn.DarkPrimary,
+    onUserBubble to Shadcn.DarkOnPrimary,
+    text to Shadcn.DarkText,
+    textSecondary to Shadcn.DarkTextSecondary,
+    textTertiary to Shadcn.DarkTextTertiary,
+    textMuted to Shadcn.DarkTextMuted,
+    accent to Shadcn.DarkPrimary,
+    onAccent to Shadcn.DarkOnPrimary,
+    accentText to Shadcn.DarkPrimary,
+    accentSoft to Shadcn.DarkPrimary.copy(alpha = 0.10f),
+    inverse to Shadcn.DarkPrimary,
+    onInverse to Shadcn.DarkOnPrimary,
+    stroke to Shadcn.DarkStroke,
+    strokeStrong to Shadcn.DarkStrokeStrong,
+    danger to Shadcn.DangerDark,
+    success to Shadcn.SuccessDark,
+    warning to Shadcn.WarningDark,
+    dangerSoft to Shadcn.DangerDark.copy(alpha = 0.14f),
+    successSoft to Shadcn.SuccessDark.copy(alpha = 0.13f),
+    warningSoft to Shadcn.WarningDark.copy(alpha = 0.13f),
+)

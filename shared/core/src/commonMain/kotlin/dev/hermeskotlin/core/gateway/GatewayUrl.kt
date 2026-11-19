@@ -50,6 +50,10 @@ value class GatewayUrl private constructor(val value: String) {
     companion object {
         private val SCHEME = Regex("^[a-z][a-z0-9+.-]*://", RegexOption.IGNORE_CASE)
 
+        /** DNS names, including their punycode `xn--` form, that both Ktor and OkHttp accept. */
+        private val WEB_HOST = Regex("""^(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)*\.?$""")
+        private val IPV6_HOST = Regex("""^\[[0-9a-f:.]+]$""")
+
         fun parse(raw: String): GatewayUrl {
             var input = raw.trim()
             if (input.isEmpty()) throw InvalidGatewayUrlException(InvalidGatewayUrlException.Problem.Required, message = "Gateway URL is required.")
@@ -75,6 +79,17 @@ value class GatewayUrl private constructor(val value: String) {
             }
             if (builder.host.isBlank()) {
                 throw InvalidGatewayUrlException(InvalidGatewayUrlException.Problem.NoHost, message = "Gateway URL has no host.")
+            }
+            // Ktor's URL parser is looser than the HTTP engine: it accepts a name with characters such as `)` in
+            // an xn-- label, which OkHttp then rejects while building the request (unexpected host). Catch it here
+            // so the connect screen can word the error instead of the app crashing on the next network call.
+            val host = builder.host.lowercase()
+            if (!WEB_HOST.matches(host) && !IPV6_HOST.matches(host)) {
+                throw InvalidGatewayUrlException(
+                    InvalidGatewayUrlException.Problem.Invalid,
+                    builder.host,
+                    "Gateway URL has a host the network stack can't use: ${builder.host}",
+                )
             }
 
             builder.parameters.clear()

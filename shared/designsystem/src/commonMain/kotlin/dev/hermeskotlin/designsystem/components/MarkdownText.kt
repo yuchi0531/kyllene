@@ -182,40 +182,58 @@ fun MarkdownText(text: String, modifier: Modifier = Modifier, streaming: Boolean
     val codeStyle = Theme[typography][code].copy(color = Theme[colors][textColor], textDirection = TextDirection.Ltr)
     val headingStyle = Theme[typography][heading].copy(color = Theme[colors][textColor], textDirection = direction)
     val linkColor = Theme[colors][accentText]
-    val linkStyle = SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline)
+    val linkStyle = remember(linkColor) { SpanStyle(color = linkColor, textDecoration = TextDecoration.Underline) }
     // On a desktop a link under the pointer takes a soft tint, which also tells the right-click menu which link
     // it is on (see LinkUnderPointer).
     val desktop = LocalDesktopLayout.current
-    val hoverMark = Theme[colors][accent].copy(alpha = 0.14f)
-    val markdownColors = DefaultMarkdownColors(
-        text = bodyStyle.color,
-        codeBackground = Theme[colors][well],
-        // Translucent: Compose paints a span's background over a text selection's highlight, so an opaque one
-        // hides the selection on the code. A faint wash of the text color reads as the same chip in either theme.
-        inlineCodeBackground = Theme[colors][textColor].copy(
-            alpha = if (Theme[colors][background].luminance() < 0.5f) INLINE_CODE_WASH_DARK else INLINE_CODE_WASH,
-        ),
-        dividerColor = Theme[colors][stroke],
-        tableBackground = Theme[colors][surface],
-    )
-    val markdownTypography = DefaultMarkdownTypography(
-        h1 = Theme[typography][title].copy(color = Theme[colors][textColor]),
-        h2 = headingStyle.copy(fontSize = 19.sp, lineHeight = 26.sp),
-        h3 = headingStyle,
-        h4 = headingStyle,
-        h5 = replyStyle.copy(fontWeight = FontWeight.SemiBold),
-        h6 = replyStyle.copy(fontWeight = FontWeight.SemiBold),
-        text = replyStyle,
-        code = codeStyle,
-        inlineCode = codeStyle,
-        quote = replyStyle.copy(color = Theme[colors][textTertiary]),
-        paragraph = replyStyle,
-        ordered = replyStyle,
-        bullet = replyStyle,
-        list = replyStyle,
-        textLink = TextLinkStyles(linkStyle, hoveredStyle = if (desktop) linkStyle.copy(background = hoverMark) else null),
-        table = replyStyle,
-    ).withTextStyle(compact)
+    val accentColor = Theme[colors][accent]
+    val hoverMark = remember(accentColor) { accentColor.copy(alpha = 0.14f) }
+    // Read the theme values here, outside the remembered calculations: a theme swap must still recompose so
+    // these keys change and the cached colors, styles and spans below are rebuilt.
+    val bodyTextColor = Theme[colors][textColor]
+    val wellColor = Theme[colors][well]
+    val backgroundColor = Theme[colors][background]
+    val strokeColor = Theme[colors][stroke]
+    val surfaceColor = Theme[colors][surface]
+    val mutedColor = Theme[colors][textTertiary]
+    val titleStyle = Theme[typography][title]
+    val markdownColors = remember(bodyStyle.color, wellColor, bodyTextColor, backgroundColor, strokeColor, surfaceColor) {
+        DefaultMarkdownColors(
+            text = bodyStyle.color,
+            codeBackground = wellColor,
+            // Translucent: Compose paints a span's background over a text selection's highlight, so an opaque one
+            // hides the selection on the code. A faint wash of the text color reads as the same chip in either theme.
+            inlineCodeBackground = bodyTextColor.copy(
+                alpha = if (backgroundColor.luminance() < 0.5f) INLINE_CODE_WASH_DARK else INLINE_CODE_WASH,
+            ),
+            dividerColor = strokeColor,
+            tableBackground = surfaceColor,
+        )
+    }
+    // replyStyle/headingStyle carry the text direction, so a language switch (rtl) invalidates this too; compact
+    // carries the [textStyle] override, and codeStyle the monospace body, so those changes invalidate it as well.
+    val markdownTypography = remember(
+        titleStyle, headingStyle, replyStyle, codeStyle, bodyTextColor, mutedColor, linkStyle, desktop, hoverMark, compact,
+    ) {
+        DefaultMarkdownTypography(
+            h1 = titleStyle.copy(color = bodyTextColor),
+            h2 = headingStyle.copy(fontSize = 19.sp, lineHeight = 26.sp),
+            h3 = headingStyle,
+            h4 = headingStyle,
+            h5 = replyStyle.copy(fontWeight = FontWeight.SemiBold),
+            h6 = replyStyle.copy(fontWeight = FontWeight.SemiBold),
+            text = replyStyle,
+            code = codeStyle,
+            inlineCode = codeStyle,
+            quote = replyStyle.copy(color = mutedColor),
+            paragraph = replyStyle,
+            ordered = replyStyle,
+            bullet = replyStyle,
+            list = replyStyle,
+            textLink = TextLinkStyles(linkStyle, hoveredStyle = if (desktop) linkStyle.copy(background = hoverMark) else null),
+            table = replyStyle,
+        ).withTextStyle(compact)
+    }
     val components = remember {
         markdownComponents(
             codeFence = { MarkdownCodeFence(it.content, it.node, block = { code, language, style -> CodeBlock(code, language, style) }) },
@@ -227,19 +245,25 @@ fun MarkdownText(text: String, modifier: Modifier = Modifier, streaming: Boolean
         )
     }
     val density = LocalDensity.current
-    val math = MathStyle(
-        textSizePx = with(density) { bodyStyle.fontSize.toPx() },
-        argb = bodyStyle.color.toArgb(),
-        fallback = markdownTypography.code.toSpanStyle(),
-    )
+    // Keyed on exactly what MathStyle reads: the body size/color, the code fallback and the density used to
+    // convert sp to px. A density or theme change rebuilds it; an unrelated recomposition reuses it.
+    val math = remember(bodyStyle.fontSize, bodyStyle.color, markdownTypography.code, density) {
+        MathStyle(
+            textSizePx = with(density) { bodyStyle.fontSize.toPx() },
+            argb = bodyStyle.color.toArgb(),
+            fallback = markdownTypography.code.toSpanStyle(),
+        )
+    }
     val annotate: AnnotatedString.Builder.(String, ASTNode) -> Boolean = remember(math) { { content, child -> appendFormula(content, child, math) } }
-    val annotator = markdownAnnotator(annotate = annotate)
+    val annotator = remember(annotate) { markdownAnnotator(annotate = annotate) }
     val inlineContent = remember(prepared, math, density) { DefaultMarkdownInlineContent(inlineFormulas(prepared, math, density)) }
     val parentUris = LocalUriHandler.current
     val fileLinks = LocalFileLinks.current
     val webOnly = remember(parentUris, fileLinks) { WebLinksOnly(parentUris, fileLinks) }
     val clipboard = LocalClipboard.current
     val scope = rememberCoroutineScope()
+    // Not remembered: the desktop branch calls rememberLinkHoverSpans, a composable that refreshes the painter's
+    // open/copy callbacks and registers a DisposableEffect on every composition. Wrapping it would drop those effects.
     val extendedSpans = if (!desktop) markdownExtendedSpans() else markdownExtendedSpans {
         rememberLinkHoverSpans(
             hoverMark,

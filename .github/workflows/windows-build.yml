@@ -1,0 +1,42 @@
+name: Windows build
+
+# Builds an unsigned Windows MSI for the current branch on a Windows runner. A Linux host can compile the
+# desktop app but silently skips the MSI packaging task, so the installer has to be made here.
+on:
+  workflow_dispatch:
+  push:
+    branches: ["omos/i18n-ja"]
+
+permissions:
+  contents: read
+
+jobs:
+  msi:
+    runs-on: windows-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      # The installer bundles this JDK: the custom title bar needs the JetBrains Runtime's window decorations,
+      # and the widget/plugin pages need its JCEF Chromium.
+      - uses: actions/setup-java@v4
+        with:
+          distribution: jetbrains
+          java-version: "25"
+          java-package: jdk+jcef
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - uses: gradle/actions/setup-gradle@v3
+
+      - name: Build the MSI
+        env:
+          HERALD_PACKAGING_JDK: ${{ env.JAVA_HOME }}
+        shell: bash
+        run: ./gradlew --no-daemon :desktopApp:packageReleaseMsi -PappVersion=0.1.0
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kyllene-windows-msi
+          path: desktopApp/build/compose/binaries/main-release/msi/*.msi
+          if-no-files-found: error

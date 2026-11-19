@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="shortcut_new_chat">新しいチャット</string>
+    <string name="shortcut_voice_short">音声入力</string>
+    <string name="shortcut_voice">音声で新しいチャット</string>
+    <string name="shortcut_voice_chat">Hermesに発信</string>
+    <string name="shortcut_voice_chat_moved">「Hermesに発信」が移動しました。アプリアイコンを長押しして、もう一度ピン留めしてください。</string>
+
+    <!-- App lock and links -->
+    <string name="app_lock_prompt_title">Kylleneのロックを解除</string>
+    <string name="link_no_app">この端末でそのリンクを開けるアプリはありません。</string>
+
+    <!-- Notification channels, as Settings › Notifications lists them -->
+    <string name="channel_connection_name">バックグラウンド接続</string>
+    <string name="channel_connection_description">Kylleneがバックグラウンドで接続を維持している間、または処理を行っている間に表示されます。</string>
+    <string name="channel_requests_name">承認と質問</string>
+    <string name="channel_requests_description">エージェントがあなたの対応を待っています。</string>
+    <string name="channel_replies_name">完了した返信</string>
+    <string name="channel_replies_description">アプリがバックグラウンドにいる間に処理が完了しました。</string>
+    <string name="channel_bots_name">ボットからのメッセージ</string>
+    <string name="channel_bots_description">アプリがバックグラウンドにいる間にボットがチャットに書き込みました。</string>
+    <string name="channel_inbox_name">受信トレイ</string>
+    <string name="channel_inbox_description">フォロー中の予約ジョブが報告した内容（朝のブリーフィングなど）です。</string>
+    <string name="channel_inbox_failed_name">失敗したジョブ</string>
+    <string name="channel_inbox_failed_description">予約ジョブの実行が失敗しました。</string>
+    <string name="channel_voice_name">音声チャット</string>
+    <string name="channel_voice_description">画面がオフのとき、または別のアプリを開いているときに音声チャットが続行されている間、表示されます。</string>
+    <string name="channel_calls_name">回答を求める着信</string>
+    <string name="channel_calls_description">承認や質問が電話のように着信します（設定 → 電話ツール → 通話）。</string>
+    <string name="channel_phone_tools_name">電話ツール</string>
+    <string name="channel_phone_tools_description">エージェントがこの端末で何かを変更しようとするとき</string>
+
+    <!-- The ongoing notification while Kyllene stays connected -->
+    <string name="notification_connected">Hermesに接続済み</string>
+    <string name="notification_reconnecting">Hermesに再接続中…</string>
+    <string name="notification_push_anywhere">ボットからのメッセージは通知を通じてどこでも受け取れます</string>
+    <string name="notification_not_connected">Hermesに未接続</string>
+    <string name="notification_turn_off">オフにする</string>
+
+    <!-- A voice chat kept up like a call -->
+    <string name="notification_voice_title">音声チャット</string>
+    <string name="notification_voice_text">Hermesと会話中</string>
+    <string name="notification_voice_end">終了</string>
+
+    <!-- Approvals, questions, passwords -->
+    <string name="notification_approve_title">このコマンドを承認しますか？</string>
+    <string name="notification_question_title">Hermesから質問があります</string>
+    <plurals name="notification_questions">
+        <item quantity="one">%d件の質問</item>
+        <item quantity="other">%d件の質問</item>
+    </plurals>
+    <string name="notification_your_answer">あなたの回答</string>
+    <string name="notification_answer">回答</string>
+    <string name="notification_secret_sudo">sudoのパスワードが必要です</string>
+    <string name="notification_secret_secret">シークレットが必要です</string>
+    <string name="notification_secret_vault_unlock">パスワードマネージャーのロックを解除してください</string>
+    <string name="notification_secret_vault_code">サインインコードが必要です</string>
+    <!-- %1$s: the site, or notification_vault_this_site -->
+    <string name="notification_vault_no_login">Hermesには%1$sのログイン情報がありません。チャットを開いて保存してください。</string>
+    <string name="notification_vault_this_site">このサイト</string>
+    <string name="notification_allow_once">1回だけ許可</string>
+    <string name="notification_allow_session">このチャットのみ許可</string>
+    <string name="notification_allow_always">常に許可</string>
+    <string name="notification_deny">拒否</string>
+
+    <!-- Finished turns, bots, rooms, the Inbox -->
+    <string name="notification_turn_failed_text">処理に失敗しました。</string>
+    <string name="notification_done">完了しました。</string>
+    <string name="notification_finished">終了しました。</string>
+    <string name="notification_message_hermes">Hermesにメッセージを送る</string>
+    <string name="notification_turn_failed">処理失敗</string>
+    <string name="notification_hermes_replied">Hermesから返信がありました</string>
+    <string name="notification_reply">返信</string>
+    <string name="notification_you">あなた</string>
+    <!-- %1$s: the bot's name -->
+    <string name="notification_message_bot">%1$sにメッセージを送る</string>
+    <string name="notification_run_failed_text">実行に失敗しました。</string>
+    <!-- %1$s: the scheduled job's name -->
+    <string name="notification_job_failed">%1$sが失敗しました</string>
+    <string name="notification_mark_read">既読にする</string>
+    <string name="notification_push_test_title">どこでも通知を受け取れます</string>
+    <string name="notification_push_test_text">これはゲートウェイ接続ではなく、ntfy経由でエンドツーエンド暗号化されて届きました。</string>
+
+    <!-- An answer from the shade that couldn't be delivered -->
+    <string name="notification_send_failed">送信できませんでした</string>
+    <string name="notification_bot_send_failed">送信できませんでした。Kylleneを開いて再度お試しください。</string>
+    <string name="notification_chat_closed">そのチャットは閉じられています。Kylleneを開いて返信してください。</string>
+    <string name="notification_reply_send_failed">送信できませんでした。Kylleneを開いて再度送信してください。</string>
+    <string name="notification_reply_open_app">Kylleneを開いて再度送信してください。</string>
+    <string name="notification_answer_not_connected">ゲートウェイに接続されていません。Kylleneを開いて回答してください。</string>
+
+    <!-- Calls -->
+    <string name="call_needs_microphone">通話にはマイクが必要です。確認はチャットで行ってください。</string>
+    <string name="call_new_session">新しいセッション</string>
+
+    <!-- Phone tools: what the agent asks to do, before it happens -->
+    <string name="phone_allow">許可</string>
+    <string name="phone_deny">拒否</string>
+    <string name="phone_question_change">エージェントが端末の設定を変更しようとしています</string>
+    <!-- Joins the items of a short list, such as days or settings -->
+    <string name="phone_list_separator">、</string>
+    <!-- Ends a sentence built from parts; %1$s: the sentence -->
+    <string name="phone_sentence">%1$s。</string>
+
+    <string name="phone_alarm_question">%1$sにアラームを設定します。</string>
+    <!-- %2$s: when it repeats, such as phone_alarm_every_weekday -->
+    <string name="phone_alarm_question_repeats">%1$s、%2$sにアラームを設定します。</string>
+    <!-- %2$s: the alarm's label. Keep the straight quotes: a label can't have one in it, so it can't close them. -->
+    <string name="phone_alarm_question_label">%1$sにアラームを設定します: \"%2$s\"。</string>
+    <string name="phone_alarm_question_repeats_label">%1$s、%2$sにアラームを設定します: \"%3$s\"。</string>
+    <string name="phone_alarm_every_day">毎日</string>
+    <string name="phone_alarm_every_weekday">平日</string>
+    <string name="phone_alarm_every_weekend">週末</string>
+    <!-- %1$s: day names, such as “Monday, Friday” -->
+    <string name="phone_alarm_every_days">毎週%1$s</string>
+    <!-- %1$s: how long, such as “1 h 30 min” -->
+    <string name="phone_timer_question">%1$sのタイマーを開始します。</string>
+    <string name="phone_timer_question_label">%1$sのタイマーを開始します: \"%2$s\"。</string>
+    <string name="phone_hours_short">%1$d時間</string>
+    <string name="phone_minutes_short">%1$d分</string>
+    <string name="phone_seconds_short">%1$d秒</string>
+
+    <string name="phone_clipboard_title">エージェントがクリップボードにコピーしようとしています</string>
+    <string name="phone_clipboard_question">クリップボードにコピー: %1$s</string>
+    <string name="phone_clipboard_label">エージェントから</string>
+
+    <string name="phone_open_title">エージェントが端末で何かを開こうとしています</string>
+    <!-- %1$s: the site; %2$s: phone_open_not_secure or nothing; %3$s: the link -->
+    <string name="phone_open_link">%1$s%2$sのリンクを開きます: %3$s</string>
+    <string name="phone_open_not_secure">"（安全ではありません）"</string>
+    <string name="phone_open_directions">地図アプリで%1$sへの経路案内を開始します</string>
+    <string name="phone_open_map">地図アプリで表示: %1$s</string>
+    <string name="phone_open_app">アプリを開く: %1$s</string>
+    <string name="phone_open_share">このテキストを共有: %1$s</string>
+
+    <string name="phone_sound_dnd_off">おやすみモードをオフにする</string>
+    <!-- %1$s: phone_sound_dnd_priority, _alarms or _silence -->
+    <string name="phone_sound_dnd_on">おやすみモードをオンにする（%1$s）</string>
+    <string name="phone_sound_dnd_priority">優先度の高い通知のみ</string>
+    <string name="phone_sound_dnd_alarms">アラームのみ</string>
+    <string name="phone_sound_dnd_silence">完全なサイレント</string>
+    <!-- %1$s: phone_sound_ringer_normal, _vibrate or _silent -->
+    <string name="phone_sound_ringer">着信音を%1$sに設定する</string>
+    <string name="phone_sound_ringer_normal">通常</string>
+    <string name="phone_sound_ringer_vibrate">バイブレーション</string>
+    <string name="phone_sound_ringer_silent">サイレント</string>
+    <!-- %1$d: the volume in percent -->
+    <string name="phone_sound_volume_ring">着信音量を%1$d%%に設定する</string>
+    <string name="phone_sound_volume_notification">通知音量を%1$d%%に設定する</string>
+    <string name="phone_sound_volume_media">メディア音量を%1$d%%に設定する</string>
+    <string name="phone_sound_volume_alarm">アラーム音量を%1$d%%に設定する</string>
+
+    <string name="phone_calendar_add_title">エージェントがカレンダーに予定を追加しようとしています</string>
+    <string name="phone_calendar_move_title">エージェントが予定を移動しようとしています</string>
+    <!-- %1$s: when; %2$s: the calendar -->
+    <string name="phone_calendar_add_question">%1$s、%2$sに追加します。</string>
+    <!-- %3$s: the place -->
+    <string name="phone_calendar_add_question_place">%1$s、%2$sの%3$sに追加します。</string>
+    <!-- %1$s: when it was; %2$s: when it moves to; %3$s: the calendar -->
+    <string name="phone_calendar_move_question">%1$sから%2$sへ、%3$sに移動します。</string>
+    <plurals name="phone_calendar_guests">
+        <item quantity="one">%d人に通知される場合があります。</item>
+        <item quantity="other">%d人に通知される場合があります。</item>
+    </plurals>
+    <string name="phone_calendar_title_line">タイトル: %1$s</string>
+    <string name="phone_calendar_notes_line">メモ: %1$s</string>
+    <!-- %1$s: a day -->
+    <string name="phone_calendar_all_day">%1$s、終日</string>
+    <string name="phone_calendar_days_all_day">%1$sから%2$sまで、終日</string>
+    <!-- %1$s: a day; %2$s, %3$s: start and end times -->
+    <string name="phone_calendar_day_hours">%1$s、%2$s–%3$s</string>
+    <!-- %1$s, %2$s: phone_calendar_day_time each -->
+    <string name="phone_calendar_range">%1$sから%2$s</string>
+    <!-- %1$s: a day; %2$s: a time -->
+    <string name="phone_calendar_day_time">%1$s、%2$s</string>
+    <!-- java.time patterns for a day in the question: weekday, day and month, and with the year. Keep the letters. -->
+    <string name="phone_calendar_day_pattern">EEE d MMM</string>
+    <string name="phone_calendar_day_year_pattern">EEE d MMM yyyy</string>
+
+    <string name="phone_place_title">エージェントが場所を監視しようとしています</string>
+    <string name="phone_place_remove_title">エージェントが場所の監視を停止しようとしています</string>
+    <string name="phone_place_remove_arrive">%1$sの監視を停止しますか？到着しても通知されなくなります。</string>
+    <string name="phone_place_remove_leave">%1$sの監視を停止しますか？離れても通知されなくなります。</string>
+    <!-- %1$s: coordinates -->
+    <string name="phone_place_here">現在の端末の位置、%1$s</string>
+    <!-- %1$s: the chat's title -->
+    <string name="phone_place_chat">\"%1$s\"</string>
+    <string name="phone_place_this_chat">このチャット</string>
+    <!-- %1$s: the place; %2$s: where; %3$d: radius in metres; %4$s: the chat; %5$s: the message -->
+    <string name="phone_place_add_arrive">%1$s（%2$s、%3$d m）に到着すると、Kylleneがこのメッセージをあなたとして%4$sに送信します: %5$s</string>
+    <string name="phone_place_add_leave">%1$s（%2$s、%3$d m）を離れると、Kylleneがこのメッセージをあなたとして%4$sに送信します: %5$s</string>
+    <string name="phone_place_arrived">%1$sに到着しました</string>
+    <string name="phone_place_left">%1$sを離れました</string>
+    <string name="phone_place_the_chat">チャット</string>
+    <!-- %1$s: the chat; %2$s: the message -->
+    <string name="phone_place_sent">%1$sに送信しました: %2$s</string>
+    <!-- %2$s: why, such as phone_place_no_reach -->
+    <string name="phone_place_not_sent">%1$sに送信できませんでした: %2$s。Kylleneを開いて自分で送信してください。</string>
+    <string name="phone_place_no_answer">ゲートウェイが時間内に応答しませんでした</string>
+    <string name="phone_place_other_gateway">Kylleneは現在別のゲートウェイにサインインしています</string>
+    <string name="phone_place_not_accepted">受け付けられませんでした</string>
+    <string name="phone_place_no_reach">Kylleneがゲートウェイに接続できませんでした</string>
+    <string name="phone_place_refused">ゲートウェイに拒否されました</string>
+</resources>

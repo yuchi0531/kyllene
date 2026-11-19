@@ -27,6 +27,7 @@ val AppLanguages: List<AppLanguage> = listOf(
     AppLanguage("pt-BR", "Português (Brasil)"),
     AppLanguage("zh-CN", "简体中文"),
     AppLanguage("hu", "Magyar"),
+    AppLanguage("ja", "日本語"),
 )
 
 /**

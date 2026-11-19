@@ -183,6 +183,8 @@ class LinkPreviewsTest {
         assertEquals(0, requests)
         assertTrue(webUrl("HTTPS://example.com") != null)
         assertTrue(webUrl("https://[2606:4700::1111]/") != null)
+        assertTrue(webUrl("https://xn--strae-oqa.de/") != null)
+        assertNull(webUrl("https://vault.yuchi0531.xn--moe)-tc4c"))
     }
 
     @Test fun addressesOnTheUsersOwnNetworksAreNeverPreviewed() = runBlocking {

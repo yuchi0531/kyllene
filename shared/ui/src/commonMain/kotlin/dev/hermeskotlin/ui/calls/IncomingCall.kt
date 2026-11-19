@@ -55,7 +55,7 @@ import dev.hermeskotlin.designsystem.body
 import dev.hermeskotlin.designsystem.colors
 import dev.hermeskotlin.designsystem.danger
 import dev.hermeskotlin.designsystem.display
-import dev.hermeskotlin.designsystem.hermesTheme
+import dev.hermeskotlin.designsystem.appTheme
 import dev.hermeskotlin.designsystem.label
 import dev.hermeskotlin.designsystem.onAccent
 import dev.hermeskotlin.designsystem.text
@@ -74,7 +74,7 @@ import org.koin.compose.koinInject
 fun IncomingCallScreen(caller: String, why: String, onAnswer: () -> Unit, onDecline: () -> Unit) {
     val settings = koinInject<SettingsStore>().settings.collectAsState().value ?: return
     val palette = AccentPalette.named(settings.accent)
-    hermesTheme(palette)(if (settings.pureBlack) PureBlack else ColorScheme.Dark) {
+    appTheme(settings.look, palette)(if (settings.pureBlack) PureBlack else ColorScheme.Dark) {
         CompositionLocalProvider(LocalAccentPalette provides palette) {
             ProvideAppWords { IncomingCallView(caller, why, onAnswer, onDecline) }
         }
@@ -144,7 +144,7 @@ fun InCallScreen(model: PhoneCallModel) {
             delay(1_000)
         }
     }
-    hermesTheme(palette)(if (settings.pureBlack) PureBlack else ColorScheme.Dark) {
+    appTheme(settings.look, palette)(if (settings.pureBlack) PureBlack else ColorScheme.Dark) {
         CompositionLocalProvider(LocalAccentPalette provides palette) {
             ProvideAppWords { InCallView(state, seconds, onMute = model::toggleMute, onEnd = model::hangUp) }
         }

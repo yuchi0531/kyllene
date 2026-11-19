@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tile_label">Hermesに発信</string>
+    <string name="tile_description">Hermesと会話し、最後の返信を確認できます。</string>
+    <string name="complication_label">Hermesに発信</string>
+
+    <!-- The tile and the complication -->
+    <string name="wear_call_hermes">Hermesに発信</string>
+    <!-- %1$s: who the call goes to, a chat or a bot -->
+    <string name="wear_call_target">%1$sに発信</string>
+    <!-- The complication's short text: a single short word -->
+    <string name="wear_call_short">発信</string>
+    <string name="wear_start_call">通話を開始</string>
+
+    <!-- The phone, at the top edge -->
+    <string name="wear_phone_connected">接続済み</string>
+    <string name="wear_phone_reconnecting">再接続中</string>
+    <string name="wear_phone_not_connected">未接続</string>
+    <string name="wear_phone_not_connected_detail">スマートフォンが接続されていません。</string>
+    <string name="wear_phone_no_app">スマートフォンのKylleneが応答しません。そちらで開くか、アップデートしてください。</string>
+    <string name="wear_phone_signed_out">先にスマートフォンのKylleneにサインインしてください。</string>
+    <string name="wear_phone_unreachable">Kylleneがゲートウェイに接続できません。スマートフォンで確認してください。</string>
+    <string name="wear_phone_no_answer">スマートフォンのKylleneが応答しません。もう一度お試しください。</string>
+    <string name="wear_phone_changed">スマートフォンが変更されました。もう一度お試しください。</string>
+    <string name="wear_phone_unreachable_short">スマートフォンに接続できませんでした。</string>
+    <string name="wear_profile_changed">スマートフォンのプロフィールが変更されました。もう一度お試しください。</string>
+    <string name="wear_profile_changed_short">スマートフォンのプロフィールが変更されました。再試行してください。</string>
+    <string name="wear_update_for_profiles">プロフィール対応の通話を利用するには、スマートフォンのKylleneをアップデートしてください。</string>
+    <string name="wear_update_for_bots">ボットと会話するには、スマートフォンのKylleneをアップデートしてください。</string>
+    <string name="wear_update_for_bot_calls">ボットに発信するには、スマートフォンのKylleneをアップデートしてください。</string>
+    <string name="wear_call_target_changed">通話先が変更されました。「発信」をもう一度タップしてください。</string>
+    <string name="wear_default_call_target_changed">デフォルトの通話先が変更されました。「発信」をもう一度タップしてください。</string>
+
+    <!-- Talking -->
+    <string name="wear_new_chat">新しいチャット</string>
+    <string name="wear_chat">チャット</string>
+    <string name="wear_open_chats">チャットを開く</string>
+    <string name="wear_done_talking">会話を終了</string>
+    <string name="wear_stop">停止</string>
+    <string name="wear_cancel">キャンセル</string>
+    <string name="wear_talk_to_hermes">Hermesと会話</string>
+    <!-- Read out after the orb's label; %1$d: how full the context is, in percent -->
+    <string name="wear_context_full">、コンテキスト%1$d%%使用</string>
+    <string name="wear_ask_hermes">Hermesに尋ねる</string>
+    <string name="wear_listening">聞き取り中… 完了したらタップ</string>
+    <string name="wear_checking_phone">スマートフォンを確認中…</string>
+    <string name="wear_tap_to_stop">タップして停止</string>
+    <string name="wear_something_wrong">問題が発生しました。</string>
+    <string name="wear_tap_to_talk">タップして話す</string>
+    <string name="wear_transcribing">文字起こし中…</string>
+    <string name="wear_sending">送信中…</string>
+    <string name="wear_waiting_on_phone">スマートフォンであなたの対応を待っています</string>
+    <string name="wear_thinking">考え中…</string>
+    <!-- What was said, quoted -->
+    <string name="wear_said">「%1$s」</string>
+    <string name="wear_needs_microphone">声を聞き取るのにマイクが必要です。</string>
+    <string name="wear_tap_allow_microphone">タップしてマイクを許可してください。</string>
+    <string name="wear_nothing_heard">何も聞き取れませんでした。</string>
+    <string name="wear_microphone_failed">マイクを使用できませんでした。</string>
+    <string name="wear_microphone_unavailable">マイクを利用できません。</string>
+
+    <!-- Calls -->
+    <string name="wear_mute">ミュート</string>
+    <string name="wear_unmute">ミュート解除</string>
+    <string name="wear_volume">音量</string>
+    <string name="wear_end_call">通話を終了</string>
+    <string name="wear_decline">拒否</string>
+    <string name="wear_answer">応答</string>
+    <string name="wear_ring_agent">着信中</string>
+    <string name="wear_ring_approval">あなたの承認が必要です</string>
+    <string name="wear_ring_question">あなたに質問があります</string>
+    <string name="wear_call_starting">開始中…</string>
+    <string name="wear_call_connecting">接続中…</string>
+    <string name="wear_call_muted">ミュート中</string>
+    <!-- %1$s: what Hermes is doing, such as a tool's name -->
+    <string name="wear_call_working">Hermes: %1$s</string>
+    <string name="wear_call_thinking">Hermesが処理中です…</string>
+    <string name="wear_call_live">ライブ</string>
+    <string name="wear_call_ended">通話終了</string>
+    <string name="wear_call_ended_detail">通話が終了しました。</string>
+    <string name="wear_call_dropped">通話が切断されました。</string>
+    <string name="wear_call_start_failed">通話を開始できませんでした。</string>
+    <string name="wear_call_no_connect">通話が接続されませんでした。</string>
+    <string name="wear_call_offer_failed">通話のオファーを送信できませんでした。</string>
+    <string name="wear_call_setup_failed">通話をセットアップできませんでした。</string>
+    <string name="wear_call_events_failed">通話のイベントチャネルを開けませんでした。</string>
+    <string name="wear_call_refused">通話が拒否されました。</string>
+    <string name="wear_channel_calls_name">回答を求める着信</string>
+    <string name="wear_channel_calls_description">承認や回答が必要なとき、またはすぐに対応が必要なときに、スマートフォンが鳴る設定であればHermesが発信します。</string>
+
+    <!-- Chats and bots -->
+    <string name="wear_chats">チャット</string>
+    <string name="wear_bots">ボット</string>
+    <string name="wear_settings">設定</string>
+    <string name="wear_no_bots">ボットはまだありません。</string>
+    <string name="wear_no_chats">チャットはまだありません。</string>
+    <!-- How long ago a chat was active, as short as a list allows -->
+    <string name="wear_ago_now">今</string>
+    <string name="wear_ago_minutes">%1$d分前</string>
+    <string name="wear_ago_hours">%1$d時間前</string>
+    <string name="wear_ago_days">%1$d日前</string>
+    <string name="wear_ago_weeks">%1$d週間前</string>
+
+    <!-- Settings -->
+    <string name="wear_talk_live">音声通話で話す</string>
+    <string name="wear_talk_live_detail">音声通話として</string>
+    <string name="wear_read_aloud">読み上げ</string>
+    <string name="wear_read_aloud_detail">すべての返信</string>
+    <string name="wear_assistant">アシスタント</string>
+    <string name="wear_assistant_set">ボタンでKylleneが応答します</string>
+    <string name="wear_assistant_refused">未設定です。タップして再試行</string>
+    <string name="wear_assistant_unset">Kylleneをアシスタントに設定</string>
+</resources>

@@ -507,6 +507,13 @@ internal fun SettingsView(
                     )
                     Divider()
                     SwitchRow(
+                        title = stringResource(Res.string.settings_shadcn_look),
+                        detail = stringResource(Res.string.settings_shadcn_look_detail),
+                        checked = settings.look == "shadcn",
+                        onCheckedChange = { on -> onUpdate { it.copy(look = if (on) "shadcn" else "hermes") } },
+                    )
+                    Divider()
+                    SwitchRow(
                         title = stringResource(Res.string.settings_glow),
                         detail = stringResource(Res.string.settings_glow_detail),
                         checked = settings.glow,

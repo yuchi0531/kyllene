@@ -99,7 +99,7 @@ import dev.hermeskotlin.designsystem.components.MarkdownText
 import dev.hermeskotlin.designsystem.components.Spinner
 import dev.hermeskotlin.designsystem.components.halo
 import dev.hermeskotlin.designsystem.danger
-import dev.hermeskotlin.designsystem.hermesTheme
+import dev.hermeskotlin.designsystem.appTheme
 import dev.hermeskotlin.designsystem.label
 import dev.hermeskotlin.designsystem.onUserBubble
 import dev.hermeskotlin.designsystem.radii
@@ -173,7 +173,7 @@ fun AssistantPanel(
     }
     val density = LocalDensity.current
     val palette = AccentPalette.named(settings.accent)
-    hermesTheme(palette)(scheme) {
+    appTheme(settings.look, palette)(scheme) {
         CompositionLocalProvider(
             LocalAccentPalette provides palette,
             LocalAppSettings provides settings,

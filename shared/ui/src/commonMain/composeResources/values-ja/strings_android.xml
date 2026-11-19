@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Words only the phone draws: shared/ui's androidMain (media on an agent's screen, attachments, widgets, saving).
+    Keys start with android_.
+-->
+<resources>
+    <!-- Media on a screen the agent shows -->
+    <string name="android_media_picture_not_shown">画像を表示できません</string>
+    <string name="android_media_picture_failed">画像を読み込めませんでした</string>
+    <string name="android_media_audio_not_played">音声を再生できません</string>
+    <string name="android_media_video_not_shown">動画を表示できません</string>
+    <string name="android_media_audio_failed">音声を読み込めませんでした</string>
+    <string name="android_media_video_failed">動画を読み込めませんでした</string>
+    <string name="android_screen_closed">エージェントがこの画面を閉じました。</string>
+    <string name="android_screen_part_failed">この部分を表示できませんでした</string>
+
+    <!-- Attachments: picked, taken or shared from another app -->
+    <string name="android_attach_photo_failed">写真を読み込めませんでした。</string>
+    <string name="android_attach_no_camera">利用できるカメラアプリがありません。</string>
+    <string name="android_attach_not_allowed">共有元のアプリが Kyllene にファイルの読み取りを許可しませんでした。</string>
+    <string name="android_attach_read_failed">ファイルを読み込めませんでした。</string>
+    <!-- %1$s: the file's name -->
+    <string name="android_attach_photo_too_large">%1$s は 50 MB を超えています。</string>
+    <string name="android_attach_file_too_large">%1$s は %2$d MB を超えています。</string>
+    <string name="android_attach_unreadable">%1$s を読み込めませんでした。</string>
+    <string name="android_attach_not_image">%1$s を画像として読み込めませんでした。</string>
+    <string name="android_attach_too_much">一度に添付できるのは 50 MB までです。</string>
+
+    <!-- Widgets in a reply -->
+    <string name="android_widget_update_webview">このウィジェットを実行するには Android System WebView をアップデートしてください。</string>
+    <string name="android_widget_failed">このウィジェットを表示できませんでした。</string>
+
+    <!-- Saving a file or picture -->
+    <string name="android_save_needs_android_10">保存には Android 10 が必要です。代わりに「共有」を使用してください。</string>
+    <!-- %1$s: the file's name -->
+    <string name="android_save_failed">%1$s を保存できませんでした。</string>
+    <!-- %1$s: the folder, such as Pictures/Kyllene -->
+    <string name="android_saved_to">%1$s に保存しました</string>
+</resources>

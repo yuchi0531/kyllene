@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings → Phone tools: the tools, the calls and quiet hours, the phones the gateway knows, watched places. -->
+    <string name="phone_intro">エージェントにこの端末を使わせることができます。状態の確認や操作が可能です。すべてのツールはオンにするまで無効で、端末を変更する操作は必ず事前に確認を求めます。Kyllene が開いている間はアプリ内で、それ以外は通知で確認します。ツールをオフにすると、すぐにエージェントから取り除かれます。</string>
+    <string name="phone_install_what">ここでオンにしたツールをエージェントに提供し、その呼び出しをこの端末に渡します。</string>
+    <string name="phone_let_agent">エージェントにこの端末の使用を許可</string>
+    <string name="phone_set_up">ゲートウェイで設定</string>
+    <string name="phone_allow">この端末で許可</string>
+    <string name="phone_section_tools">ツール</string>
+    <string name="phone_section_calls">通話</string>
+    <string name="phone_section_phones">端末</string>
+    <string name="phone_section_used">最近の使用</string>
+
+    <string name="phone_status_off">オフです。エージェントはこの端末を使用できません。</string>
+    <string name="phone_status_none">オンです。エージェントに使用を許可するツールを下でオンにしてください。</string>
+    <plurals name="phone_status_count">
+        <item quantity="one">オンです。新しいチャットで %1$d 個のツールを使用できます。</item>
+        <item quantity="other">オンです。新しいチャットで %1$d 個のツールを使用できます。</item>
+    </plurals>
+    <string name="phone_status_offline">ゲートウェイへの接続を待っています。</string>
+    <string name="phone_status_working">ゲートウェイとの設定を進めています…</string>
+    <string name="phone_status_not_installed">ゲートウェイに herald-push プラグインが必要です。</string>
+    <string name="phone_status_outdated">ゲートウェイの herald-push プラグインは %1$s ですが、電話ツールには %2$s が必要です。下でアップデートしてください。</string>
+    <string name="phone_status_too_old">ゲートウェイの herald-push プラグインが古すぎます。</string>
+    <string name="phone_status_refused">ゲートウェイに拒否されました。</string>
+
+    <string name="phone_rings_title">確認が必要なときに呼び出す</string>
+    <string name="phone_rings_detail">表示していないチャットからの承認依頼や質問は、通話のように呼び出し音が鳴ります。拒否すると通常の通知になります。呼び出しはあなた宛てのみで、エージェントがこの端末から誰かに電話をかけることはありません。</string>
+    <string name="phone_rings_talk_title">応答時に通話する</string>
+    <string name="phone_rings_talk_detail">応答すると Hermes と通話状態になり、Hermes が独自の言葉で質問し、あなたは音声で答えて、そのまま会話を続けられます。オフの場合は、「応答」を押すとチャットが開きます。</string>
+    <string name="phone_watch_rings_title">腕時計でも呼び出す</string>
+    <string name="phone_watch_rings_detail">腕時計の Kyllene でも呼び出し音が鳴ります。Wear OS の腕時計では、ゲートウェイが音声で会話しているときに「応答」を押すと時計から通話が始まります。Pebble では、Pebble 側の「応答」がオンの場合、質問が Pebble に表示されます。それ以外は端末で応答してください。</string>
+    <string name="phone_quiet_title">サイレント時間</string>
+    <string name="phone_quiet_empty">開始と終了がどちらも %1$s なので、サイレント時間はまだ設定されていません。別の時間を選んでください。</string>
+    <string name="phone_quiet_window">%1$s から %2$s まで呼び出し音は鳴りません。</string>
+    <string name="phone_quiet_off">選んだ時間の間は呼び出し音が鳴りません。</string>
+    <string name="phone_quiet_detail">%1$s エージェントには別の方法で連絡するよう指示され、承認依頼や質問は通知として届きます。おやすみモードでも通知はミュートされますが、Kyllene からの割り込みを許可すれば例外です。同じチャットから 15 分以内に再び呼び出しがあった場合は、かけ直しとみなして通知します。</string>
+    <string name="phone_quiet_starts">開始</string>
+    <string name="phone_quiet_ends">終了</string>
+    <string name="phone_quiet_start_title">サイレント時間の開始</string>
+    <string name="phone_quiet_end_title">サイレント時間の終了</string>
+    <string name="phone_quiet_set">設定</string>
+    <string name="phone_later_hour">後の時間</string>
+    <string name="phone_earlier_hour">前の時間</string>
+    <string name="phone_later_minutes">後の分</string>
+    <string name="phone_earlier_minutes">前の分</string>
+
+    <string name="phone_phones_note">端末から送信したチャットは、その端末を使用します。予約ジョブや Hermes Desktop・ダッシュボードからのチャットは、この一覧でツールがオンになっている最初の端末を使用します。削除した端末も、その端末の Kyllene が電話ツールをオンのままログインしていれば、再び表示されます。</string>
+    <string name="phone_this_phone">%1$s · この端末</string>
+    <string name="phone_move_up">%1$s を上に移動</string>
+    <string name="phone_move_down">%1$s を下に移動</string>
+    <string name="phone_remove">%1$s を削除</string>
+    <string name="phone_no_tools">オンのツールなし</string>
+    <plurals name="phone_tools_on">
+        <item quantity="one">%1$d 個のツールがオン</item>
+        <item quantity="other">%1$d 個のツールがオン</item>
+    </plurals>
+    <string name="phone_used_ago">%1$s · %2$s 前に使用</string>
+    <string name="phone_used_just_now">%1$s · たった今使用</string>
+    <string name="phone_seen_ago">%1$s · %2$s 前に確認</string>
+    <string name="phone_seen_just_now">%1$s · たった今確認</string>
+    <string name="phone_remove_title">%1$s を削除しますか？</string>
+    <string name="phone_remove_message">エージェントは電話ツールの使用を停止し、保留中の呼び出しは拒否されます。その端末の Kyllene が電話ツールをオンのままログインしていれば、次回接続時に再び表示されます。</string>
+
+    <string name="phone_places_note_on">Android は数分ごとに確認するため、メッセージが少し遅れて届くことがあります。メッセージはあなた名で送信され、場所からの通知として示されます。</string>
+    <string name="phone_places_note_off">監視中の場所がオフのため、これらは作動しません。</string>
+    <string name="phone_place_arriving">%1$s に到着 · %2$d m</string>
+    <string name="phone_place_leaving">%1$s を出発 · %2$d m</string>
+    <string name="phone_place_sends">送信内容: %1$s</string>
+    <string name="phone_place_sends_to">%1$s への送信内容: %2$s</string>
+    <string name="phone_place_stop">%1$s の監視を停止</string>
+    <string name="phone_just_now">たった今</string>
+    <string name="phone_ago">%1$s 前</string>
+
+    <!-- What a tool still needs from Android, under its switch, and the optional grants offered as a row. -->
+    <string name="phone_need_notifications">Kyllene の通知をオンにしてください。変更内容は通知で確認します。</string>
+    <string name="phone_need_dnd">Kyllene に「おやすみモード」の変更を許可してください。</string>
+    <string name="phone_need_usage">使用状況へのアクセスを Kyllene に許可し、使用中のアプリを確認できるようにしてください。</string>
+    <string name="phone_need_location">Kyllene にこの端末の位置情報の使用を許可してください。</string>
+    <string name="phone_need_precise">正確な位置情報を許可してください。Android はこれがないと場所を監視できません。</string>
+    <string name="phone_need_always">常に位置情報を許可してください。Kyllene が閉じている間も場所を監視できます。「常に許可」を選択してください。</string>
+    <string name="phone_need_calendar">Kyllene にカレンダーの使用を許可してください。</string>
+    <string name="phone_need_contacts">Kyllene に連絡先の読み取りを許可してください。</string>
+    <string name="phone_need_health_update">データ元の Health Connect をアップデートしてください。</string>
+    <string name="phone_need_health_install">データ元の Health Connect をインストールしてください。</string>
+    <string name="phone_need_health_none">この端末には Health Connect がありません。</string>
+    <string name="phone_need_health_read">Kyllene に Health Connect の歩数・睡眠・心拍数の読み取りを許可してください。</string>
+    <string name="phone_need_call_notifications">Kyllene の通知をオンにしてください。呼び出し音は通知で鳴ります。</string>
+    <string name="phone_need_full_screen">全画面通知を許可してください。ロック画面上に通話が表示されます。</string>
+    <string name="phone_need_android">電話ツールは Android 端末の Kyllene で使用できます。</string>
+    <string name="phone_optional_closed">Kyllene が閉じている間も使用 (任意)</string>
+    <string name="phone_optional_health">歩数・睡眠・心拍数も使用 (任意)</string>
+
+    <string name="phone_tool_battery">バッテリー</string>
+    <string name="phone_tool_battery_detail">残量、充電中かどうか、満充電までの時間です。</string>
+    <string name="phone_tool_network">ネットワーク</string>
+    <string name="phone_tool_network_detail">Wi-Fi・モバイルデータ・オフラインの別、従量課金かどうか、VPN の状態です。</string>
+    <string name="phone_tool_sound">サウンド</string>
+    <string name="phone_tool_sound_detail">おやすみモード、着信音、音量です。変更する場合は事前に確認します。</string>
+    <string name="phone_tool_alarms">アラームとタイマー</string>
+    <string name="phone_tool_alarms_detail">許可すると、時計アプリにアラームやタイマーを設定します。</string>
+    <string name="phone_tool_screen_time">スクリーンタイム</string>
+    <string name="phone_tool_screen_time_detail">使用したアプリとその時間、画面の点灯時間とロック解除の回数を、最大 1 週間分まで取得します。</string>
+    <string name="phone_tool_open">リンク・地図・アプリを開く</string>
+    <string name="phone_tool_open_detail">許可すると、リンク・場所・アプリ・共有シートを開きます。</string>
+    <string name="phone_tool_clipboard">クリップボードにコピー</string>
+    <string name="phone_tool_clipboard_detail">許可すると、テキストをクリップボードにコピーします。既存の内容は読み取りません。</string>
+    <string name="phone_tool_location">位置情報</string>
+    <string name="phone_tool_location_detail">端末の位置と最寄りの住所を、許可した精度で取得します。基本は Kyllene が開いている間のみで、閉じている間の使用も許可した場合は例外です。</string>
+    <string name="phone_tool_geofences">監視中の場所</string>
+    <string name="phone_tool_geofences_detail">場所への到着・退出時に、その場所のメッセージを追加元のチャットに送信します。追加・削除時には事前に確認します。正確な位置情報の常時許可が必要です。</string>
+    <string name="phone_tool_calendar">カレンダー</string>
+    <string name="phone_tool_calendar_detail">指定した期間の予定です。追加・移動時には事前に確認します。</string>
+    <string name="phone_tool_contacts">連絡先</string>
+    <string name="phone_tool_contacts_detail">名前・電話番号・メールアドレスで人物を検索します。取得できるのは名前・電話番号・メールアドレスのみで、一度に数件ずつです。</string>
+    <string name="phone_tool_health">ヘルスケア</string>
+    <string name="phone_tool_health_detail">Health Connect の歩数・睡眠・心拍数を、そこで許可した範囲で取得します。基本は Kyllene が開いている間のみで、閉じている間の使用も許可した場合は例外です。</string>
+    <string name="phone_tool_show_ui">チャット内の画面 (実験的)</string>
+    <string name="phone_tool_show_ui_detail">エージェントが返信の下にボタン・選択肢・フォーム付きの小さな画面を表示し、最大 5 分間タップを待ちます。Android のみ。</string>
+    <string name="phone_tool_call_me">Hermes から電話を受ける</string>
+    <string name="phone_tool_call_me_detail">急ぎの用事や電話を依頼したときに、予約ジョブからでもエージェントが呼び出しをかけます。応答すると、Hermes が通話で理由を伝えます。電話をかける相手はあなただけです。</string>
+</resources>

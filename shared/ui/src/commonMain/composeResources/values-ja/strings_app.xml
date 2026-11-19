@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The app around the chats: app_ for the shell (shortcuts, the command palette, the window, words several
+    places share), connect_ and check_ for adding a gateway and the connection check, signin_, gateways_,
+    update_, journey_, pet_ and plugins_ for their pages.
+-->
+<resources>
+    <string name="app_expanded">展開</string>
+    <string name="app_collapsed">折りたたみ</string>
+    <string name="app_save">保存</string>
+    <string name="app_try_again">再試行</string>
+    <string name="app_done">完了</string>
+
+    <string name="app_palette_title">コマンドパレット</string>
+    <string name="app_palette_placeholder">チャット、ページ、操作を検索</string>
+    <string name="app_palette_nothing">該当する項目はありません</string>
+    <string name="app_palette_search">検索</string>
+    <string name="app_palette_search_all">すべてのチャットで「%1$s」を検索</string>
+    <string name="app_palette_go_to">移動</string>
+    <string name="app_palette_this_chat">このチャット</string>
+    <string name="app_palette_pinned">ピン留め</string>
+    <string name="app_palette_help">ヘルプ</string>
+    <string name="app_page_chats">チャット</string>
+    <string name="app_page_bots">ボット</string>
+    <string name="app_page_inbox">受信トレイ</string>
+    <string name="app_page_scheduled">予定</string>
+    <string name="app_page_archived">アーカイブ済みのチャット</string>
+    <string name="app_page_capabilities">機能</string>
+    <string name="app_page_config">構成</string>
+    <string name="app_page_insights">インサイト</string>
+    <string name="app_new_chat">新しいチャット</string>
+    <string name="app_search_chats">チャットを検索</string>
+    <string name="app_pick_model">モデルを選択</string>
+    <string name="app_find_in_chat">チャット内を検索</string>
+    <string name="app_new_window">新しいウィンドウで開く</string>
+    <string name="app_chat_options">チャットのオプション</string>
+    <string name="app_usage">使用量</string>
+    <string name="app_processes">プロセス</string>
+    <string name="app_checkpoints">チェックポイント</string>
+    <string name="app_theme_light">ライトテーマ</string>
+    <string name="app_theme_dark">ダークテーマ</string>
+    <string name="app_theme_system">システムテーマ</string>
+    <string name="app_keyboard_shortcuts">キーボードショートカット</string>
+    <string name="app_keys_composer">入力欄</string>
+    <string name="app_keys_app">アプリ</string>
+    <string name="app_keys_send">送信</string>
+    <string name="app_keys_new_line">改行</string>
+    <string name="app_keys_queue">実行中の返信の後にキューに追加</string>
+    <string name="app_keys_earlier_prompts">以前のプロンプト</string>
+    <string name="app_keys_stop">返信を停止</string>
+    <string name="app_keys_focus_composer">入力欄にフォーカス</string>
+    <string name="app_keys_next_chat">次のチャット</string>
+    <string name="app_keys_previous_chat">前のチャット</string>
+    <string name="app_keys_chat_in_list">リスト内のチャット 1〜9</string>
+    <string name="app_keys_find_in_chat">このチャット内を検索</string>
+    <string name="app_keys_toggle_file">開いているファイルを表示・非表示</string>
+    <string name="app_keys_files_in_prompt">プロンプト内のファイルとフォルダー</string>
+    <string name="app_keys_chat_new_window">チャットを新しいウィンドウで開く</string>
+    <string name="app_keys_pin">チャットをピン留め・解除</string>
+    <string name="app_keys_archive">チャットをアーカイブ</string>
+    <string name="app_keys_scroll_page">ページをスクロール</string>
+    <string name="app_keys_first_latest">最初または最新のメッセージ</string>
+    <string name="app_keys_step_chats">前または次のチャット</string>
+    <string name="app_keys_sidebar">サイドバーを表示・非表示</string>
+    <string name="app_keys_zoom">拡大 / 縮小 / リセット</string>
+    <string name="app_keys_save">ジョブまたは config.yaml を保存</string>
+    <string name="app_keys_close_window">ウィンドウを閉じる</string>
+    <string name="app_keys_quick_entry">どこからでもクイック入力</string>
+    <string name="app_keys_these">これらのショートカット</string>
+    <string name="app_loading">読み込み中</string>
+    <string name="app_clear">クリア</string>
+    <string name="app_show_password">パスワードを表示</string>
+    <string name="app_hide_password">パスワードを非表示</string>
+    <string name="app_dismiss">閉じる</string>
+    <string name="app_copy">コピー</string>
+    <string name="app_copied">コピーしました</string>
+    <string name="app_open_picture">画像を開く</string>
+    <string name="app_picture_failed">画像を読み込めませんでした</string>
+    <string name="app_not_connected">未接続</string>
+    <string name="app_reconnecting">再接続中…</string>
+    <string name="app_connected">接続済み</string>
+    <string name="app_offline_retrying">オフライン · %1$d 秒後に再試行</string>
+    <string name="app_session_expired">セッションの有効期限が切れました</string>
+    <string name="app_connection_refused">接続を拒否されました</string>
+    <string name="app_sign_in_again">セッションの有効期限が切れました。再度サインインしてください。</string>
+    <string name="app_chat_fallback_title">チャット</string>
+    <string name="app_untitled_session">無題のセッション</string>
+    <string name="app_share_bot_gone">%1$s のチャットを開けなかったため、新しいチャットで共有しました。</string>
+    <string name="app_call_opening">通話を開始中…</string>
+    <string name="app_call_failed">通話を開始できませんでした</string>
+    <string name="app_ok">OK</string>
+    <string name="app_call_invalid_target">設定で有効なデフォルトの通話先を選択してください。</string>
+    <string name="app_call_bot_unavailable">このボットは利用できません。設定でデフォルトの通話先を選択してください。</string>
+    <string name="app_call_open_failed">デフォルトの通話先を開けませんでした。%1$s</string>
+    <string name="app_call_bot_unreachable">ボットに接続できませんでした。接続してから再度お試しください。</string>
+    <string name="app_call_open_retry">デフォルトの通話先を開けませんでした。再度お試しください。</string>
+    <string name="app_bot_model_note">%1$s はすべてのチャット（ボットチャットやルーチンを含む）でこれを実行します。</string>
+    <string name="app_bot_capabilities">%1$s の機能</string>
+    <string name="app_bot_capabilities_note">変更は %1$s の新しいチャットに適用されます。ボットチャットに反映されない場合は、「新規開始」でここでの設定すべてが適用された新しいチャットが作成されます。</string>
+    <string name="app_bot_config">%1$s の構成</string>
+    <string name="app_bot_config_note">%1$s 固有の設定で、プロファイルの config.yaml に保存されます。多くの設定は次のチャットから適用されます。</string>
+
+    <!-- Settings → Suggested replies, filling settings_suggestions_failed’s reason. -->
+    <string name="app_suggestions_no_reason">ゲートウェイがインストールしませんでした。</string>
+    <string name="app_suggestions_not_listed">インストール済みですが、ゲートウェイにまだ表示されていません。ゲートウェイを再起動して、再度確認してください。</string>
+
+    <string name="time_today">今日</string>
+    <string name="time_yesterday">昨日</string>
+    <string name="time_yesterday_at">昨日 %1$s</string>
+    <string name="time_weekday_at">%1$s %2$s</string>
+    <string name="time_month_day">%1$s %2$s</string>
+    <string name="time_with_year">%1$s、%2$s</string>
+    <string name="time_with_clock">%1$s、%2$s</string>
+    <string name="time_full">%1$s、%2$s、%3$s</string>
+    <string name="time_am">午前</string>
+    <string name="time_pm">午後</string>
+    <string-array name="time_months_short">
+        <item>1月</item>
+        <item>2月</item>
+        <item>3月</item>
+        <item>4月</item>
+        <item>5月</item>
+        <item>6月</item>
+        <item>7月</item>
+        <item>8月</item>
+        <item>9月</item>
+        <item>10月</item>
+        <item>11月</item>
+        <item>12月</item>
+    </string-array>
+    <string-array name="time_weekdays_short">
+        <item>月</item>
+        <item>火</item>
+        <item>水</item>
+        <item>木</item>
+        <item>金</item>
+        <item>土</item>
+        <item>日</item>
+    </string-array>
+    <string-array name="time_weekdays">
+        <item>月曜日</item>
+        <item>火曜日</item>
+        <item>水曜日</item>
+        <item>木曜日</item>
+        <item>金曜日</item>
+        <item>土曜日</item>
+        <item>日曜日</item>
+    </string-array>
+    <string name="time_saved_just_now">保存済みのコピー · たった今</string>
+    <string name="time_saved_ago">保存済みのコピー · %1$s 前</string>
+
+    <string name="journey_title">歩み</string>
+    <string name="journey_detail">このプロファイルのエージェントが身につけた %1$s と %2$s。</string>
+    <plurals name="journey_skills">
+        <item quantity="one">%1$d 件のスキル</item>
+        <item quantity="other">%1$d 件のスキル</item>
+    </plurals>
+    <plurals name="journey_memories">
+        <item quantity="one">%1$d 件の記憶</item>
+        <item quantity="other">%1$d 件の記憶</item>
+    </plurals>
+    <string name="journey_error">歩みを読み込めませんでした。</string>
+    <string name="journey_empty">まだ何も学習していません。エージェントが作成したスキルや保存した記憶がここに表示されます。</string>
+    <string name="journey_undated">日付なし</string>
+    <string name="journey_month_year">%1$s %2$s</string>
+    <string-array name="journey_months">
+        <item>1月</item>
+        <item>2月</item>
+        <item>3月</item>
+        <item>4月</item>
+        <item>5月</item>
+        <item>6月</item>
+        <item>7月</item>
+        <item>8月</item>
+        <item>9月</item>
+        <item>10月</item>
+        <item>11月</item>
+        <item>12月</item>
+    </string-array>
+    <string name="journey_pinned">ピン留め</string>
+    <string name="journey_back">歩みに戻る</string>
+    <string name="journey_unreadable">これを読み取れませんでした。</string>
+    <string name="journey_memory">記憶</string>
+    <string name="journey_skill">スキル</string>
+    <plurals name="journey_used">
+        <item quantity="one">1 回使用</item>
+        <item quantity="other">%1$d 回使用</item>
+    </plurals>
+    <string name="journey_archived">アーカイブ済み</string>
+
+    <string name="pet_title">ペット</string>
+    <string name="pet_detail">ペットはプロファイルに紐づくため、Hermes Desktop でも同じものが表示されます。</string>
+    <string name="pet_empty">ゲートウェイにペットはありません。</string>
+    <string name="pet_hide">ペットをしまう</string>
+    <string name="pet_error_load">ペットを読み込めませんでした。</string>
+    <string name="pet_error_adopt">%1$s を迎え入れられませんでした。</string>
+
+    <string name="plugins_title">プラグイン</string>
+    <string name="plugins_detail">Kanban のように専用ページを持つ、ゲートウェイのダッシュボードプラグインです。アプリ内で開けます。</string>
+    <string name="plugins_error">プラグインを読み込めませんでした</string>
+    <string name="plugins_empty">プラグインのページはありません</string>
+    <string name="plugins_empty_detail">Kanban のようにページを持つプラグインがここに表示されます。</string>
+    <string name="plugins_open">%1$s を開く</string>
+    <string name="plugins_close_page">ページを閉じる</string>
+    <string name="plugins_page_failed">ページを開けませんでした。</string>
+    <string name="app_open_link">リンクを開く</string>
+    <string name="app_copy_link">リンクをコピー</string>
+    <string name="wallpaper_dialog_title">チャットの背景</string>
+    <string name="wallpaper_dialog_failed">ファイルダイアログを開けませんでした。</string>
+    <string name="wallpaper_too_large">その画像は大きすぎるか、読み取れません。</string>
+    <string name="wallpaper_not_an_image">そのファイルは Kyllene が読み取れる画像ではありません。</string>
+    <string name="wallpaper_read_failed">その画像を読み取れませんでした。</string>
+
+    <string name="update_renamed">Herald は Kyllene になりました</string>
+    <string name="update_renamed_detail">名前とアイコンが変わっただけで、アプリは同じです。サインイン、チャット、設定はそのまま引き継がれます。</string>
+    <string name="update_got_it">了解</string>
+
+    <string name="gateways_title">ゲートウェイ</string>
+    <string name="gateways_detail">各ゲートウェイは独立した Hermes で、それぞれプロファイルとチャットを持っています。</string>
+    <string name="gateways_make_primary">プライマリにする</string>
+    <string name="gateways_rename">名前を変更</string>
+    <string name="gateways_primary">プライマリ</string>
+    <string name="gateways_signed_out">サインアウト済み</string>
+    <string name="gateways_signed_out_after">· サインアウト済み</string>
+    <string name="gateways_client_cert">クライアント証明書</string>
+    <string name="gateways_more_for">%1$s のその他の操作</string>
+    <string name="gateways_rename_title">ゲートウェイの名前を変更</string>
+    <string name="gateways_rename_detail">空にするとアドレスが表示されます。</string>
+    <string name="gateways_remove_title">ゲートウェイを削除しますか？</string>
+    <string name="gateways_remove_detail">Kyllene は「%1$s」からサインアウトし、情報を削除します。チャットはゲートウェイに残ります。</string>
+    <string name="gateways_client_cert_detail">サーバーが要求すると、Kyllene はこの証明書を「%1$s」に提示します。鍵はシステムストアに残り、保持されるのは名前だけです。</string>
+    <string name="gateways_pick">選択…</string>
+    <string name="gateways_change">変更…</string>
+    <string name="gateways_clear">クリア</string>
+
+    <string name="connect_welcome">Kyllene へようこそ</string>
+    <string name="connect_welcome_detail">Hermes Agent のゲートウェイに接続します。サインインするまで何も送信されません。</string>
+    <string name="connect_add_gateway">ゲートウェイを追加</string>
+    <string name="connect_add_gateway_detail">別の Hermes Agent ゲートウェイに接続します。保存済みのゲートウェイではサインイン状態が維持されます。</string>
+    <string name="connect_address">ゲートウェイのアドレス</string>
+    <string name="connect_address_detail">hermes ダッシュボードの実行場所: LAN、Tailscale、または HTTPS。</string>
+    <string name="connect_url_required">ゲートウェイの URL は必須です。</string>
+    <string name="connect_url_scheme">ゲートウェイの URL は http:// または https:// である必要があります。実際は %1$s です。</string>
+    <string name="connect_url_invalid">ゲートウェイの URL が無効です: %1$s</string>
+    <string name="connect_url_no_host">ゲートウェイの URL にホストがありません。</string>
+    <string name="connect_start_dashboard">ダッシュボードがまだ実行されていない場合は、サーバーで以下を実行してください:</string>
+    <string name="connect_exposed">このアドレスはプライベートではなく https:// も使っていないため、パスワードやチャットが暗号化されずにインターネットを通過します。代わりに https://、Tailscale、または独自のネットワークを使用してください。</string>
+    <string name="connect_which_address">どのアドレスを使えばいいですか？</string>
+    <string name="connect_behind_access">Cloudflare Access の背後にある場合</string>
+    <string name="connect_need_cert">クライアント証明書が必要な場合</string>
+    <string name="connect_continue">サインインへ進む</string>
+    <string name="connect_back_to_gateway">ゲートウェイに戻る</string>
+    <string name="connect_test">テスト</string>
+    <string name="connect_testing">テスト中…</string>
+    <string name="connect_test_connection">接続をテスト</string>
+    <string name="connect_testing_connection">接続をテスト中</string>
+    <string name="connect_access_hint">このアドレスが Cloudflare Access で保護されている場合は、Cloudflare Zero Trust（Access → Service credentials）でサービス トークンを作成し、そのトークンを含む Service Auth ポリシーを Access アプリケーションに追加してください。</string>
+    <string name="connect_access_saved">このアドレス用のサービス トークンが保存されています</string>
+    <string name="connect_forget">忘れる</string>
+    <string name="connect_access_keep">入力欄を空にするとそのまま使用し、新しいトークンを入力すると置き換えます。</string>
+    <string name="connect_client_id">クライアント ID</string>
+    <string name="connect_client_secret">クライアント シークレット</string>
+    <string name="connect_client_secret_detail">この端末に暗号化して保存され、このアドレスにのみ送信されます。</string>
+    <string name="connect_client_secret_detail_desktop">このコンピューターに暗号化して保存され、このアドレスにのみ送信されます。</string>
+    <string name="connect_access_half_filled">クライアント ID とクライアント シークレットは両方入力するか、どちらも入力しないでください。</string>
+    <string name="connect_cert_demanded">このサーバーは通信前にクライアント証明書を要求します。サーバーから渡された証明書を選択し、再度テストしてください。</string>
+    <string name="connect_cert_hint">このアドレスの前段にあるプロキシがクライアント証明書を要求する場合は、ここで選択すると、テスト、サインイン、チャットのすべてでその証明書が提示されます。</string>
+    <string name="connect_cert_kept">鍵自体はシステムストアに残り、ゲートウェイごとに名前だけが保持されます。</string>
+    <string name="connect_pick_cert">証明書を選択</string>
+    <string name="connect_reachable">Hermes に接続できます</string>
+    <string name="connect_reachable_version">Hermes %1$s に接続できます</string>
+    <string name="connect_tested_next">次はサインイン、その後チャットをテストします</string>
+    <string name="connect_agent_gateway">エージェント ゲートウェイ</string>
+    <string name="connect_running">実行中</string>
+    <string name="connect_stopped">停止中</string>
+    <string name="connect_sign_in_not_required">不要</string>
+    <string name="connect_sign_in_password_or_browser">パスワードまたはブラウザー</string>
+    <string name="connect_sign_in_password">ユーザー名とパスワード</string>
+    <string name="connect_sign_in_browser">ブラウザーで (SSO)</string>
+    <string name="connect_sign_in_unsupported">非対応</string>
+    <string name="connect_profiles">プロファイル</string>
+    <string name="connect_no_sign_in">アプリが使用できるサインイン方法がありません</string>
+    <string name="connect_no_sign_in_detail">このダッシュボードはユーザー名/パスワード プロバイダーもブラウザー サインインも提供していません。Hermes を更新するか、サーバーでユーザー名/パスワード プロバイダーを構成してください。</string>
+    <string name="connect_auth_off">認証ゲートがオフです</string>
+    <string name="connect_auth_off_detail">ダッシュボードが loopback にバインドされているため、他のデバイスはチャットできません。--host 0.0.0.0 でバインドし、パスワード プロバイダーを構成してください。</string>
+    <string name="connect_guide_local">同じ Wi-Fi またはローカル ネットワーク</string>
+    <string name="connect_guide_local_detail">サーバーのローカル アドレスとポート（例: 192.168.1.20:9119）を使用してください。他のデバイスから接続できるように --host 0.0.0.0 でダッシュボードを起動します。</string>
+    <string name="connect_guide_tailscale_detail">この端末で Tailscale をオンにし、サーバーの Tailscale アドレス（例: 100.64.0.1:9119 または .ts.net 名）を使用してください。自宅外でも動作します。</string>
+    <string name="connect_guide_tailscale_detail_desktop">このコンピューターで Tailscale をオンにし、サーバーの Tailscale アドレス（例: 100.64.0.1:9119 または .ts.net 名）を使用してください。自宅外でも動作します。</string>
+    <string name="connect_guide_https_detail">ダッシュボードが証明書付きのプロキシの背後にある場合は、https:// アドレスを使用してください。プロキシでは /api/ws の WebSocket アップグレードも中継する必要があります。</string>
+
+    <string name="signin_title">サインイン</string>
+    <string name="signin_detail_browser">ブラウザーで %1$s にサインインします。ダッシュボードが使用するアカウントを使ってください。</string>
+    <string name="signin_detail_both">%1$s に構成されたダッシュボードのユーザー名とパスワードを使用するか、ブラウザーでサインインしてください。</string>
+    <string name="signin_detail_password">%1$s に構成されたダッシュボードのユーザー名とパスワードを使用してください。</string>
+    <string name="signin_username">ユーザー名</string>
+    <string name="signin_password">パスワード</string>
+    <string name="signin_signing_in">サインイン中…</string>
+    <string name="signin_with_browser">ブラウザーでサインイン</string>
+    <string name="signin_waiting_browser">ブラウザーを待っています…</string>
+    <string name="signin_finish_in_browser">開いたページでサインインを完了してください。完了すると Kyllene に自動的に戻ります。</string>
+    <string name="signin_different_gateway">別のゲートウェイを使用</string>
+    <string name="signin_gateway_chip">ゲートウェイ %1$s</string>
+    <string name="signin_or">または</string>
+    <string name="signin_error_missing">ユーザー名とパスワードを入力してください。</string>
+    <string name="signin_error_wrong">ユーザー名またはパスワードが正しくありません。</string>
+    <string name="signin_error_rejected">サインインが拒否されました。</string>
+    <string name="signin_error_rate_limited">試行回数が多すぎます。しばらく待ってから再度お試しください。</string>
+    <string name="signin_error_unreachable">ゲートウェイに接続できませんでした: %1$s</string>
+
+    <string name="check_stage_server">サーバーへのアクセス</string>
+    <string name="check_stage_sign_in">サインイン</string>
+    <string name="check_stage_live">ライブ接続</string>
+    <string name="check_not_checked_yet">まだ確認していません。</string>
+    <string name="check_step">ステップ %1$d / %2$d</string>
+    <string name="check_disc">%1$s、%2$s</string>
+    <string name="check_state_checking">確認中</string>
+    <string name="check_state_passed">成功</string>
+    <string name="check_state_failed">失敗</string>
+    <string name="check_state_skipped">スキップ</string>
+    <string name="check_state_not_checked">未確認</string>
+    <string name="check_what_to_do">対処方法</string>
+    <string name="check_server_answers">Hermes %1$s が %2$s で応答しています。</string>
+    <string name="check_signed_in_as">%1$s としてサインインしています。</string>
+    <string name="check_live_ready">チャット接続が開き、ゲートウェイが準備完了と応答しました。</string>
+    <string name="check_needs_server">まずサーバーへのアクセスが必要です。</string>
+    <string name="check_needs_sign_in">まずサインインが必要です。</string>
+    <string name="check_sign_in_expired">この端末はゲートウェイにサインインしていないか、サインインの有効期限が切れています。</string>
+    <string name="check_sign_in_rate_limited">ゲートウェイがサインインの試行回数を制限しています。</string>
+    <string name="check_sign_in_unavailable">サインインの確認ができませんでした: %1$s</string>
+    <string name="check_sign_in_refused">ゲートウェイがサインインの確認を拒否しました: %1$s</string>
+    <string name="check_ticket_expired">ゲートウェイがチャット チケットを発行しませんでした: サインインの有効期限が切れています。</string>
+    <string name="check_ticket_unavailable">チャット チケットを要求できませんでした: %1$s</string>
+    <string name="check_requests_rate_limited">ゲートウェイがリクエストを制限しています。</string>
+    <string name="check_ticket_refused">ゲートウェイがチャット チケットを発行しませんでした: %1$s</string>
+    <string name="check_never_ready">チャット接続は開きましたが、ゲートウェイが準備完了と応答しませんでした。</string>
+    <string name="check_no_chat_endpoint">このダッシュボードにはチャット エンドポイント (/api/ws) がありません。</string>
+    <string name="check_chat_guarded">ゲートウェイがチャット接続を拒否しました (Host/Origin ガード)。</string>
+    <string name="check_chat_login_redirect">チャット接続がログイン ページにリダイレクトされました (HTTP %1$s)。</string>
+    <string name="check_chat_refused">チャット接続が拒否されました (HTTP %1$s)。</string>
+    <string name="check_ticket_rejected">ゲートウェイがチャット チケットを拒否しました。</string>
+    <string name="check_chat_cert_required">チャット接続中にサーバーがクライアント証明書を要求しました: %1$s</string>
+    <string name="check_chat_failed">チャット接続に失敗しました: %1$s</string>
+    <string name="check_server_cert_required">%1$s に接続できません: サーバーがクライアント証明書を要求しました (%2$s)。</string>
+    <string name="check_not_hermes">%1$s で何かが応答しましたが、Hermes ダッシュボードではありません。</string>
+    <string name="check_not_hermes_status">%1$s で何かが応答しました (HTTP %2$s) が、Hermes ダッシュボードではありません。</string>
+    <string name="check_access_token_refused">Cloudflare Access がこのゲートウェイのサービス トークンを拒否しました (HTTP %1$s)。</string>
+    <string name="check_access_blocked">Cloudflare Access がリクエストを Hermes に届く前に停止しました (HTTP %1$s)。</string>
+    <string name="check_unreachable">%1$s に接続できません: %2$s</string>
+    <string name="check_fix_sign_in_again">再度サインインしてください。</string>
+    <string name="check_fix_sign_in_password_or_browser">ダッシュボードのパスワードまたはブラウザーで、再度サインインしてください。</string>
+    <string name="check_fix_wait_a_minute">1 分ほど待ってから再度お試しください。</string>
+    <string name="check_fix_sign_in_or_update">再度サインインしてください。失敗が続く場合は Hermes を更新してください。</string>
+    <string name="check_fix_update_hermes_try_again">Hermes を更新してから再度お試しください。</string>
+    <string name="check_fix_update_hermes">サーバーの Hermes を更新してください。</string>
+    <string name="check_fix_agent_running">サーバーでエージェント ゲートウェイが実行されているか確認してください。プロキシの背後にある場合は /api/ws の WebSocket アップグレードを許可してください。</string>
+    <string name="check_fix_exact_address">ダッシュボードに構成された正確なアドレスを使用し、埋め込みチャットが有効か確認してください。</string>
+    <string name="check_fix_access_token_or_proxy">Cloudflare Access の背後にある場合は、このゲートウェイ用のサービス トークンを追加してください。そうでない場合は、プロキシが /api/ws を中継しているか確認してください。</string>
+    <string name="check_fix_allow_upgrades">プロキシの背後にある場合は、/api/ws の WebSocket アップグレードを許可してください。</string>
+    <string name="check_fix_allow_upgrades_or_retry">プロキシの背後にある場合は /api/ws の WebSocket アップグレードを許可してください。そうでない場合は再度お試しください。</string>
+    <string name="check_fix_client_cert">このサーバーが要求するクライアント証明書をゲートウェイに追加し（システムストアの別名で指定）、再度確認してください。</string>
+    <string name="check_fix_dashboard_port">ダッシュボード独自のポート（既定は 9119）を使用してください。プロキシの背後にある場合は、ダッシュボードへ中継されているか確認してください。</string>
+    <string name="check_fix_check_access_token">クライアント ID とクライアント シークレット、および Access アプリケーションにこのトークンを含む Service Auth ポリシーがあるか確認してください。</string>
+    <string name="check_fix_add_access_token">このゲートウェイ用の Cloudflare Access サービス トークンを追加し、そのトークンを含む Service Auth ポリシーを Access アプリケーションに設定してください。</string>
+    <string name="check_fix_loopback">このアドレスはサーバーではなくこの端末を指しています。代わりにサーバーのローカル ネットワーク アドレスまたは Tailscale アドレスを使用してください。</string>
+    <string name="check_fix_tailscale">この端末で Tailscale をオンにし、サーバーが同じ tailnet 内でオンラインか確認してください。</string>
+    <string name="check_fix_https">ドメインがサーバーを指していること、証明書が有効であること、プロキシがダッシュボードへ中継していることを確認してください。</string>
+    <string name="check_fix_local_network">サーバーと同じ Wi-Fi またはネットワークに接続し、--host 0.0.0.0 でダッシュボードを起動して他のデバイスから接続できるようにしてください。</string>
+    <string name="check_fix_reachable">アドレスとポート、およびこの端末からサーバーに接続できるか確認してください。</string>
+
+    <!-- Imported desktop client certificates. -->
+    <string name="check_fix_client_cert_desktop">このサーバーが要求する PKCS#12 クライアント証明書をインポートし、再度確認してください。</string>
+    <string name="check_fix_client_cert_unsupported">このビルドの Kyllene はクライアント証明書を提示できません。このサーバーには Android アプリまたは Linux Flatpak を使用してください。</string>
+    <string name="client_cert_import_title">クライアント証明書のインポート</string>
+    <string name="client_cert_import">インポート</string>
+    <string name="client_cert_importing">インポート中…</string>
+    <string name="client_cert_import_detail">選択した PKCS#12 ファイルのパスワードを入力してください。鍵はこの TLS ホスト名用に暗号化して保存されます。ホスト名を共有するゲートウェイは、ポートやパスに関係なく証明書の選択も共有します。</string>
+    <string name="client_cert_password">PKCS#12 のパスワード</string>
+    <string name="client_cert_invalid">Kyllene はこのクライアント証明書を開けませんでした。パスワードを確認し、有効期限内のクライアント証明書、対応する秘密鍵、証明書チェーンが含まれた PKCS#12 ファイルを選択してください。</string>
+    <string name="client_cert_regular_file">通常の PKCS#12 ファイルを選択してください。シンボリック リンク、デバイス、名前付きパイプはインポートできません。</string>
+    <string name="client_cert_read_failed">その PKCS#12 ファイルを読み取れませんでした。再度選択し、ファイルのアクセス権を確認してください。</string>
+    <string name="client_cert_clear_selection">選択を解除</string>
+    <string name="connect_cert_kept_desktop">インポートした鍵はこの TLS ホスト名用に暗号化して保存されます。選択を解除しても、同じホスト名の別の保存済み証明書が使われる場合があります。インポートした鍵は暗号化された設定に残ります。</string>
+    <string name="gateways_client_cert_detail_desktop">サーバーが要求すると、Kyllene はこの証明書を「%1$s」に提示します。インポートした鍵はこの TLS ホスト名用に暗号化して保存されます。選択を解除しても、同じホスト名の別の保存済み証明書が使われる場合があります。インポートした鍵は暗号化された設定に残ります。</string>
+    <string name="client_cert_storage_unavailable">Kyllene がストレージ キーを取得できませんでした。デスクトップのキーリングをアンロックし、Secret ポータルが利用可能か確認してから再度お試しください。</string>
+    <string name="client_cert_storage_cancelled">ストレージのアンロックがキャンセルされました。再度お試しください。既存のデータは保持されています。</string>
+    <string name="client_cert_storage_corrupt">Kyllene が暗号化された設定を開けませんでした。正常なバックアップを復元するか、元のアプリケーション ID を使用してください。既存のデータは保持されています。</string>
+    <string name="client_cert_storage_version">この設定形式には別のバージョンの Kyllene が必要です。既存のデータは保持されています。</string>
+    <string name="client_cert_storage_read">Kyllene が設定を読み取れないか、ファイルが 16 MiB を超えています。再試行する前にファイルのアクセス権を確認してください。</string>
+    <string name="client_cert_storage_write">Kyllene が設定の保存または整理を完了できませんでした。既存のコピーは保持されています。再試行する前にディスク容量とファイルのアクセス権を確認してください。</string>
+    <string name="client_cert_storage_uncertain">Kyllene が設定の保存を確認できませんでした。ファイルのアクセス権を確認し、起動を再試行するか、終了して再起動してから変更を行ってください。</string>
+    <string name="client_cert_storage_changed">設定がこのウィンドウ外で変更されました。保存する前に Kyllene を終了して再起動し、設定を読み込み直してください。</string>
+    <string name="client_cert_storage_legacy">競合する、または未完了の旧形式の設定が見つかりました。既存のファイルは保持されています。終了して古いコピーを解決してから再試行してください。</string>
+    <string name="client_cert_storage_unsupported">Kyllene が Flatpak のアプリケーション ID を確認できませんでした。再試行する前にインストールを確認してください。平文での代替手段はありません。</string>
+</resources>

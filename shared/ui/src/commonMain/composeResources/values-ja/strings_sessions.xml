@@ -1,0 +1,494 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    The sessions list and sidebar, and the pages it opens (Scheduled, Insights, Capabilities, Config), in English.
+    Every key starts sessions_. Gateway text (titles, previews, errors) is shown as it comes and isn’t here.
+-->
+<resources>
+    <!-- Sidebar: header, switch, pages -->
+    <string name="sessions_mode_chats">チャット</string>
+    <string name="sessions_mode_bots">ボット</string>
+    <string name="sessions_new_chat">新しいチャット</string>
+    <string name="sessions_search_chats">チャットを検索</string>
+    <string name="sessions_close_search">検索を閉じる</string>
+    <string name="sessions_account">アカウント</string>
+    <string name="sessions_account_and_gateways">アカウントとゲートウェイ</string>
+    <string name="sessions_nav_inbox">受信トレイ</string>
+    <string name="sessions_nav_scheduled">予定</string>
+    <string name="sessions_nav_insights">分析情報</string>
+    <string name="sessions_nav_capabilities">機能</string>
+    <string name="sessions_nav_plugins">プラグイン</string>
+    <string name="sessions_nav_config">構成</string>
+    <string name="sessions_nav_archived">アーカイブ済み</string>
+    <plurals name="sessions_unread_count">
+        <item quantity="one">未読 %1$d 件</item>
+        <item quantity="other">未読 %1$d 件</item>
+    </plurals>
+
+    <!-- Connection, as the header's dot says it -->
+    <string name="sessions_connection_connected">接続済み</string>
+    <string name="sessions_connection_not_connected">未接続</string>
+    <string name="sessions_connection_signed_out">ログアウト済み</string>
+    <string name="sessions_connection_reconnecting">再接続中</string>
+    <string name="sessions_connection_connecting">接続中</string>
+
+    <!-- The list -->
+    <string name="sessions_no_matches">一致するものがありません</string>
+    <string name="sessions_no_matches_detail">検索では、タイトル、セッション ID、メッセージ本文が対象になります。</string>
+    <string name="sessions_saved_copy">保存済みのコピー · %1$s</string>
+    <string name="sessions_saved_copy_unreachable">%1$s。現在 Hermes に接続できません。</string>
+    <string name="sessions_try_again">再試行</string>
+    <string name="sessions_load_failed">セッションを読み込めませんでした</string>
+    <string name="sessions_load_failed_detail">セッションを読み込めませんでした。%1$s</string>
+    <string name="sessions_empty_project">このプロジェクトにはチャットがありません。</string>
+    <string name="sessions_empty">会話がここに表示されます。</string>
+    <string name="sessions_none_running">現在実行中のものはありません。</string>
+    <string name="sessions_none_waiting">現在あなたの対応が必要なものはありません。</string>
+    <string name="sessions_nothing_archived">アーカイブ済みのものはありません</string>
+    <string name="sessions_nothing_archived_detail">アーカイブ済みのセッションは「最近」に表示されなくなりますが、再開できます。</string>
+    <string name="sessions_filter_all">すべて</string>
+    <string name="sessions_filter_needs_you">対応が必要</string>
+    <string name="sessions_section_threads">スレッド</string>
+    <string name="sessions_section_pinned">ピン留め</string>
+    <string name="sessions_show_threads">スレッドを表示</string>
+    <string name="sessions_hide_threads">スレッドを非表示</string>
+    <string name="sessions_show_pinned">ピン留めしたチャットを表示</string>
+    <string name="sessions_hide_pinned">ピン留めしたチャットを非表示</string>
+    <string name="sessions_collapsed">折りたたみ済み</string>
+    <string name="sessions_expanded">展開済み</string>
+    <string name="sessions_threads_drag_to_reorder">スレッド · ドラッグして並べ替え</string>
+    <string name="sessions_done">完了</string>
+    <string name="sessions_drag_thread">%1$s をドラッグ</string>
+    <string name="sessions_session_actions">セッションの操作</string>
+    <string name="sessions_thread">スレッド</string>
+    <string name="sessions_in_project">プロジェクト %1$s 内</string>
+    <string name="sessions_dismiss">閉じる</string>
+
+    <!-- A row's status line -->
+    <string name="sessions_status_running">実行中</string>
+    <string name="sessions_status_new_reply">新しい返信</string>
+    <string name="sessions_status_draft">下書き</string>
+    <string name="sessions_waiting_approval">承認が必要</string>
+    <string name="sessions_waiting_question">質問があります</string>
+    <string name="sessions_waiting_input">入力が必要</string>
+    <string name="sessions_waiting_unknown">あなたの対応待ち</string>
+
+    <!-- Ages: a row’s compact one, and as words -->
+    <string name="sessions_age_now">今</string>
+    <string name="sessions_age_minutes">%1$d分</string>
+    <string name="sessions_age_hours">%1$d時間</string>
+    <string name="sessions_age_days">%1$d日</string>
+    <string name="sessions_age_weeks">%1$d週間</string>
+    <string name="sessions_age_months">%1$dか月</string>
+    <string name="sessions_age_years">%1$d年</string>
+    <string name="sessions_just_now">たった今</string>
+    <plurals name="sessions_minutes_ago">
+        <item quantity="one">%1$d 分前</item>
+        <item quantity="other">%1$d 分前</item>
+    </plurals>
+    <plurals name="sessions_hours_ago">
+        <item quantity="one">%1$d 時間前</item>
+        <item quantity="other">%1$d 時間前</item>
+    </plurals>
+    <plurals name="sessions_days_ago">
+        <item quantity="one">%1$d 日前</item>
+        <item quantity="other">%1$d 日前</item>
+    </plurals>
+    <plurals name="sessions_weeks_ago">
+        <item quantity="one">%1$d 週間前</item>
+        <item quantity="other">%1$d 週間前</item>
+    </plurals>
+    <plurals name="sessions_months_ago">
+        <item quantity="one">%1$d か月前</item>
+        <item quantity="other">%1$d か月前</item>
+    </plurals>
+    <plurals name="sessions_years_ago">
+        <item quantity="one">%1$d 年前</item>
+        <item quantity="other">%1$d 年前</item>
+    </plurals>
+    <string name="sessions_active_ago">%1$s に活動</string>
+
+    <!-- A chat's actions -->
+    <string name="sessions_pin">ピン留め</string>
+    <string name="sessions_unpin">ピン留めを解除</string>
+    <string name="sessions_archive">アーカイブ</string>
+    <string name="sessions_unarchive">アーカイブを解除</string>
+    <string name="sessions_archived">アーカイブ済み</string>
+    <string name="sessions_unarchived">アーカイブ解除</string>
+    <string name="sessions_undo_toast">%1$s「%2$s」</string>
+    <string name="sessions_undo">元に戻す</string>
+    <string name="sessions_delete">削除</string>
+    <string name="sessions_rename">名前を変更</string>
+    <string name="sessions_save">保存</string>
+    <string name="sessions_create">作成</string>
+    <string name="sessions_open_in_new_window">新しいウィンドウで開く</string>
+    <string name="sessions_make_a_thread">スレッドを作成</string>
+    <string name="sessions_make_thread">スレッドを作成</string>
+    <string name="sessions_start_fresh">新しく開始</string>
+    <string name="sessions_usage_and_cost">使用量とコスト</string>
+    <string name="sessions_background_processes">バックグラウンド処理</string>
+    <string name="sessions_checkpoints">チェックポイント</string>
+    <string name="sessions_goal_and_loops">目標とループ</string>
+    <string name="sessions_export_markdown">Markdown として書き出す</string>
+    <string name="sessions_copy_session_id">セッション ID をコピー</string>
+    <string name="sessions_rename_chat">チャットの名前を変更</string>
+    <string name="sessions_rename_chat_detail">空にするとタイトルが消去されます。</string>
+    <string name="sessions_delete_chat_title">チャットを削除しますか？</string>
+    <string name="sessions_delete_chat_detail">「%1$s」とそのメッセージがゲートウェイから削除されます。この操作は取り消せません。</string>
+
+    <!-- Threads -->
+    <string name="sessions_rename_thread">スレッドの名前を変更</string>
+    <string name="sessions_rename_thread_detail">紐付くチャットも名前が変更され、新しく始まるチャットもこの名前になります。</string>
+    <string name="sessions_move_up">上に移動</string>
+    <string name="sessions_move_down">下に移動</string>
+    <string name="sessions_reorder">並べ替え</string>
+    <string name="sessions_remove_thread">スレッドを削除</string>
+    <string name="sessions_start_thread_fresh_title">%1$s を新しく開始しますか？</string>
+    <string name="sessions_start_thread_fresh_detail">紐付くチャットは「%1$s · 日時」としてアーカイブされ、代わりに新しい空のチャットが作成されます。アーカイブしたチャットは 30 日間保持されます。</string>
+    <string name="sessions_thread_make_failed">スレッドを作成できませんでした。</string>
+    <string name="sessions_thread_remove_failed">スレッドを削除できませんでした。</string>
+    <string name="sessions_thread_rename_failed">スレッドの名前を変更できませんでした。</string>
+    <string name="sessions_thread_move_failed">スレッドを移動できませんでした。</string>
+    <string name="sessions_thread_order_failed">並び順を保存できませんでした。</string>
+    <string name="sessions_thread_fresh_failed">スレッドを新しく開始できませんでした。</string>
+
+    <!-- Projects -->
+    <string name="sessions_all_projects">すべてのプロジェクト</string>
+    <string name="sessions_new_project">新しいプロジェクト</string>
+    <string name="sessions_project_options">%1$s のオプション</string>
+    <string name="sessions_choose_project">プロジェクトを選択</string>
+    <string name="sessions_delete_project">プロジェクトを削除</string>
+    <string name="sessions_save_as_project">プロジェクトとして保存</string>
+    <string name="sessions_choose_folder">フォルダーを選択</string>
+    <string name="sessions_new_project_detail">フォルダー内のチャットがプロジェクトにまとめられ、そこで始めた新しいチャットもその中で実行されます。</string>
+    <string name="sessions_use_this_folder">このフォルダーを使用</string>
+    <string name="sessions_project_name">名前</string>
+    <string name="sessions_project_folder">ゲートウェイ上のフォルダー</string>
+    <string name="sessions_project_folder_hint">任意。Hermes が動作するマシン上のフォルダーです。</string>
+    <string name="sessions_browse_folders">フォルダーを参照</string>
+    <string name="sessions_folder_list_failed">このフォルダーの一覧を取得できませんでした。</string>
+    <string name="sessions_folder_up">上のフォルダーへ</string>
+    <string name="sessions_folder_home">ホームフォルダー</string>
+    <string name="sessions_folder_new">新しいフォルダー</string>
+    <string name="sessions_folder_filter">フィルター</string>
+    <string name="sessions_folder_new_name">新しいフォルダーの名前</string>
+    <string name="sessions_folder_empty">フォルダーがありません。</string>
+    <string name="sessions_folder_more">一部のフォルダーが表示されない場合があります。名前の先頭を入力して探してください。</string>
+    <string name="sessions_rename_project">プロジェクトの名前を変更</string>
+    <string name="sessions_delete_project_title">プロジェクトを削除しますか？</string>
+    <string name="sessions_delete_project_detail">「%1$s」がゲートウェイから削除されます。チャットは残り、フォルダーごとに再度まとめられます。</string>
+    <string name="sessions_not_connected">接続されていません。</string>
+    <string name="sessions_cant_make_folders">このビルドではフォルダーを作成できません。</string>
+    <string name="sessions_gateway_cant_change_projects">このゲートウェイではプロジェクトを変更できません。</string>
+    <string name="sessions_project_change_failed">プロジェクトを変更できませんでした。</string>
+
+    <!-- Account and profiles -->
+    <string name="sessions_signed_in">ログイン済み</string>
+    <string name="sessions_profile_named">プロファイル: %1$s</string>
+    <string name="sessions_refresh_chats">チャットを更新</string>
+    <string name="sessions_refreshing_chats">チャットを更新中…</string>
+    <string name="sessions_retry_connection">今すぐ再接続</string>
+    <string name="sessions_sign_out">ログアウト</string>
+    <string name="sessions_switch_gateway">ゲートウェイの切り替え・追加</string>
+    <string name="sessions_profiles">プロファイル</string>
+    <string name="sessions_switch_profile">プロファイルを切り替え</string>
+    <string name="sessions_profiles_detail">各プロファイルは専用のエージェントで、チャット、メモリ、モデルがそれぞれ独立しています。</string>
+    <string name="sessions_profiles_add_hint">プロファイルはゲートウェイのホストで「hermes profile create」を実行して追加します。</string>
+    <string name="sessions_profile_default">デフォルト</string>
+    <string name="sessions_profile_active">アクティブ</string>
+
+    <!-- Other chats: the Sessions button and the banner -->
+    <string name="sessions_badge">セッション</string>
+    <plurals name="sessions_badge_need_you">
+        <item quantity="one">セッション、%1$d 件があなたの対応待ち</item>
+        <item quantity="other">セッション、%1$d 件があなたの対応待ち</item>
+    </plurals>
+    <string name="sessions_other_reply">%1$s で返信</string>
+    <string name="sessions_other_approval">%1$s に承認が必要です</string>
+    <string name="sessions_other_question">%1$s に回答が必要です</string>
+    <string name="sessions_other_input">%1$s に入力が必要です</string>
+    <plurals name="sessions_other_and_more">
+        <item quantity="one">%1$s、ほか %2$d 件</item>
+        <item quantity="other">%1$s、ほか %2$d 件</item>
+    </plurals>
+
+    <!-- A message with the gateway’s reason after it -->
+    <string name="sessions_with_detail">%1$s: %2$s</string>
+
+    <!-- Words several pages share -->
+    <string name="sessions_couldnt_load">読み込めませんでした</string>
+    <string name="sessions_loading">読み込み中…</string>
+    <string name="sessions_open">開く</string>
+    <string name="sessions_edit">編集</string>
+    <string name="sessions_discard">破棄</string>
+    <string name="sessions_keep_editing">編集を続ける</string>
+    <string name="sessions_replace">置き換え</string>
+    <string name="sessions_optional">任意</string>
+    <string name="sessions_turn_off">オフにする</string>
+    <string name="sessions_change_ellipsis">変更…</string>
+    <string name="sessions_more_for">%1$s のその他の操作</string>
+    <string name="sessions_in_time">%1$s 後</string>
+    <string name="sessions_just_now_alone">たった今</string>
+
+    <!-- Scheduled jobs and a bot’s routines -->
+    <string name="sessions_bot_routines">%1$s のルーチン</string>
+    <plurals name="sessions_jobs_count">
+        <item quantity="one">%1$d 件のジョブ · 実行ごとにチャットが開きます</item>
+        <item quantity="other">%1$d 件のジョブ · 実行ごとにチャットが開きます</item>
+    </plurals>
+    <plurals name="sessions_routines_count">
+        <item quantity="one">%1$d 件のルーチン · それぞれ %2$s として実行されます</item>
+        <item quantity="other">%1$d 件のルーチン · それぞれ %2$s として実行されます</item>
+    </plurals>
+    <string name="sessions_new_job">新しいジョブ</string>
+    <string name="sessions_new_routine">新しいルーチン</string>
+    <string name="sessions_edit_job">ジョブを編集</string>
+    <string name="sessions_edit_routine">ルーチンを編集</string>
+    <string name="sessions_delete_job">ジョブを削除</string>
+    <string name="sessions_delete_routine">ルーチンを削除</string>
+    <string name="sessions_delete_job_title">ジョブを削除しますか？</string>
+    <string name="sessions_delete_routine_title">ルーチンを削除しますか？</string>
+    <string name="sessions_delete_job_detail">「%1$s」の実行が停止されます。過去の実行によるチャットは残ります。</string>
+    <string name="sessions_discard_changes_title">変更を破棄しますか？</string>
+    <string name="sessions_discard_job_detail">このジョブで変更した内容はまだ保存されていません。</string>
+    <string name="sessions_discard_routine_detail">このルーチンで変更した内容はまだ保存されていません。</string>
+    <string name="sessions_pick_job">ジョブを選択</string>
+    <string name="sessions_pick_routine">ルーチンを選択</string>
+    <string name="sessions_pick_job_detail">プロンプト、報告先、実行履歴がここに表示されます。</string>
+    <string name="sessions_jobs_load_failed">予定済みのジョブを読み込めませんでした</string>
+    <string name="sessions_routines_load_failed">ルーチンを読み込めませんでした</string>
+    <string name="sessions_no_jobs">予定済みのジョブはありません</string>
+    <string name="sessions_no_jobs_detail">朝のブリーフィングなど、エージェントに定期的な処理を任せられます。実行ごとにここにチャットが開きます。</string>
+    <string name="sessions_no_routines">ルーチンはまだありません</string>
+    <string name="sessions_no_routines_detail">%1$s に朝のブリーフィングなどの定期処理を任せられます。%1$s として、専用のメモリとスキルで実行され、チャットに報告できます。</string>
+    <string name="sessions_run_now">今すぐ実行</string>
+    <string name="sessions_pause">一時停止</string>
+    <string name="sessions_resume">再開</string>
+    <string name="sessions_runs">実行履歴</string>
+    <string name="sessions_runs_load_failed">実行履歴を読み込めませんでした。%1$s</string>
+    <string name="sessions_no_runs">実行履歴はまだありません。実行ごとにここにチャットが開きます。</string>
+    <plurals name="sessions_run_messages">
+        <item quantity="one">%1$d 件のメッセージ</item>
+        <item quantity="other">%1$d 件のメッセージ</item>
+    </plurals>
+    <string name="sessions_delivers_to">配信先: %1$s</string>
+    <string name="sessions_delivery_local">ローカル（保存のみ）</string>
+    <string name="sessions_delivery_bot_chat">%1$s のチャット</string>
+    <string name="sessions_delivery_the_bot_chat">ボットのチャット</string>
+    <!-- A job's state, small, over what it refers to -->
+    <string name="sessions_job_paused">一時停止中</string>
+    <string name="sessions_job_done">完了</string>
+    <string name="sessions_job_finished">終了</string>
+    <string name="sessions_job_missed">実行漏れ</string>
+    <string name="sessions_job_failed">失敗</string>
+    <string name="sessions_job_last_run">前回の実行</string>
+    <string name="sessions_job_last_run_failed">前回の実行に失敗</string>
+    <string name="sessions_job_next_run">次回の実行</string>
+    <string name="sessions_job_next">次回 %1$s</string>
+    <string name="sessions_job_due_now">実行時刻が到来</string>
+    <!-- A cron schedule read out; %1$s is a 24-hour time such as 09:00 -->
+    <string name="sessions_schedule_daily">毎日 %1$s</string>
+    <string name="sessions_schedule_weekdays">平日 %1$s</string>
+    <string name="sessions_schedule_sundays">毎週日曜 %1$s</string>
+    <string name="sessions_schedule_mondays">毎週月曜 %1$s</string>
+    <string name="sessions_schedule_tuesdays">毎週火曜 %1$s</string>
+    <string name="sessions_schedule_wednesdays">毎週水曜 %1$s</string>
+    <string name="sessions_schedule_thursdays">毎週木曜 %1$s</string>
+    <string name="sessions_schedule_fridays">毎週金曜 %1$s</string>
+    <string name="sessions_schedule_saturdays">毎週土曜 %1$s</string>
+    <!-- The job form -->
+    <string name="sessions_job_prompt">プロンプト</string>
+    <string name="sessions_job_prompt_example">未読メールを要約し、緊急のものを通知してください</string>
+    <string name="sessions_job_prompt_hint">各実行でエージェントが行う処理です。新しいチャットとして実行されます。</string>
+    <string name="sessions_routine_prompt_hint">各実行で %1$s が行う処理です。専用のメモリとスキルを使って実行されます。</string>
+    <string name="sessions_job_schedule">スケジュール</string>
+    <!-- The examples are what the gateway reads; keep them as they are -->
+    <string name="sessions_job_schedule_hint_new">「every 2h」「0 9 * * *」「every monday 9am」「in 30m」（1 回のみ）のような形式です。</string>
+    <string name="sessions_job_schedule_hint_edit">そのままにすると現在のスケジュールが維持されます。1 回のみのジョブは空から始まります。</string>
+    <string name="sessions_preset_every_30_min">30 分ごと</string>
+    <string name="sessions_preset_hourly">1 時間ごと</string>
+    <string name="sessions_preset_daily">毎日 9:00</string>
+    <string name="sessions_preset_weekdays">平日 9:00</string>
+    <string name="sessions_preset_mondays">毎週月曜 9:00</string>
+    <string name="sessions_preset_once">1 回のみ、1 時間後</string>
+    <string name="sessions_routine_name_example">朝のブリーフィング</string>
+    <string name="sessions_deliver_to">配信先</string>
+    <string name="sessions_deliver_no_home">%1$s にはゲートウェイにホームチャンネルが設定されていないため、実行結果の送信先がありません。</string>
+    <string name="sessions_deliver_bot_chat_detail">各実行の結果は %1$s にメッセージとして届き、それを読み取って返信するため、実行ごとにターンが 1 回多く消費されます。</string>
+    <string name="sessions_schedule_job">ジョブを予約</string>
+    <string name="sessions_schedule_routine">ルーチンを予約</string>
+    <string name="sessions_job_gone">このジョブはゲートウェイで削除されたため、保存するものがありません。</string>
+    <string name="sessions_job_needs_name">ルーチンに名前を付けてください。</string>
+    <string name="sessions_job_needs_prompt">各実行でエージェントが行う処理を入力してください。</string>
+    <string name="sessions_job_needs_schedule">実行するタイミングを入力してください。</string>
+    <!-- What happened to a job -->
+    <string name="sessions_job_scheduled">ジョブを予約しました</string>
+    <string name="sessions_job_saved">ジョブを保存しました</string>
+    <string name="sessions_job_deleted">ジョブを削除しました</string>
+    <string name="sessions_routine_scheduled">ルーチンを予約しました</string>
+    <string name="sessions_routine_saved">ルーチンを保存しました</string>
+    <string name="sessions_routine_deleted">ルーチンを削除しました</string>
+    <string name="sessions_job_run_started">実行を開始しました</string>
+    <string name="sessions_job_run_failed">実行を開始できませんでした</string>
+    <string name="sessions_job_pause_failed">ジョブを一時停止できませんでした</string>
+    <string name="sessions_job_resume_failed">ジョブを再開できませんでした</string>
+    <string name="sessions_job_save_failed">ジョブを保存できませんでした</string>
+    <string name="sessions_job_delete_failed">ジョブを削除できませんでした</string>
+
+    <!-- Insights -->
+    <plurals name="sessions_insights_days">
+        <item quantity="one">%1$d 日</item>
+        <item quantity="other">%1$d 日</item>
+    </plurals>
+    <string name="sessions_insights_load_failed">分析情報を読み込めませんでした</string>
+    <string name="sessions_insights_empty">使用実績がまだありません</string>
+    <string name="sessions_insights_empty_detail">この期間のチャットとそのコストがここに表示されます。</string>
+    <string name="sessions_insights_billed">請求済み</string>
+    <string name="sessions_insights_estimated">推定コスト</string>
+    <!-- Under a number shown on its own -->
+    <plurals name="sessions_insights_chats">
+        <item quantity="one">チャット</item>
+        <item quantity="other">チャット</item>
+    </plurals>
+    <string name="sessions_insights_tokens_in_out">入出力トークン</string>
+    <string name="sessions_insights_from_cache">キャッシュからのプロンプト</string>
+    <string name="sessions_insights_models">モデル</string>
+    <!-- %1$s is a short count such as 12.3k -->
+    <string name="sessions_insights_tokens">%1$s トークン</string>
+    <string name="sessions_insights_tool_calls">ツール呼び出し</string>
+    <string name="sessions_insights_tool_calls_spoken">%1$s、%2$s 回の呼び出し</string>
+    <string name="sessions_insights_skill_uses">スキル使用回数</string>
+    <string name="sessions_insights_skill_uses_spoken">%1$s、%2$s 回の使用</string>
+    <string name="sessions_insights_tokens_by_day">日別トークン数</string>
+    <string name="sessions_insights_peak">最大 %1$s · %2$s</string>
+    <plurals name="sessions_insights_day_chats">
+        <item quantity="one">%1$d 件のチャット</item>
+        <item quantity="other">%1$d 件のチャット</item>
+    </plurals>
+    <string name="sessions_insights_hint_touch">日付をタップすると数値が表示されます。</string>
+    <string name="sessions_insights_hint_pointer">日付にカーソルを合わせると数値が表示されます。</string>
+    <string name="sessions_insights_show_numbers">数値を表示</string>
+    <string name="sessions_insights_day_spoken">%1$s: %2$s トークン</string>
+    <!-- A short date: %1$s the month below, %2$s the day of the month -->
+    <string name="sessions_short_date">%1$s%2$s日</string>
+    <string name="sessions_month_1">1月</string>
+    <string name="sessions_month_2">2月</string>
+    <string name="sessions_month_3">3月</string>
+    <string name="sessions_month_4">4月</string>
+    <string name="sessions_month_5">5月</string>
+    <string name="sessions_month_6">6月</string>
+    <string name="sessions_month_7">7月</string>
+    <string name="sessions_month_8">8月</string>
+    <string name="sessions_month_9">9月</string>
+    <string name="sessions_month_10">10月</string>
+    <string name="sessions_month_11">11月</string>
+    <string name="sessions_month_12">12月</string>
+
+    <!-- Capabilities: skills, toolsets, MCP servers -->
+    <string name="sessions_capabilities_detail">新しいチャットでエージェントが利用できるもの</string>
+    <string name="sessions_tab_skills">スキル</string>
+    <string name="sessions_tab_toolsets">ツールセット</string>
+    <string name="sessions_tab_mcp">MCP</string>
+    <string name="sessions_no_toolsets">ツールセットが設定されていません。</string>
+    <string name="sessions_toolsets_hint">新しいチャットでエージェントが利用できるツールセットです。</string>
+    <string name="sessions_no_mcp_servers">MCP サーバーがありません。ゲートウェイで `hermes mcp add` を実行するか、Hermes Desktop から追加してください。</string>
+    <string name="sessions_changes_next_chat">変更は次のチャットから適用されます。</string>
+    <string name="sessions_no_skills">スキルはまだありません。エージェントが学習しながら作成するほか、`hermes skills` でインストールできます。</string>
+    <plurals name="sessions_search_skills">
+        <item quantity="one">%1$d 件のスキルを検索</item>
+        <item quantity="other">%1$d 件のスキルを検索</item>
+    </plurals>
+    <string name="sessions_browse_hub">ハブを閲覧</string>
+    <string name="sessions_no_skills_match">「%1$s」に一致するスキルがありません。</string>
+    <!-- The group of skills without a category -->
+    <string name="sessions_skills_other">その他</string>
+    <!-- Where a skill came from, as a small tag -->
+    <string name="sessions_skill_tag_hub">ハブ</string>
+    <string name="sessions_skill_tag_learned">学習済み</string>
+    <string name="sessions_skill_tag_external">外部</string>
+    <string name="sessions_toolset_needs_setup">設定が必要</string>
+    <plurals name="sessions_tools_count">
+        <item quantity="one">%1$d 個のツール</item>
+        <item quantity="other">%1$d 個のツール</item>
+    </plurals>
+    <string name="sessions_mcp_from_plugin">%1$s から</string>
+    <string name="sessions_mcp_set_by_plugin">%1$s により設定</string>
+    <string name="sessions_locked_note">ここでは変更できません</string>
+    <string name="sessions_switch_on_locked">オン、%1$s</string>
+    <string name="sessions_switch_off_locked">オフ、%1$s</string>
+    <string name="sessions_mcp_test">テスト</string>
+    <plurals name="sessions_mcp_connected_tools">
+        <item quantity="one">接続済み · %1$d 個のツール</item>
+        <item quantity="other">接続済み · %1$d 個のツール</item>
+    </plurals>
+    <string name="sessions_mcp_connect_failed">接続できませんでした。</string>
+    <string name="sessions_turn_on_failed">%1$s をオンにできませんでした</string>
+    <string name="sessions_turn_off_failed">%1$s をオフにできませんでした</string>
+    <string name="sessions_uninstall">アンインストール</string>
+    <string name="sessions_uninstall_skill_detail">%2$s から %1$s を削除しますか？オフにするとインストールは維持されます。</string>
+    <string name="sessions_uninstall_skill_main_detail">メインプロファイルから %1$s を削除しますか？オフにするとインストールは維持されます。</string>
+
+    <!-- The skills hub -->
+    <string name="sessions_hub_title">スキルハブ</string>
+    <string name="sessions_hub_installs_into">%1$s にインストールします</string>
+    <string name="sessions_hub_installs_into_main">メインプロファイルにインストールします</string>
+    <string name="sessions_hub_update_all">すべて更新</string>
+    <string name="sessions_hub_unsupported">このゲートウェイはまだスキルハブに対応していません。</string>
+    <string name="sessions_hub_search">ハブを検索</string>
+    <string name="sessions_hub_timed_out">一部のソースが応答しませんでした: %1$s</string>
+    <string name="sessions_hub_no_match">検索条件に一致するスキルがありません。</string>
+    <string name="sessions_hub_featured">おすすめ</string>
+    <string name="sessions_hub_official">公式</string>
+    <string name="sessions_hub_official_empty">公式カタログにスキルがありません。</string>
+    <string name="sessions_hub_installed_tag">インストール済み</string>
+    <string name="sessions_hub_blocked_by_scan">セキュリティスキャンでブロックされました</string>
+    <string name="sessions_hub_view_scan">スキャン結果を表示</string>
+    <!-- %1$s is the scan's verdict as the gateway gives it -->
+    <string name="sessions_hub_scan_title">%1$s のスキャン</string>
+    <string name="sessions_hub_install_anyway">それでもインストール</string>
+    <string name="sessions_hub_scan_failed">スキャンできませんでした</string>
+    <string name="sessions_hub_check_failed">%1$s を確認できませんでした</string>
+    <string name="sessions_hub_blocked">%1$s はセキュリティスキャンでブロックされました。</string>
+    <string name="sessions_hub_installed">%1$s をインストールしました。次のチャットから適用されます。</string>
+    <string name="sessions_hub_removed">%1$s を削除しました。次のチャットから適用されます。</string>
+    <string name="sessions_hub_updated">スキルを更新しました。次のチャットから適用されます。</string>
+    <string name="sessions_hub_install_failed">%1$s をインストールできませんでした</string>
+    <string name="sessions_hub_remove_failed">%1$s を削除できませんでした</string>
+    <string name="sessions_hub_update_failed">スキルを更新できませんでした</string>
+
+    <!-- Config -->
+    <string name="sessions_config_detail">Hermes 固有の設定で、config.yaml に保存されます。多くの設定は次のチャットから適用されます。</string>
+    <string name="sessions_config_edit_yaml">config.yaml を編集</string>
+    <string name="sessions_config_yaml_row_detail">一覧にない項目も含め、ファイル全体を編集します</string>
+    <string name="sessions_config_yaml_detail">プロファイルの設定ファイル全体です。</string>
+    <string name="sessions_config_all">すべての設定</string>
+    <string name="sessions_config_all_detail">ゲートウェイが把握しているすべての設定を、独自のグループ別に表示します。</string>
+    <string name="sessions_config_all_row_detail">すべての項目をゲートウェイのグループ別に表示</string>
+    <plurals name="sessions_config_search">
+        <item quantity="one">%1$d 件の設定を検索</item>
+        <item quantity="other">%1$d 件の設定を検索</item>
+    </plurals>
+    <plurals name="sessions_config_settings">
+        <item quantity="one">%1$d 件の設定</item>
+        <item quantity="other">%1$d 件の設定</item>
+    </plurals>
+    <string name="sessions_config_first_of">%2$d 件の設定のうち最初の %1$d 件</string>
+    <string name="sessions_config_no_match">「%1$s」に一致する設定がありません。</string>
+    <string name="sessions_config_type_more">さらに入力すると絞り込めます。</string>
+    <string name="sessions_config_none_here">このゲートウェイにはこれらの設定がありません。</string>
+    <string name="sessions_config_voice_note">選択したプロバイダー固有の設定のみ表示されます。</string>
+    <string name="sessions_config_model_note">新しいチャットのデフォルトです。チャット側のモデル選択で個別に変更できます。</string>
+    <string name="sessions_config_search_options">%1$d 件を検索</string>
+    <string name="sessions_config_other">その他…</string>
+    <string name="sessions_config_one_per_line">1 行に 1 つずつ入力してください。</string>
+    <string name="sessions_copy_key">キーをコピー</string>
+    <string name="sessions_copy_value">値をコピー</string>
+    <string name="sessions_discard_title">変更を破棄しますか？</string>
+    <string name="sessions_config_discard_detail">config.yaml は保存時のままになります。</string>
+    <string name="sessions_config_all_off_title">すべてのツールセットをオフにしますか？</string>
+    <string name="sessions_config_all_off_detail">再度オンにするまで、エージェントはメモリ、ターミナル、ウェブ検索、サブエージェント、およびほとんどのツールを使用できなくなります。</string>
+    <string name="sessions_config_replace_title">config.yaml を置き換えますか？</string>
+    <string name="sessions_config_replace_detail">ファイルの内容がこのテキストそのものになります。Hermes は新しいチャットで再度読み込みます。一部の設定はゲートウェイの再起動が必要です。</string>
+    <string name="sessions_config_refresh_failed">更新できませんでした</string>
+    <string name="sessions_config_save_failed">%1$s を保存できませんでした</string>
+    <string name="sessions_config_yaml_saved">config.yaml を保存しました</string>
+</resources>

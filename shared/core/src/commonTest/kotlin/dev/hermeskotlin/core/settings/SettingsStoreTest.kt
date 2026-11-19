@@ -120,17 +120,17 @@ class SettingsStoreTest {
     }
 
     @Test
-    fun glowIsOnUnlessTurnedOff() = runTest {
+    fun glowIsOffByDefaultAndCanBeTurnedOn() = runTest {
         val disk = InMemoryKeyValueStore()
-        // Settings saved before the option existed keep the glow.
+        // A flat look is the default: no full-screen gradients or shadow bitmaps until one is asked for.
         disk.put("settings.v1", """{"theme":"Dark"}""")
         val first = SettingsStore(disk, backgroundScope)
-        assertEquals(true, first.settings.filterNotNull().first().glow)
+        assertEquals(false, first.settings.filterNotNull().first().glow)
 
-        first.update { it.copy(glow = false) }
+        first.update { it.copy(glow = true) }
         advanceUntilIdle()
 
-        assertEquals(false, SettingsStore(disk, backgroundScope).settings.filterNotNull().first().glow)
+        assertEquals(true, SettingsStore(disk, backgroundScope).settings.filterNotNull().first().glow)
     }
 
     @Test

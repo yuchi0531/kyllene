@@ -71,10 +71,16 @@ data class AppSettings(
      */
     val accent: String = DEFAULT_ACCENT,
     /**
+     * The look's name (`shadcn` or `hermes`), used by `HermesTheme.appTheme`. A string, not an enum, so a look a
+     * newer version adds reads here instead of making the whole stored settings unreadable; an unknown name falls
+     * back to the default look. Defaults to `shadcn`, so this fork opens in the shadcn-like style.
+     */
+    val look: String = "shadcn",
+    /**
      * The colored glows: behind the top of each screen; under prompts, the app mark, Send, New chat, the main
      * buttons and live subagent cards; on the voice screen; and the assistant edge's halo. Off, all flat.
      */
-    val glow: Boolean = true,
+    val glow: Boolean = false,
     val textSize: TextSize = TextSize.Default,
     /**
      * The language picked in Settings › Language, as a BCP 47 tag (`de`, `pt-BR`); null follows the system. Kept here
