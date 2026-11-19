@@ -445,8 +445,8 @@ fun SessionsSidebar(
     var actionTarget by remember { mutableStateOf<SessionSummary?>(null) }
     var renameTarget by remember { mutableStateOf<SessionSummary?>(null) }
     var deleteTarget by remember { mutableStateOf<SessionSummary?>(null) }
-    // Row swipes: Recent and search pin (right) and archive (left); Archived unarchives (right) and deletes
-    // (left), which asks first, as the actions sheet's Delete does.
+    // Row swipes: Recent and search pin (right); Archived deletes (left), which asks first, as the actions
+    // sheet's Delete does. Archiving stays in the row's menu and the keyboard shortcuts, not in a swipe.
     val pinWord = stringResource(Res.string.sessions_pin)
     val unpinWord = stringResource(Res.string.sessions_unpin)
     val archiveWord = stringResource(Res.string.sessions_archive)
@@ -458,10 +458,6 @@ fun SessionsSidebar(
     val pinSwipe = { s: SessionSummary ->
         if (s.pinned) SwipeAction(unpinWord, Lucide.PinOff, SwipeKind.Pin) { viewModel.togglePinned(s) }
         else SwipeAction(pinWord, Lucide.Pin, SwipeKind.Pin) { viewModel.togglePinned(s) }
-    }
-    val archiveSwipe = { s: SessionSummary ->
-        if (s.archived) SwipeAction(unarchiveWord, Lucide.ArchiveRestore, SwipeKind.Archive) { viewModel.toggleArchived(s) }
-        else SwipeAction(archiveWord, Lucide.Archive, SwipeKind.Archive) { viewModel.toggleArchived(s) }
     }
     val deleteSwipe = { s: SessionSummary -> SwipeAction(deleteWord, Lucide.Trash2, SwipeKind.Delete) { deleteTarget = s } }
     var projectActions by remember { mutableStateOf<Project?>(null) }
@@ -889,7 +885,6 @@ fun SessionsSidebar(
                         sections.others, selectedId, click, rowActions,
                         menu = rowMenu,
                         swipeRight = pinSwipe,
-                        swipeLeft = archiveSwipe,
                         statuses = statuses,
                         drafts = drafts,
                         focus = searchList,
@@ -905,8 +900,7 @@ fun SessionsSidebar(
                             searchResults, selectedId, click, rowActions,
                             menu = rowMenu,
                             swipeRight = pinSwipe,
-                            swipeLeft = archiveSwipe,
-                            showSnippets = true,
+                                showSnippets = true,
                             statuses = statuses,
                             drafts = drafts,
                             focus = searchList,
@@ -919,7 +913,6 @@ fun SessionsSidebar(
                         onActions = rowActions,
                         menu = rowMenu,
                         swipeRight = pinSwipe,
-                        swipeLeft = archiveSwipe,
                         threads = shownThreads,
                         onOpenThread = { click(it.session) },
                         onThreadActions = { threadActions = it },
@@ -1023,7 +1016,6 @@ fun SessionsSidebar(
                         onOpen = open,
                         onActions = rowActions,
                         menu = rowMenu,
-                        swipeRight = archiveSwipe,
                         swipeLeft = deleteSwipe,
                         canLoadMore = state.canLoadMore,
                         loadingMore = state.loadingMore,

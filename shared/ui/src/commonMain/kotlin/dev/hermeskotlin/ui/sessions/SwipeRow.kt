@@ -54,14 +54,13 @@ import dev.hermeskotlin.designsystem.surface2
 import dev.hermeskotlin.designsystem.textTertiary
 import dev.hermeskotlin.designsystem.typography
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.delay
 import kotlin.math.abs
 
 /**
- * What a swipe past the threshold does, and how its row goes: off the list ([Archive], which also unarchives)
- * or back in place ([Pin], and [Delete], whose confirmation decides).
+ * What a swipe past the threshold does: pin back in place, or delete, whose confirmation decides.
+ * Archiving is deliberately not a swipe: it stays in the row's menu and the keyboard shortcuts.
  */
-internal enum class SwipeKind { Archive, Pin, Delete }
+internal enum class SwipeKind { Pin, Delete }
 
 /** One side's action on a [SwipeRow]. */
 internal class SwipeAction(val label: String, val icon: ImageVector, val kind: SwipeKind, val onSwipe: () -> Unit)
@@ -113,7 +112,7 @@ internal fun SwipeRow(
     val (fillToken, onFillToken) = when (action?.kind) {
         SwipeKind.Pin -> accent to onAccent
         SwipeKind.Delete -> danger to onAccent
-        else -> inverse to onInverse
+        null -> inverse to onInverse
     }
     val fill by animateColorAsState(if (armed) Theme[colors][fillToken] else Theme[colors][surface2])
     val tint by animateColorAsState(if (armed) Theme[colors][onFillToken] else Theme[colors][textTertiary])
@@ -149,23 +148,9 @@ internal fun SwipeRow(
                         settling = coroutineContext[Job]
                         val flung = abs(velocity) > FLING_VELOCITY && velocity * offset > 0f && abs(offset) > threshold / 3
                         val done = (abs(offset) >= threshold || flung).let { if (it) (if (offset > 0f) startAction else endAction) else null }
-                        if (done?.kind == SwipeKind.Archive) {
-                            // Off the row's side, then out of the list; the undo toast brings it back. A drag or
-                            // the list cutting the slide short still archives, as the tick promised.
-                            try {
-                                animate(offset, if (offset > 0f) width.toFloat() else -width.toFloat(), velocity, spring(stiffness = 800f)) { v, _ -> offset = v }
-                            } finally {
-                                done.onSwipe()
-                            }
-                            // Left in place, the row would flash back before the list drops it. A row the list
-                            // keeps (no gateway to ask) comes back once it's clear it stays.
-                            delay(KEPT_ROW_MILLIS)
-                            offset = 0f
-                        } else {
-                            // Done first, so a drag that catches the row on its way back can't drop it.
-                            done?.onSwipe()
-                            animate(offset, 0f, velocity, spring(dampingRatio = 0.8f, stiffness = 600f)) { v, _ -> offset = v }
-                        }
+                        // Done first, so a drag that catches the row on its way back can't drop it.
+                        done?.onSwipe()
+                        animate(offset, 0f, velocity, spring(dampingRatio = 0.8f, stiffness = 600f)) { v, _ -> offset = v }
                     },
                 ),
         ) {
@@ -180,5 +165,3 @@ private const val THRESHOLD_FRACTION = 0.35f
 /** A flick this fast (px/s) toward an action does it even short of the threshold. */
 private const val FLING_VELOCITY = 1500f
 
-/** How long an archived row waits off to the side for the list to drop it before it slides back. */
-private const val KEPT_ROW_MILLIS = 600L
