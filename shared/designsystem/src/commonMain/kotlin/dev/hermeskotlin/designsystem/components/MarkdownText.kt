@@ -129,6 +129,15 @@ import com.mikepenz.markdown.model.ImageTransformer
 /** Code blocks wrap long lines instead of scrolling sideways (the "Wrap code lines" setting). */
 val LocalCodeWrap = compositionLocalOf { false }
 
+/** Draws a fenced block and returns true when it did; false falls back to the normal code block. */
+typealias FenceBlockRenderer = @Composable (language: String?, code: String, complete: Boolean) -> Boolean
+
+/**
+ * A host's renderer for fenced blocks, so it can draw a ```ui card itself. Null (the default) draws every fence
+ * as code; the module doesn't know what a given language means.
+ */
+val LocalFenceBlock = staticCompositionLocalOf<FenceBlockRenderer?> { null }
+
 /**
  * How much of the text color the background of an inline code span takes, so a selection shows through it. A dark
  * ground needs more of it for the span to stand out as much as it does on a light one.
@@ -236,8 +245,8 @@ fun MarkdownText(text: String, modifier: Modifier = Modifier, streaming: Boolean
     }
     val components = remember {
         markdownComponents(
-            codeFence = { MarkdownCodeFence(it.content, it.node, block = { code, language, style -> CodeBlock(code, language, style) }) },
-            codeBlock = { MarkdownCodeBlock(it.content, it.node, block = { code, language, style -> CodeBlock(code, language, style) }) },
+            codeFence = { component -> MarkdownCodeFence(component.content, component.node, block = { code, language, style -> FenceCodeBlock(component.content, component.node, code, language, style) }) },
+            codeBlock = { component -> MarkdownCodeBlock(component.content, component.node, block = { code, language, style -> FenceCodeBlock(component.content, component.node, code, language, style) }) },
             paragraph = { HighlightedParagraph(it.content, it.node) },
             orderedList = { ListInItsDirection(it.content, it.node) { MarkdownOrderedList(it.content, it.node, depth = it.listDepth) } },
             unorderedList = { DotList(it.content, it.node, it.listDepth) },
@@ -501,6 +510,47 @@ private val BULLET_DOT = 5.dp
 /** The highlighter under text a comment is about: the accent, a little stronger than its soft tint so it stands out. */
 @Composable
 fun highlightColor(): Color = Theme[colors][accent].copy(alpha = 0.24f)
+
+/** A parsed fence: its info string, its body, and whether its closing fence is there. */
+internal data class FenceInfo(val language: String?, val code: String, val complete: Boolean)
+
+/**
+ * Reads [node] as a fence in [content]. The language is the info string up to its first space (so ```ui json is
+ * "ui"), the code is the body without the fences, and a fence with no closing fence is incomplete, as one still
+ * streaming in is.
+ */
+internal fun fenceInfo(content: String, node: ASTNode): FenceInfo {
+    val language = node.children
+        .firstOrNull { it.type == MarkdownTokenTypes.FENCE_LANG }
+        ?.getTextInNode(content)
+        ?.toString()
+        ?.trim()
+        ?.substringBefore(' ')
+        ?.takeIf { it.isNotEmpty() }
+    val complete = node.children.any { it.type == MarkdownTokenTypes.CODE_FENCE_END }
+    val code = if (node.type == MarkdownElementTypes.CODE_FENCE) {
+        // The body starts after the opening line's EOL; without one, the fence is only its opening line.
+        val start = node.children.firstOrNull { it.type == MarkdownTokenTypes.EOL }?.endOffset
+        val end = node.children.firstOrNull { it.type == MarkdownTokenTypes.CODE_FENCE_END }?.startOffset
+            ?: node.children.lastOrNull()?.endOffset
+            ?: node.endOffset
+        if (start == null) "" else content.subSequence(start, maxOf(start, end)).toString().replaceIndent()
+    } else {
+        val start = node.children.firstOrNull()?.startOffset ?: node.startOffset
+        val end = node.children.lastOrNull()?.endOffset ?: node.endOffset
+        content.subSequence(start, end).toString().replaceIndent()
+    }
+    return FenceInfo(language, code, complete)
+}
+
+/** A fence a host draws itself through [LocalFenceBlock]; without one, or when it declines, the normal [CodeBlock]. */
+@Composable
+private fun FenceCodeBlock(content: String, node: ASTNode, code: String, language: String?, style: TextStyle) {
+    val fence = remember(content, node) { fenceInfo(content, node) }
+    val render = LocalFenceBlock.current
+    if (render != null && render(fence.language, fence.code, fence.complete)) return
+    CodeBlock(code, language, style)
+}
 
 @Composable
 private fun CodeBlock(code: String, language: String?, style: TextStyle) {

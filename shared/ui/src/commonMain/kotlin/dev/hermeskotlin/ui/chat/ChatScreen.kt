@@ -356,8 +356,11 @@ import androidx.compose.ui.platform.LocalHapticFeedback
 import com.composables.icons.lucide.Copy
 import com.composables.icons.lucide.GitBranch
 import com.composables.icons.lucide.Pencil
+import dev.hermeskotlin.designsystem.components.LocalFenceBlock
 import dev.hermeskotlin.designsystem.components.LocalTextHighlights
 import dev.hermeskotlin.designsystem.components.MarkdownText
+import dev.hermeskotlin.core.chat.GenUi
+import dev.hermeskotlin.core.chat.GenUiParseResult
 import dev.hermeskotlin.designsystem.components.highlightColor
 import dev.hermeskotlin.designsystem.components.withHighlights
 import dev.hermeskotlin.designsystem.components.Spinner
@@ -1093,6 +1096,21 @@ internal fun ChatView(
                                 }
                             },
                             LocalAgentScreenSend provides actions::sendPrompt,
+                            LocalFenceBlock provides { language, code, complete ->
+                                val isUi = language?.substringBefore(' ')
+                                    ?.equals(GenUi.FENCE_LANGUAGE, ignoreCase = true) == true
+                                if (isUi && complete) {
+                                    val parsed = remember(code) { GenUi.parse(code) }
+                                    if (parsed is GenUiParseResult.Ok) {
+                                        GenUiCard(parsed.root)
+                                        true
+                                    } else {
+                                        false
+                                    }
+                                } else {
+                                    false
+                                }
+                            },
                             LocalCommentHost provides commentHost,
                         ) {
                             key(conversationKey) {
