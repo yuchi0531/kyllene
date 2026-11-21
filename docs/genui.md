@@ -70,10 +70,14 @@ Form values are collected by `id` into `data`; the sent text follows the A2UI ta
 
 ## Instruction the agent needs
 
-Kyllene cannot change Hermes's system prompt: `prompt.submit` carries only the user's text. Install
-`skills/kyllene-genui/SKILL.md` through the gateway's Skills Hub (or copy it to the gateway's skill folder) so
-the agent learns the `ui` protocol. Without it the renderer still works, but the agent has no reason to emit the
-fence.
+Kyllene cannot change Hermes's system prompt: `prompt.submit` carries only the user's text. Instead the app
+writes a skill into the gateway itself on the first connection to each gateway and chat profile, through
+`POST /api/skills` (`CapabilitiesApi.createSkill`). The content ships in `BundledSkills.GENUI_CONTENT`
+(`shared/core/.../capabilities/BundledSkills.kt`), which mirrors `skills/kyllene-genui/SKILL.md`; its frontmatter
+description must stay within the gateway's 60-character index limit. `AppViewModel.ensureBundledSkills` runs after
+`ConnectionState.Connected` and when the chat profile changes, records `<gateway>#<profile>` in
+`AppSettings.installedSkills` once written, and leaves a skill the user deleted deleted. Without the skill the
+renderer still works, but the agent has no reason to emit the fence.
 
 ## Tests
 
