@@ -64,38 +64,6 @@ class CapabilitiesApiTest {
     }
 
     @Test
-    fun createSkillPostsTheWholeFileForTheProfile() = runTest {
-        var method: HttpMethod? = null
-        var path: String? = null
-        var body: String? = null
-        val api = CapabilitiesApi(createHttpClient(MockEngine { request ->
-            method = request.method
-            path = request.url.encodedPath
-            body = request.body.toByteArray().decodeToString()
-            respond("""{"ok":true}""", HttpStatusCode.OK, json)
-        }))
-
-        assertIs<ApiResult.Success<Unit>>(api.createSkill(url, "ruby", BundledSkills.GENUI_NAME, BundledSkills.GENUI_CONTENT))
-
-        assertEquals(HttpMethod.Post, method)
-        assertEquals("/api/skills", path)
-        assertTrue(body.orEmpty().contains("\"name\":\"${BundledSkills.GENUI_NAME}\""))
-        assertTrue(body.orEmpty().contains("\"profile\":\"ruby\""))
-        assertTrue(body.orEmpty().contains("```ui"))
-    }
-
-    @Test
-    fun theBundledSkillDescriptionFitsTheGatewayIndexLimit() {
-        val description = BundledSkills.GENUI_CONTENT.lineSequence()
-            .dropWhile { it.trim() != "---" }.drop(1)
-            .takeWhile { it.trim() != "---" }
-            .first { it.startsWith("description:") }
-            .removePrefix("description:")
-            .trim()
-        assertEquals(true, description.length <= 60, "description is ${description.length} characters: $description")
-    }
-
-    @Test
     fun togglesSendTheBodyEachRouteExpects() = runTest {
         val seen = mutableListOf<String>()
         val api = CapabilitiesApi(createHttpClient(MockEngine { request ->

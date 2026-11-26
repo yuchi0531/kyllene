@@ -20,8 +20,6 @@ import io.ktor.http.encodeURLPathPart
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
-import kotlinx.serialization.json.buildJsonObject
-import kotlinx.serialization.json.put
 
 /** A skill the profile's agent can load, as `GET /api/skills` lists it (disabled ones included). */
 @Serializable
@@ -100,26 +98,6 @@ class CapabilitiesApi(private val client: HttpClient) {
             profile(profile)
             contentType(ContentType.Application.Json)
             setBody(SkillToggle(name, enabled))
-        }
-    }.map { }
-
-    /**
-     * Writes a new skill's `SKILL.md` on the gateway ([content] is the whole file, frontmatter included). The
-     * gateway refuses a name that already exists, a description past its 60-character index limit, or content
-     * over 100k characters.
-     */
-    suspend fun createSkill(url: GatewayUrl, profile: String?, name: String, content: String, category: String? = null): ApiResult<Unit> = apiCall {
-        client.post(url.resolve("api/skills")) {
-            profile(profile)
-            contentType(ContentType.Application.Json)
-            setBody(
-                buildJsonObject {
-                    put("name", name)
-                    put("content", content)
-                    profile?.let { put("profile", it) }
-                    category?.let { put("category", it) }
-                },
-            )
         }
     }.map { }
 

@@ -21,8 +21,6 @@ import dev.hermeskotlin.core.gateway.AccessTokens
 import dev.hermeskotlin.core.gateway.ClientCertAliases
 import dev.hermeskotlin.core.gateway.GatewayList
 import dev.hermeskotlin.core.gateway.GatewayRepository
-import dev.hermeskotlin.core.capabilities.BundledSkills
-import dev.hermeskotlin.core.capabilities.CapabilitiesApi
 import dev.hermeskotlin.core.inbox.InboxStore
 import dev.hermeskotlin.ui.inbox.ReportChat
 import dev.hermeskotlin.core.gateway.SavedGateway
@@ -51,8 +49,6 @@ import kotlinx.coroutines.flow.filterNotNull
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.sync.Mutex
-import kotlinx.coroutines.sync.withLock
 import dev.hermeskotlin.ui.resources.*
 import org.jetbrains.compose.resources.getString
 
@@ -116,7 +112,6 @@ class AppViewModel(
     private val settings: SettingsStore,
     private val sessions: SessionsApi,
     private val botsApi: BotsApi,
-    private val capabilities: CapabilitiesApi,
     /** The chats saved on this device, which go with signing out. */
     private val cache: OfflineCache? = null,
     /** Where the user last looked in each chat, so one opened from a notification starts at its new messages. */
@@ -199,13 +194,6 @@ class AppViewModel(
         viewModelScope.launch {
             connection.state.collect { state ->
                 if (state is ConnectionState.SessionExpired) onSessionExpired()
-            }
-        }
-        // Once per gateway and profile, after the session is up: teach the agent the app's own forms. Quiet, and
-        // retried on the next connection when the gateway was merely unreachable.
-        viewModelScope.launch {
-            combine(connection.state, _chatsProfile) { state, _ -> state }.collect { state ->
-                if (state is ConnectionState.Connected) ensureBundledSkills()
             }
         }
         viewModelScope.launch {
@@ -653,32 +641,6 @@ class AppViewModel(
     }
 
     private fun signedInGateway(): SavedGateway? = (_route.value as? Route.Chat)?.gateway
-
-    private val bundledSkillLock = Mutex()
-
-    /**
-     * Writes the app's bundled skills to the connected gateway's [currentProfile] once, so the agent knows how to
-     * answer with the app's rich cards. A gateway that already has the skill, or one this device already wrote it
-     * to, is left alone; an unreachable gateway is tried again on the next connection.
-     */
-    private suspend fun ensureBundledSkills() = bundledSkillLock.withLock {
-        val gateway = gateways.current()?.gatewayUrl ?: return@withLock
-        val profile = currentProfile()
-        val key = gateway.value + "#" + (profile ?: "")
-        if (settings.settings.value?.installedSkills?.containsKey(key) == true) return@withLock
-        val listed = capabilities.skills(gateway, profile)
-        if (listed !is ApiResult.Success) return@withLock
-        val present = listed.value.any { it.name == BundledSkills.GENUI_NAME }
-        val wrote = present || when (val created = capabilities.createSkill(gateway, profile, BundledSkills.GENUI_NAME, BundledSkills.GENUI_CONTENT)) {
-            is ApiResult.Success -> true
-            // "already exists" is the gateway telling us it is there; anything else waits for the next connection.
-            is ApiResult.Failed -> created.message.contains("exist", ignoreCase = true)
-            else -> false
-        }
-        if (wrote) {
-            settings.update { it.copy(installedSkills = it.installedSkills + (key to BundledSkills.GENUI_VERSION)) }
-        }
-    }
 
     private fun currentProfile(): String? = _chatsProfile.value
 

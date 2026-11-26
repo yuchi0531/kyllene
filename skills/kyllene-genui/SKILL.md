@@ -1,6 +1,6 @@
 ---
 name: kyllene-genui
-description: Draw interactive cards from ```ui JSON blocks in Kyllene.
+description: Render rich, interactive cards inside Kyllene by emitting a ```ui fenced block whose body is one JSON component tree. Use for tables, metrics, bar/line charts, choices, sliders, checklists and action buttons that are easier to read than prose.
 tags:
   - ui
   - genui

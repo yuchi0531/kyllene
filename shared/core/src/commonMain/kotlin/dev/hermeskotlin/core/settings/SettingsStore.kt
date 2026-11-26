@@ -124,12 +124,6 @@ data class AppSettings(
      * last one had no project.
      */
     val lastProjects: Map<String, String> = emptyMap(),
-    /**
-     * The bundled skills this device already wrote to a gateway, by gateway URL and profile (`<url>#<profile>`),
-     * with the version it wrote. It stops the first connection from re-offering the skill the user deleted; a
-     * gateway that never got it is simply absent.
-     */
-    val installedSkills: Map<String, String> = emptyMap(),
     /** Notify when a turn finishes while the app is in the background. */
     val notifyReplies: Boolean = true,
     /** Notify when the agent waits on an approval or a question while the app is in the background. */
