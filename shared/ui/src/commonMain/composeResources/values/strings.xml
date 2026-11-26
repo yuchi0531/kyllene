@@ -120,6 +120,13 @@
     <string name="settings_suggestions_failed">Next Prompt wasn’t installed: %1$s</string>
     <string name="settings_suggestions_outdated">The gateway has Next Prompt %1$s. A gateway with several profiles needs %2$s or later; update it in the dashboard’s Plugins.</string>
     <string name="settings_suggestions_install_row">Install Next Prompt on the gateway</string>
+    <string name="settings_genui">Generative UI cards</string>
+    <string name="settings_genui_detail">Let the agent draw cards, tables and charts in replies.</string>
+    <string name="settings_genui_installed">The cards skill is on this gateway.</string>
+    <string name="settings_genui_installing">Installing the cards skill on the gateway…</string>
+    <string name="settings_genui_disabled">The cards skill is on this gateway but switched off there.</string>
+    <string name="settings_genui_failed">The cards skill wasn’t installed: %1$s</string>
+    <string name="settings_genui_install_row">Install the cards skill on the gateway</string>
     <string name="settings_dictation">Dictation</string>
     <string name="settings_dictation_detail">A mic in the composer to talk instead of type. Off, the model name gets its room.</string>
     <string name="settings_dictate_with">Dictate with</string>

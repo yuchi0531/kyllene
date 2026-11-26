@@ -3,6 +3,8 @@ package dev.hermeskotlin.ui.settings
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dev.hermeskotlin.core.auth.AuthApi
+import dev.hermeskotlin.core.capabilities.BundledSkills
+import dev.hermeskotlin.core.capabilities.CapabilitiesApi
 import dev.hermeskotlin.core.gateway.CheckStage
 import dev.hermeskotlin.core.gateway.ConnectionCheck
 import dev.hermeskotlin.core.gateway.GatewayProbe
@@ -58,6 +60,17 @@ sealed interface SuggestionsPlugin {
     data object NotListed : SuggestionsPlugin
 }
 
+/** Where the Kyllene cards skill (the genui protocol) stands on the bound gateway. */
+sealed interface GenUiSkill {
+    data object Checking : GenUiSkill
+    data object Missing : GenUiSkill
+    data object Installing : GenUiSkill
+    data object Installed : GenUiSkill
+    /** Written on the gateway but switched off there. */
+    data object Disabled : GenUiSkill
+    data class Failed(val message: String?) : GenUiSkill
+}
+
 /** "Check connection": the stages done so far, and whether it's still going. */
 data class ConnectionCheckState(val results: Map<CheckStage, StageResult> = emptyMap(), val running: Boolean = false)
 
@@ -71,6 +84,7 @@ class SettingsViewModel(
     private val profilesApi: ProfilesApi,
     private val sessionsApi: SessionsApi,
     private val nextPrompt: NextPromptApi,
+    private val capabilities: CapabilitiesApi,
 ) : ViewModel() {
 
     /** The chat background's encoded image, or null when there's none (or it isn't read yet). */
@@ -111,6 +125,12 @@ class SettingsViewModel(
     val suggestions: StateFlow<SuggestionsPlugin> = _suggestions.asStateFlow()
     private var suggestionsJob: Job? = null
 
+    private val _genUiSkill = MutableStateFlow<GenUiSkill>(GenUiSkill.Checking)
+
+    /** Whether the gateway has the skill that teaches the agent the app's generative-UI cards. */
+    val genUiSkill: StateFlow<GenUiSkill> = _genUiSkill.asStateFlow()
+    private var genUiSkillJob: Job? = null
+
     /** [profile] is the one the chats use; Suggested replies looks for its plugin there. */
     fun bind(gateway: SavedGateway, profile: String? = null) {
         if (bound == gateway && boundProfile == profile) return
@@ -118,6 +138,7 @@ class SettingsViewModel(
         bound = gateway
         boundProfile = profile
         checkSuggestions()
+        checkGenUiSkill()
         if (sameGateway) return
         _gateway.value = GatewayInfo()
         viewModelScope.launch {
@@ -180,6 +201,49 @@ class SettingsViewModel(
             }
             // Settings moved to another gateway or profile meanwhile.
             if (bound?.gatewayUrl != url || boundProfile != profile) checkSuggestions()
+        }
+    }
+
+    /** Looks again whether the gateway has the Kyllene cards skill. */
+    fun checkGenUiSkill() {
+        val url = bound?.gatewayUrl ?: return
+        val profile = boundProfile
+        if (_genUiSkill.value == GenUiSkill.Installing) return
+        genUiSkillJob?.cancel()
+        _genUiSkill.value = GenUiSkill.Checking
+        genUiSkillJob = viewModelScope.launch {
+            _genUiSkill.value = genUiSkillState(url, profile)
+        }
+    }
+
+    private suspend fun genUiSkillState(url: GatewayUrl, profile: String?): GenUiSkill {
+        val skills = capabilities.skills(url, profile) as? ApiResult.Success ?: return GenUiSkill.Missing
+        val skill = skills.value.firstOrNull { it.name == BundledSkills.GENUI_NAME } ?: return GenUiSkill.Missing
+        return if (skill.enabled) GenUiSkill.Installed else GenUiSkill.Disabled
+    }
+
+    /** Writes the Kyllene cards skill on the gateway for the profile the chats use. */
+    fun installGenUiSkill() {
+        val url = bound?.gatewayUrl ?: return
+        val profile = boundProfile
+        if (_genUiSkill.value == GenUiSkill.Installing) return
+        genUiSkillJob?.cancel()
+        _genUiSkill.value = GenUiSkill.Installing
+        genUiSkillJob = viewModelScope.launch {
+            val result = capabilities.createSkill(url, profile, BundledSkills.GENUI_NAME, BundledSkills.GENUI_CONTENT)
+            val now = genUiSkillState(url, profile)
+            _genUiSkill.value = if (now == GenUiSkill.Missing && result is ApiResult.Failed) GenUiSkill.Failed(result.message) else now
+        }
+    }
+
+    /** Leaves the skill off on the gateway without deleting it; it can be turned back on here. */
+    fun setGenUiSkillEnabled(enabled: Boolean) {
+        val url = bound?.gatewayUrl ?: return
+        val profile = boundProfile
+        genUiSkillJob?.cancel()
+        genUiSkillJob = viewModelScope.launch {
+            capabilities.setSkillEnabled(url, profile, BundledSkills.GENUI_NAME, enabled)
+            _genUiSkill.value = genUiSkillState(url, profile)
         }
     }
 

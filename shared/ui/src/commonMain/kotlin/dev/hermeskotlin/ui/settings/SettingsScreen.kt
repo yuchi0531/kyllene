@@ -136,6 +136,7 @@ import com.composables.icons.lucide.Phone
 import com.composables.icons.lucide.RefreshCw
 import com.composables.icons.lucide.Send
 import com.composables.icons.lucide.ShieldAlert
+import com.composables.icons.lucide.Sparkles
 import com.composables.icons.lucide.Smartphone
 import com.composables.icons.lucide.Sun
 import com.composables.icons.lucide.Watch
@@ -278,6 +279,7 @@ fun SettingsScreen(
     val appIcons = key(appIconOpen) { rememberAppIcons() }
     val language = rememberLanguageChoice()
     val suggestions by viewModel.suggestions.collectAsStateWithLifecycle()
+    val genUiSkill by viewModel.genUiSkill.collectAsStateWithLifecycle()
     LaunchedEffect(gateway, profile) { viewModel.bind(gateway, profile) }
     PlatformBackHandler(enabled = !checkOpen && !phoneToolsOpen && !appIconOpen && !startInstructionOpen && !callTargetOpen && !languageOpen && !connectedDevicesOpen && !sidebarPagesOpen, onBack = onBack)
     // A page opened over Settings takes the keyboard from the search, so nothing typed there lands in a hidden query.
@@ -319,6 +321,10 @@ fun SettingsScreen(
         suggestions = suggestions,
         onInstallSuggestions = viewModel::installSuggestions,
         onCheckSuggestions = viewModel::checkSuggestions,
+        genUiSkill = genUiSkill,
+        onInstallGenUiSkill = viewModel::installGenUiSkill,
+        onSetGenUiSkillEnabled = viewModel::setGenUiSkillEnabled,
+        onCheckGenUiSkill = viewModel::checkGenUiSkill,
     ) }
     if (callTargetOpen) CallTargetPicker(gateway, viewModel, botFaces, onDismiss = { callTargetOpen = false }) { target ->
         viewModel.update { it.copy(callTargets = it.callTargets + (gateway.url to target)) }
@@ -429,6 +435,11 @@ internal fun SettingsView(
     suggestions: SuggestionsPlugin = SuggestionsPlugin.Checking,
     onInstallSuggestions: () -> Unit = {},
     onCheckSuggestions: () -> Unit = {},
+    /** Whether the gateway has the skill that teaches the agent Kyllene's cards. */
+    genUiSkill: GenUiSkill = GenUiSkill.Checking,
+    onInstallGenUiSkill: () -> Unit = {},
+    onSetGenUiSkillEnabled: (Boolean) -> Unit = {},
+    onCheckGenUiSkill: () -> Unit = {},
 ) {
     Box(
         Modifier
@@ -715,6 +726,28 @@ internal fun SettingsView(
                     if (settings.suggestedReplies && (suggestions == SuggestionsPlugin.NeedsRestart || suggestions == SuggestionsPlugin.Unknown)) {
                         Divider()
                         ActionRow(stringResource(Res.string.common_check_again), Lucide.RefreshCw, onClick = onCheckSuggestions)
+                    }
+                    Divider()
+                    SwitchRow(
+                        title = stringResource(Res.string.settings_genui),
+                        detail = genUiSkillDetail(genUiSkill),
+                        checked = genUiSkill == GenUiSkill.Installed,
+                        onCheckedChange = { on ->
+                            when {
+                                on && (genUiSkill == GenUiSkill.Missing || genUiSkill is GenUiSkill.Failed) -> onInstallGenUiSkill()
+                                on -> onSetGenUiSkillEnabled(true)
+                                else -> onSetGenUiSkillEnabled(false)
+                            }
+                        },
+                        icon = Lucide.Sparkles,
+                    )
+                    if (genUiSkill == GenUiSkill.Missing || genUiSkill is GenUiSkill.Failed) {
+                        Divider()
+                        ActionRow(stringResource(Res.string.settings_genui_install_row), Lucide.Download, onClick = onInstallGenUiSkill)
+                    }
+                    if (genUiSkill is GenUiSkill.Failed) {
+                        Divider()
+                        ActionRow(stringResource(Res.string.common_check_again), Lucide.RefreshCw, onClick = onCheckGenUiSkill)
                     }
                 }
 
@@ -1065,6 +1098,16 @@ private fun suggestionsDetail(on: Boolean, plugin: SuggestionsPlugin): String =
         SuggestionsLine.NotListed -> stringResource(Res.string.app_suggestions_not_listed)
         is SuggestionsLine.Outdated -> stringResource(Res.string.settings_suggestions_outdated, line.have.orEmpty(), line.need)
     }
+
+/** Where the Kyllene cards skill stands, so the switch says why it can't be on. */
+@Composable
+private fun genUiSkillDetail(skill: GenUiSkill): String = when (skill) {
+    GenUiSkill.Installed -> stringResource(Res.string.settings_genui_installed)
+    GenUiSkill.Installing -> stringResource(Res.string.settings_genui_installing)
+    GenUiSkill.Disabled -> stringResource(Res.string.settings_genui_disabled)
+    GenUiSkill.Missing, GenUiSkill.Checking -> stringResource(Res.string.settings_genui_detail)
+    is GenUiSkill.Failed -> stringResource(Res.string.settings_genui_failed, skill.message ?: stringResource(Res.string.app_suggestions_no_reason))
+}
 
 /** What Notifications anywhere does, or where its setup on the gateway stands. */
 @Composable

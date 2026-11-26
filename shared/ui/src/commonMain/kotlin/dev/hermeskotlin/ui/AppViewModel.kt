@@ -213,8 +213,17 @@ class AppViewModel(
                     val open = (_route.value as? Route.Chat)?.target?.storedSessionId
                     val bot = link.bot
                     val stored = link.storedSessionId
+                    val gateway = signedInGateway() ?: return@collect
+                    // A notification may be about another agent's chat than the one on screen (a bot's reply
+                    // posted without its name, say): open it in the profile that owns it, not the open one.
+                    val owner = stored?.let { if (bot == null) sessionOwner(gateway, it) else null }
                     when {
                         bot != null -> openBotLink(bot, link.title, stored, link.draft, stored?.let { lastLook(it, profile = bot) })
+                        owner != null -> {
+                            val target = botChatTarget(gateway, stored, owner.name, owner.label).copy(readUpTo = lastLook(stored, owner.name))
+                            _route.value = Route.Chat(target)
+                            followBotChat(target)
+                        }
                         stored == null -> newChat(link.draft)
                         open != stored -> openSession(stored, link.title ?: getString(Res.string.app_chat_fallback_title), lastLook(stored, currentProfile()))
                         // Usually the notification is for the chat left open: the reply came in while away.
@@ -506,6 +515,19 @@ class AppViewModel(
      * opens at once and is then checked against the gateway; without one it's looked up first, safely.
      * [draft] (a share to the bot) goes into its composer, after what the user had typed there.
      */
+    /**
+     * The bot whose permanent chat [sessionId] is, when it isn't the open profile's own chat. Notifications
+     * posted without a bot name (an older one, or a failed turn) still open in the right agent's profile.
+     * Null means the current profile can read it, or no profile could be found.
+     */
+    private suspend fun sessionOwner(gateway: SavedGateway, sessionId: String): Bot? {
+        val url = gateway.gatewayUrl
+        if (sessions.messages(url, sessionId, limit = 1, profile = currentProfile()) is ApiResult.Success) return null
+        val bots = runCatching { botsApi.roster().bots }.getOrNull().orEmpty()
+        bots.firstOrNull { it.canonicalSession?.isChat(sessionId) == true }?.let { return it }
+        return bots.firstOrNull { sessions.messages(url, sessionId, limit = 1, profile = it.name) is ApiResult.Success }
+    }
+
     private fun openBotLink(bot: String, label: String?, storedSessionId: String?, draft: ComposeDraft? = null, readUpTo: Double? = null) {
         val gateway = signedInGateway() ?: return
         val name = label?.takeIf { it.isNotBlank() } ?: Bot(name = bot).label

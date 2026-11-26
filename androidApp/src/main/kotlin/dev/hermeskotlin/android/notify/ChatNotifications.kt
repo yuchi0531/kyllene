@@ -572,11 +572,11 @@ class ChatNotifications(
     fun answer(requestId: String): Intent? = _ringing.value[requestId]?.let(::answerIntent)
 
     /** A finished turn, with an inline Reply that sends the next prompt to the same chat. */
-    fun postReply(storedSessionId: String, title: String?, text: String, failed: Boolean) {
+    fun postReply(storedSessionId: String, title: String?, text: String, failed: Boolean, bot: Bot? = null) {
         val preview = text.toPlainText().take(MAX_PREVIEW)
             .ifBlank { if (failed) str(R.string.notification_turn_failed_text) else str(R.string.notification_done) }
         val input = RemoteInput.Builder(NotificationActionReceiver.KEY_TEXT).setLabel(str(R.string.notification_message_hermes)).build()
-        val notification = base(CHANNEL_REPLIES, storedSessionId, title)
+        val notification = base(CHANNEL_REPLIES, storedSessionId, title, bot)
             .setCategory(NotificationCompat.CATEGORY_MESSAGE)
             .setContentTitle(
                 if (failed) str(R.string.notification_turn_failed) else title?.takeIf { it.isNotBlank() } ?: str(R.string.notification_hermes_replied),
@@ -836,10 +836,10 @@ class ChatNotifications(
     }
 
     /** Tapping it opens Herald on [storedSessionId]'s chat, when the notification is about one. */
-    private fun base(channel: String, storedSessionId: String? = null, title: String? = null) = NotificationCompat.Builder(context, channel)
+    private fun base(channel: String, storedSessionId: String? = null, title: String? = null, bot: Bot? = null) = NotificationCompat.Builder(context, channel)
         .setSmallIcon(R.drawable.ic_notification)
         .setColor(ContextCompat.getColor(context, R.color.notification_accent))
-        .setContentIntent(openApp(storedSessionId, title))
+        .setContentIntent(if (bot != null && storedSessionId != null) openBot(bot, storedSessionId) else openApp(storedSessionId, title))
         .setAutoCancel(true)
 
     @SuppressLint("MissingPermission") // canPost checks it.

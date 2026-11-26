@@ -70,10 +70,13 @@ Form values are collected by `id` into `data`; the sent text follows the A2UI ta
 
 ## Instruction the agent needs
 
-Kyllene cannot change Hermes's system prompt: `prompt.submit` carries only the user's text. Install
-`skills/kyllene-genui/SKILL.md` through the gateway's Skills Hub (or copy it to the gateway's skill folder) so
-the agent learns the `ui` protocol. Without it the renderer still works, but the agent has no reason to emit the
-fence.
+Kyllene cannot change Hermes's system prompt: `prompt.submit` carries only the user's text. Instead Settings ›
+Chat › **Generative UI cards** writes a skill into the gateway itself, through `POST /api/skills`
+(`CapabilitiesApi.createSkill`), when the switch is turned on or the install row is tapped. The content ships in
+`BundledSkills.GENUI_CONTENT` (`shared/core/.../capabilities/BundledSkills.kt`), which mirrors
+`skills/kyllene-genui/SKILL.md`; its frontmatter description must stay within the gateway's 60-character index
+limit. Turning the switch off disables the skill on the gateway without deleting it. Without the skill the
+renderer still works, but the agent has no reason to emit the fence.
 
 ## Tests
 

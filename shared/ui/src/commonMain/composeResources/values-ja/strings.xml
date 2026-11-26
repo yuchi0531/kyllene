@@ -120,6 +120,13 @@
     <string name="settings_suggestions_failed">Next Prompt をインストールできませんでした: %1$s</string>
     <string name="settings_suggestions_outdated">ゲートウェイの Next Prompt は %1$s です。複数のプロフィールを持つゲートウェイには %2$s 以降が必要です。ダッシュボードの「プラグイン」でアップデートしてください。</string>
     <string name="settings_suggestions_install_row">ゲートウェイに Next Prompt をインストール</string>
+    <string name="settings_genui">生成 UI カード</string>
+    <string name="settings_genui_detail">エージェントが返信内にカードや表、グラフを描けるようにします。</string>
+    <string name="settings_genui_installed">カード用スキルはこのゲートウェイに導入済みです。</string>
+    <string name="settings_genui_installing">ゲートウェイにカード用スキルを導入中…</string>
+    <string name="settings_genui_disabled">カード用スキルはこのゲートウェイにありますが、無効になっています。</string>
+    <string name="settings_genui_failed">カード用スキルを導入できませんでした: %1$s</string>
+    <string name="settings_genui_install_row">ゲートウェイにカード用スキルをインストール</string>
     <string name="settings_dictation">音声入力</string>
     <string name="settings_dictation_detail">入力欄にマイクを追加し、入力の代わりに話しかけられます。オフにすると、その分モデル名の表示領域が広がります。</string>
     <string name="settings_dictate_with">音声入力の方法</string>

@@ -119,7 +119,7 @@ class ChatNotifier(
                             if (bot != null && !failed) {
                                 notifications.postBotMessage(bot, bots.picture(bot), storedId, text)
                             } else {
-                                notifications.postReply(storedId, bot?.label ?: state.title, text, failed)
+                                notifications.postReply(storedId, bot?.label ?: state.title, text, failed, bot)
                             }
                         }
                     }
