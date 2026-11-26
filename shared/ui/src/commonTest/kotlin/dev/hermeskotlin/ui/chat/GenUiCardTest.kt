@@ -17,17 +17,14 @@ class GenUiCardTest {
     }
 
     @Test
-    fun aSendCarriesTheEventContextAndFormValues() {
+    fun aSendPostsJustTheEventName() {
         val node = parsed(
             """{"type":"card","children":[{"type":"button","id":"save","event":"save",
                "context":{"day":"sat"},"action":{"type":"send"},"text":"Save"}]}""",
         )
         val button = node.children.single()
         val text = genUiSendText(GenUiAction.Send(null), button, mapOf("budget" to "50"))
-        assertEquals(
-            """Tapped “save” on the card you showed: {"context":{"day":"sat"},"data":{"budget":"50"}}""",
-            text,
-        )
+        assertEquals("save", text)
     }
 
     @Test
@@ -40,10 +37,10 @@ class GenUiCardTest {
     }
 
     @Test
-    fun anEventWithNoExtrasStaysOneShortLine() {
+    fun anEventWithNoExtrasStaysOneShortWord() {
         val node = parsed("""{"type":"button","id":"pick","event":"pick-b"}""")
         assertEquals(
-            "Tapped “pick-b” on the card you showed.",
+            "pick-b",
             genUiSendText(GenUiAction.Send(null), node, emptyMap()),
         )
     }

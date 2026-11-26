@@ -172,24 +172,13 @@ internal fun genUiTone(raw: String?): String = when (raw?.trim()?.lowercase()) {
 }
 
 /**
- * The message a Send button posts as the user: the event and the form's current values, in the same shape
- * [screenTapMessage] uses for a tap on an agent screen. A Send with no event sends its own text.
+ * The message a Send button posts as the user: the button's own text when it has one, else the event name it
+ * names. Kept short so the agent reads a plain instruction ("ask"), not a description of the tap.
  */
-internal fun genUiSendText(action: GenUiAction.Send, node: GenUiNode, values: Map<String, String>): String {
-    val event = node.eventName()?.takeIf { it.isNotBlank() }
-    if (event == null) return action.text?.takeIf { it.isNotBlank() } ?: "Tapped a button on the card you showed."
-    val context = node.props["context"] as? JsonObject
-    val data = buildJsonObject {
-        (node.props["data"] as? JsonObject)?.forEach { (key, value) -> put(key, value) }
-        values.forEach { (key, value) -> if (key.isNotBlank()) put(key, JsonPrimitive(value)) }
-    }
-    val more = buildJsonObject {
-        context?.takeIf { it.isNotEmpty() }?.let { put("context", it) }
-        if (data.isNotEmpty()) put("data", data)
-    }
-    val said = "Tapped “$event” on the card you showed"
-    return if (more.isEmpty()) "$said." else "$said: $more"
-}
+internal fun genUiSendText(action: GenUiAction.Send, node: GenUiNode, values: Map<String, String>): String =
+    action.text?.takeIf { it.isNotBlank() }
+        ?: node.eventName()?.takeIf { it.isNotBlank() }
+        ?: "Tapped a button on the card you showed."
 
 @Composable
 private fun GenUiNodeView(
@@ -525,7 +514,15 @@ private fun GenUiCode(node: GenUiNode) {
 @Composable
 private fun GenUiButton(node: GenUiNode, onAction: (GenUiNode, GenUiAction) -> Unit) {
     val action = node.action() ?: return
-    val text = node.propString("text") ?: node.propString("label") ?: node.eventName() ?: return
+    // A model may send an empty text (or only whitespace): fall through to its label, event, then the action's
+    // own name, so a button is never a blank circle.
+    val text = sequenceOf(node.propString("text"), node.propString("label"), node.eventName())
+        .firstOrNull { !it.isNullOrBlank() }
+        ?: when (action) {
+            is GenUiAction.Send -> "Send"
+            is GenUiAction.Copy -> "Copy"
+            is GenUiAction.Open -> "Open"
+        }
     val variant = when (genUiTone(node.propString("tone"))) {
         "bad" -> ButtonVariant.Danger
         "info" -> ButtonVariant.Primary

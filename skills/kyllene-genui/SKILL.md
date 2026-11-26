@@ -59,13 +59,9 @@ A button's `action` is one of:
 - `{"kind": "copy", "text": "..."}` — copies literal text to the clipboard.
 - `{"kind": "open", "url": "https://..."}` — opens an http, https or mailto URL.
 
-When a button is clicked, Kyllene sends a message shaped like:
-
-```
-Tapped "ask" on the card you showed: {"context":{"plan":"Pro"},"data":{"seats":12}}
-```
-
-`data` holds the current values of the card's sliders, choices, toggles and checklists, keyed by their `id`.
+When a button is clicked, Kyllene sends the `event` name (or the action's own `text` when you set one) as the
+next user message — a short word such as `ask`, not a description of the tap. Keep the event name short and
+actionable for that reason.
 
 Note: a `send` action becomes the next user message; it does not block the current turn like a tool call would.
 

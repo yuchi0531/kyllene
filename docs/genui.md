@@ -65,8 +65,9 @@ Aliases are accepted for the common synonyms (`column`, `hstack`, `alert`, `kpi`
 - `{"kind": "copy", "text": "..."}`.
 - `{"kind": "open", "url": "https://..."}` — http, https and mailto only.
 
-Form values are collected by `id` into `data`; the sent text follows the A2UI tap shape already used by
-`phone_show_ui` cards.
+A Send posts the event name (or the action's own `text` when it has one) as the next user message: a short word
+such as `ask`, not a description of the tap. The card's `context` and form values stay on screen; they are not
+echoed back unless the event or text names them.
 
 ## Instruction the agent needs
 
