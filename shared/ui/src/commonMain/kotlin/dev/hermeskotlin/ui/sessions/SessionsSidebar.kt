@@ -362,6 +362,9 @@ fun SessionsSidebar(
     val state = viewModel.state.collectAsStateWithLifecycle().value
     val pickedMode by bots.mode.collectAsStateWithLifecycle()
     val botsState by bots.state.collectAsStateWithLifecycle()
+    // A bot made with a title (a Japanese name, say) keeps it in ui_meta, which only the bot roster reads; the
+    // profiles here carry the generated id alone.
+    val botLabels = remember(botsState.bots, botsState.hidden) { botsState.all.associate { it.name to it.label } }
     val avatars by bots.avatars.collectAsStateWithLifecycle()
     val troubles by bots.troubles.collectAsStateWithLifecycle()
     val failingRoutines by bots.failingRoutines.collectAsStateWithLifecycle()
@@ -776,6 +779,7 @@ fun SessionsSidebar(
                     onSearch = { searchOpen = true }.takeIf { mode == SidebarMode.Chats || !modeSwitch },
                     profiles = roster?.profiles.orEmpty(),
                     activeProfile = roster?.active(profile)?.name,
+                    profileLabels = botLabels,
                     // Profiles made or removed on the host since show up, as the account sheet's do.
                     onOpenMenu = viewModel::refreshProfiles,
                     onProfile = { picked -> onSwitchProfile(profileToStore(picked, roster)) },
@@ -1125,7 +1129,7 @@ fun SessionsSidebar(
         anchor = accountAnchor.takeIf { isDesktop },
         gateway = gateway,
         userLabel = user?.label,
-        profileLabel = activeProfile?.label ?: profile,
+        profileLabel = activeProfile?.let { profileName(it, botLabels) } ?: profile,
         connection = connection,
         refreshing = state.refreshing,
         onDismiss = { accountOpen = false },
@@ -1140,6 +1144,7 @@ fun SessionsSidebar(
         visible = profilesOpen && roster != null,
         profiles = roster?.profiles.orEmpty(),
         selected = activeProfile?.name,
+        profileLabels = botLabels,
         onDismiss = { profilesOpen = false },
         onSelect = { picked ->
             profilesOpen = false
@@ -1153,6 +1158,13 @@ internal fun profileToStore(picked: Profile, roster: ProfileRoster?): String? = 
 
 /** The profile in use: the stored one, or the launch profile when none is stored; null if the gateway no longer has it. */
 internal fun ProfileRoster.active(stored: String?): Profile? = profiles.find { it.name == (stored ?: launch) }
+
+/**
+ * The name to show for a profile: the bot roster's title when it has one, else the profile's own label. A bot
+ * named in a script the id can't carry (a Japanese name, say) keeps its title in `ui_meta`, which only the bot
+ * roster reads, so the REST profile alone would fall back to the generated id.
+ */
+internal fun profileName(profile: Profile, labels: Map<String, String>): String = labels[profile.name] ?: profile.label
 
 /**
  * The sidebar's main page drawn from [sessions] alone, for previews: the same header, sections and
@@ -1368,6 +1380,8 @@ internal fun MainHeader(
     profiles: List<Profile> = emptyList(),
     /** The active profile's name, the launch profile's included. */
     activeProfile: String? = null,
+    /** The bots' names by profile id, so a bot made with a title shows it rather than its generated id. */
+    profileLabels: Map<String, String> = emptyMap(),
     onProfile: (Profile) -> Unit = {},
     onOpenGateways: () -> Unit = {},
     /** The profile menu is opening. */
@@ -1401,7 +1415,7 @@ internal fun MainHeader(
                         profiles.forEach { profile ->
                             val picked = profile.name == activeProfile
                             // A bot, as the account sheet's Profile row: the account row below is the person.
-                            MenuChoice(profile.label, Lucide.Bot, selected = picked, onClick = { if (!picked) onProfile(profile) })
+                            MenuChoice(profileName(profile, profileLabels), Lucide.Bot, selected = picked, onClick = { if (!picked) onProfile(profile) })
                         }
                         MenuSeparator()
                         MenuAction(stringResource(Res.string.sessions_switch_gateway), Lucide.ArrowLeftRight, onClick = onOpenGateways)
@@ -1456,7 +1470,7 @@ internal fun MainHeader(
                         // either is cut short and the chevron always shows.
                         if (switching && active != null) {
                             Text(
-                                "· ${active.label}",
+                                "· ${profileName(active, profileLabels)}",
                                 style = Theme[typography][caption].copy(fontSize = 12.sp),
                                 color = Theme[colors][textSecondary],
                                 maxLines = 1,
@@ -3318,6 +3332,8 @@ internal fun ProfileSheet(
     selected: String?,
     onDismiss: () -> Unit,
     onSelect: (Profile) -> Unit,
+    /** The bots' names by profile id, so a bot made with a title shows it rather than its generated id. */
+    profileLabels: Map<String, String> = emptyMap(),
 ) {
     BottomSheet(visible = visible, onDismiss = onDismiss) {
         SheetHeader(stringResource(Res.string.sessions_profiles), stringResource(Res.string.sessions_profiles_detail))
@@ -3336,6 +3352,7 @@ internal fun ProfileSheet(
                 val checked = profile.name == selected
                 ProfileRow(
                     profile,
+                    label = profileName(profile, profileLabels),
                     checked = checked,
                     onClick = { onSelect(profile) },
                     modifier = if (checked) Modifier.bringIntoViewRequester(activeRow) else Modifier,
@@ -3354,7 +3371,7 @@ internal fun ProfileSheet(
 }
 
 @Composable
-private fun ProfileRow(profile: Profile, checked: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
+private fun ProfileRow(profile: Profile, label: String, checked: Boolean, onClick: () -> Unit, modifier: Modifier = Modifier) {
     val detail = profile.description?.trim()?.takeIf { it.isNotEmpty() } ?: profile.model?.let(::displayModelName)
     Row(
         modifier
@@ -3371,13 +3388,13 @@ private fun ProfileRow(profile: Profile, checked: Boolean, onClick: () -> Unit, 
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                profile.label.take(1).uppercase(),
+                label.take(1).uppercase(),
                 style = Theme[typography][caption].copy(fontWeight = FontWeight.SemiBold),
                 color = Theme[colors][if (checked) onAccent else textSecondary],
             )
         }
         Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-            Text(profile.label, style = Theme[typography][body], color = Theme[colors][text], maxLines = 1, overflow = TextOverflow.Ellipsis)
+            Text(label, style = Theme[typography][body], color = Theme[colors][text], maxLines = 1, overflow = TextOverflow.Ellipsis)
             val sub = listOfNotNull(stringResource(Res.string.sessions_profile_default).takeIf { profile.isDefault }, detail).joinToString(" · ")
             if (sub.isNotEmpty()) {
                 Text(sub, style = Theme[typography][bodySmall], color = Theme[colors][textTertiary], maxLines = 1, overflow = TextOverflow.Ellipsis)

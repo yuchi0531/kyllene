@@ -40,7 +40,13 @@ class SidebarHeaderTest {
     private var accountOpened = 0
     private var menuOpened = 0
 
-    private fun show(profiles: List<Profile>, active: String? = profiles.firstOrNull()?.name, gateway: String = "homelab", scheme: ColorScheme = ColorScheme.Light) {
+    private fun show(
+        profiles: List<Profile>,
+        active: String? = profiles.firstOrNull()?.name,
+        gateway: String = "homelab",
+        scheme: ColorScheme = ColorScheme.Light,
+        labels: Map<String, String> = emptyMap(),
+    ) {
         composeRule.setContent {
             HermesTheme(scheme) {
                 MainHeader(
@@ -51,6 +57,7 @@ class SidebarHeaderTest {
                     onSearch = {},
                     profiles = profiles,
                     activeProfile = active,
+                    profileLabels = labels,
                     onProfile = { picked = it },
                     onOpenMenu = { menuOpened++ },
                 )
@@ -103,6 +110,19 @@ class SidebarHeaderTest {
         settle()
         assertEquals(1, accountOpened)
         assertEquals(0, menuOpened)
+    }
+
+    @Test
+    fun aBotNamedInItsOwnScriptShowsItsNameNotItsGeneratedId() {
+        // A Japanese name can't be a profile id, so the gateway keeps it as the bot's title and the profile is
+        // named after the characters' code points. The header and menu show the title.
+        val id = "u5c0f-u52a9-u624b"
+        show(listOf(Profile("default", isDefault = true), Profile(id)), active = id, labels = mapOf(id to "小助手"))
+        composeRule.onNodeWithText("· 小助手").assertIsDisplayed()
+        composeRule.onNodeWithText("· $id").assertDoesNotExist()
+        composeRule.onNodeWithText("Kyllene").performClick()
+        settle()
+        composeRule.onNodeWithText("小助手").assertIsDisplayed()
     }
 
     @Test
