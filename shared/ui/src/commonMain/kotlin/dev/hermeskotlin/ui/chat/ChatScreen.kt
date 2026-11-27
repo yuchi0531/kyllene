@@ -14,7 +14,10 @@ import androidx.compose.ui.input.pointer.PointerIcon
 import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.draw.clipToBounds
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.LocalIndication
+import androidx.compose.foundation.content.TransferableContent
+import androidx.compose.foundation.content.contentReceiver
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onPreviewKeyEvent
 import dev.hermeskotlin.ui.clearOfWindowControls
@@ -1518,6 +1521,7 @@ private fun ColumnScope.Dock(
             onAttach = onAttach,
             onDictate = onDictate,
             onVoiceChat = onVoiceChat,
+            onPasteFiles = onPasteFiles,
             onKey = { event ->
                 // A bot named so far comes before "A file" / "A folder", which any short @ word offers too.
                 val listed = when {
@@ -3861,7 +3865,7 @@ internal fun ComposerTextInput(
  * Stop is on the live task card above; a message typed mid-task gets a Send that steers, queues or stops and
  * sends as Settings says; holding it picks another way for that message.
  */
-@OptIn(ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class, ExperimentalFoundationApi::class)
 @Composable
 private fun Composer(
     hazeState: HazeState,
@@ -3888,6 +3892,8 @@ private fun Composer(
     editing: Boolean,
     /** The desktop's keys in the field before its own: a paste that attaches, a suggestion picked. */
     onKey: (KeyEvent) -> Boolean = { false },
+    /** Attaches pictures and files a paste into the focused field brings; true when it did. */
+    onPasteFiles: () -> Boolean = { false },
 ) {
     // Attachments or comments alone are sendable: the gateway gets Desktop's image prompt or the file references.
     val hasText = actions.composer.text.isNotBlank() || attachments.isNotEmpty() || comments.isNotEmpty()
@@ -3902,6 +3908,14 @@ private fun Composer(
         }
     }
     var focused by remember { mutableStateOf(false) }
+    // A picture or file on the clipboard: paste it as an attachment rather than trying to insert text.
+    // A field with a content receiver also offers Paste for an image-only clipboard.
+    val pasteNow by rememberUpdatedState(onPasteFiles)
+    val pasteReceiver = remember {
+        Modifier.contentReceiver { content ->
+            if (content.source == TransferableContent.Source.Clipboard && pasteNow()) null else content
+        }
+    }
     // Up and Down through this chat's earlier prompts, from the desktop's keyboard.
     val recall = remember(state.storedSessionId) { PromptRecall() }
     // Back hides the keyboard but leaves the field focused, and a focused field brings the keyboard back on
@@ -3943,7 +3957,7 @@ private fun Composer(
                     if (attachments.isNotEmpty()) ComposerTray(attachments, onRemove = actions::removeAttachment)
                     ComposerTextInput(
                         state = actions.composer,
-                        modifier = Modifier.fillMaxWidth().heightIn(min = 28.dp).padding(horizontal = 12.dp).focusRequester(focus)
+                        modifier = Modifier.fillMaxWidth().heightIn(min = 28.dp).padding(horizontal = 12.dp).then(pasteReceiver).focusRequester(focus)
                             .onFocusChanged { fold.typing = it.hasFocus }
                             .then(
                                 if (!enterSends) {

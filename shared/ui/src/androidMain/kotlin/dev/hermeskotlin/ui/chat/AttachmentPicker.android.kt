@@ -1,5 +1,7 @@
 package dev.hermeskotlin.ui.chat
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.ContentResolver
 import android.content.Context
 import android.graphics.Bitmap
@@ -100,8 +102,29 @@ actual fun rememberAttachmentPicker(
             }
 
             override fun pickFiles() = files.launch(arrayOf("*/*"))
+
+            override fun pasteAttachments(): Boolean {
+                val clipboard = context.getSystemService(ClipboardManager::class.java) ?: return false
+                val clip = clipboard.primaryClip ?: return false
+                // A copied picture comes as a content URI; text and copied files are left to the field.
+                val images = clip.imageUris(context::isImage)
+                if (images.isEmpty()) return false
+                read(images)
+                return true
+            }
         }
     }
+}
+
+/** The distinct pictures among a clipboard's URI items, picked by [isImage]. */
+internal fun ClipData.imageUris(isImage: (Uri) -> Boolean): List<Uri> =
+    (0 until itemCount).mapNotNull { getItemAt(it).uri }.filter(isImage).distinct()
+
+/** Whether [uri] is a picture: its type, else its name's extension (a file manager may report neither). */
+private fun Context.isImage(uri: Uri): Boolean {
+    val resolver = contentResolver
+    val type = resolver.getType(uri) ?: guessMime(resolver.displayName(uri) ?: uri.lastPathSegment.orEmpty())
+    return type.startsWith("image/")
 }
 
 /**
