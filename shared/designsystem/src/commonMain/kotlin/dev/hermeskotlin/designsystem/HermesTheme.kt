@@ -39,12 +39,18 @@ fun hermesTheme(accent: AccentPalette) = accentThemes.getValue(accent)
 /** The second, selectable visual style (shadcn/ui-like). Built once at module scope. */
 val ShadcnTheme = buildShadcnTheme()
 
+/** The Catppuccin style: the compact shadcn geometry in Latte and Mocha colors. Built once at module scope. */
+val CatppuccinTheme = buildCatppuccinTheme()
+
 /**
- * The theme selected by the "look" setting. Only the literal "shadcn" switches styles; every other value
- * (including null) keeps Hermes. The shadcn look has its own fixed neutral primary, so [accent] is ignored for it.
+ * The theme selected by the "look" setting: `shadcn`, `catppuccin`, or anything else (including null) for Hermes.
+ * The shadcn and Catppuccin looks have their own fixed primaries, so [accent] is ignored for them.
  */
-fun appTheme(look: String?, accent: AccentPalette) =
-    if (look == "shadcn") ShadcnTheme else hermesTheme(accent)
+fun appTheme(look: String?, accent: AccentPalette) = when (look) {
+    "shadcn" -> ShadcnTheme
+    "catppuccin" -> CatppuccinTheme
+    else -> hermesTheme(accent)
+}
 
 private fun buildHermesTheme(palette: AccentPalette) = buildThemeV2 {
     name = "HermesTheme" + palette.name.takeIf { palette != AccentPalette.Blue }.orEmpty()
@@ -144,6 +150,57 @@ private fun buildShadcnTheme() = buildThemeV2 {
         defaultContentColor = Shadcn.DarkText
         defaultIndication = rememberHoverIndication(Shadcn.DarkText, Shadcn.DarkRing)
         defaultTextSelectionColors = TextSelectionColors(Shadcn.DarkText, Shadcn.DarkText.copy(alpha = 0.35f))
+    }
+
+    defaultTextStyle = shadcnBaseText.copy(fontSize = 15.sp, lineHeight = 22.sp)
+}
+
+/** Catppuccin: the shadcn look's compact geometry, drawn in Latte and Mocha. */
+private fun buildCatppuccinTheme() = buildThemeV2 {
+    name = "CatppuccinTheme"
+    colorSchemeTransitionSpec = tween(180)
+
+    properties[radii] = mapOf(
+        radiusXSmall to 4.dp,
+        radiusSmall to 6.dp,
+        radiusMedium to 6.dp,
+        radiusLarge to 8.dp,
+        radiusXLarge to 12.dp,
+        radiusFull to 999.dp,
+    )
+
+    properties[typography] = mapOf(
+        display to shadcnBaseText.copy(fontSize = 30.sp, lineHeight = 34.sp, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.025).em),
+        title to shadcnBaseText.copy(fontSize = 20.sp, lineHeight = 26.sp, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.02).em),
+        heading to shadcnBaseText.copy(fontSize = 15.sp, lineHeight = 20.sp, fontWeight = FontWeight.SemiBold, letterSpacing = (-0.01).em),
+        body to shadcnBaseText.copy(fontSize = 14.sp, lineHeight = 20.sp),
+        bodySmall to shadcnBaseText.copy(fontSize = 13.sp, lineHeight = 18.sp),
+        label to shadcnBaseText.copy(fontSize = 13.sp, lineHeight = 18.sp, fontWeight = FontWeight.Medium),
+        caption to shadcnBaseText.copy(fontSize = 12.sp, lineHeight = 16.sp),
+        code to shadcnBaseText.copy(fontFamily = FontFamily.Monospace, fontSize = 12.5.sp, lineHeight = 18.sp, textDirection = TextDirection.Ltr),
+        eyebrow to shadcnBaseText.copy(fontSize = 10.sp, lineHeight = 14.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 0.08.em),
+        wordmark to shadcnBaseText.copy(fontSize = 48.sp, lineHeight = 44.sp, fontWeight = FontWeight.SemiBold, letterSpacing = 0.08.em),
+    )
+
+    colorScheme(ColorScheme.Light) {
+        properties[colors] = catppuccinLightColors()
+        defaultContentColor = Catppuccin.LatteText
+        defaultIndication = rememberHoverIndication(Catppuccin.LatteText, Catppuccin.LatteMauve)
+        defaultTextSelectionColors = TextSelectionColors(Catppuccin.LatteMauve, Catppuccin.LatteMauve.copy(alpha = 0.25f))
+    }
+
+    colorScheme(ColorScheme.Dark) {
+        properties[colors] = catppuccinDarkColors()
+        defaultContentColor = Catppuccin.MochaText
+        defaultIndication = rememberHoverIndication(Catppuccin.MochaText, Catppuccin.MochaMauve)
+        defaultTextSelectionColors = TextSelectionColors(Catppuccin.MochaText, Catppuccin.MochaText.copy(alpha = 0.35f))
+    }
+
+    colorScheme(PureBlack) {
+        properties[colors] = catppuccinDarkColors(Catppuccin.MochaCrust)
+        defaultContentColor = Catppuccin.MochaText
+        defaultIndication = rememberHoverIndication(Catppuccin.MochaText, Catppuccin.MochaMauve)
+        defaultTextSelectionColors = TextSelectionColors(Catppuccin.MochaText, Catppuccin.MochaText.copy(alpha = 0.35f))
     }
 
     defaultTextStyle = shadcnBaseText.copy(fontSize = 15.sp, lineHeight = 22.sp)

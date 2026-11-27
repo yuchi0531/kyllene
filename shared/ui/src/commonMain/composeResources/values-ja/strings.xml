@@ -54,8 +54,8 @@
     <string name="settings_language_hint">まだ翻訳されていない一部の画面は英語のままです。</string>
     <string name="settings_pure_black">純粋な黒</string>
     <string name="settings_pure_black_detail">ダークモードで完全な黒の背景を使うため、OLED 画面にやさしい設定です。</string>
-    <string name="settings_shadcn_look">shadcn 風の外観</string>
-    <string name="settings_shadcn_look_detail">ニュートラルなグレー、小さめのコントロール、角丸の小さいデザイン。</string>
+    <string name="settings_look">外観</string>
+    <string name="settings_look_detail">Herald のブルー、shadcn のニュートラル、Catppuccin Mocha から選べます。</string>
     <string name="settings_glow">グロー</string>
     <string name="settings_glow_detail">画面上部やメッセージ・ボタンの下にやわらかな色の光を表示します。オフにすると、全体がフラットに表示されます。</string>
     <string name="settings_text_size">文字サイズ</string>

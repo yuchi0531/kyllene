@@ -25,6 +25,13 @@ class ThemeColorsTest {
     }
 
     @Test
+    fun theCatppuccinSchemesDefineEveryColorToken() {
+        assertEquals(allTokens, catppuccinLightColors().keys, "catppuccin light")
+        assertEquals(allTokens, catppuccinDarkColors().keys, "catppuccin dark")
+        assertEquals(allTokens, catppuccinDarkColors(Catppuccin.MochaCrust).keys, "catppuccin pure black")
+    }
+
+    @Test
     fun theUsersBubbleCarriesItsOwnTextColor() {
         for (palette in AccentPalette.all) {
             for (scheme in listOf(lightColors(palette.light), darkColors(palette.dark), pureBlackColors(palette.black))) {

@@ -517,12 +517,14 @@ internal fun SettingsView(
                         onCheckedChange = { on -> onUpdate { it.copy(pureBlack = on) } },
                     )
                     Divider()
-                    SwitchRow(
-                        title = stringResource(Res.string.settings_shadcn_look),
-                        detail = stringResource(Res.string.settings_shadcn_look_detail),
-                        checked = settings.look == "shadcn",
-                        onCheckedChange = { on -> onUpdate { it.copy(look = if (on) "shadcn" else "hermes") } },
-                    )
+                    Field(stringResource(Res.string.settings_look), detail = stringResource(Res.string.settings_look_detail)) {
+                        SegmentedControl(
+                            options = lookValues,
+                            selected = settings.look.takeIf { it in lookValues } ?: lookValues.first(),
+                            onSelect = { look -> onUpdate { it.copy(look = look) } },
+                            optionLabel = { lookLabels.getValue(it) },
+                        )
+                    }
                     Divider()
                     SwitchRow(
                         title = stringResource(Res.string.settings_glow),
@@ -1557,6 +1559,13 @@ private fun TextSizeSlider(selected: TextSize, onSelect: (TextSize) -> Unit) {
 }
 
 private val SLIDER_THUMB = 22.dp
+
+/**
+ * The looks `appTheme` draws, as the Look control offers them: the stored value to its label. The labels are the
+ * styles' own names, so they need no per-language words.
+ */
+private val lookLabels = linkedMapOf("hermes" to "Herald", "shadcn" to "shadcn", "catppuccin" to "Catppuccin")
+private val lookValues = lookLabels.keys.toList()
 
 /** The theme modes as the Theme control names them. */
 @Composable

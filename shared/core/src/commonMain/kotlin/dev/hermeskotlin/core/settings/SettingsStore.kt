@@ -71,9 +71,9 @@ data class AppSettings(
      */
     val accent: String = DEFAULT_ACCENT,
     /**
-     * The look's name (`shadcn` or `hermes`), used by `HermesTheme.appTheme`. A string, not an enum, so a look a
-     * newer version adds reads here instead of making the whole stored settings unreadable; an unknown name falls
-     * back to the default look. Defaults to `shadcn`, so this fork opens in the shadcn-like style.
+     * The look's name (`shadcn`, `catppuccin` or `hermes`), used by `HermesTheme.appTheme`. A string, not an
+     * enum, so a look a newer version adds reads here instead of making the whole stored settings unreadable; an
+     * unknown name falls back to the default look. Defaults to `shadcn`, so this fork opens in the shadcn-like style.
      */
     val look: String = "shadcn",
     /**

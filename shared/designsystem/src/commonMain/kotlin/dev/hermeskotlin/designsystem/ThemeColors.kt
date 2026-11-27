@@ -216,6 +216,112 @@ internal fun shadcnLightColors() = mapOf(
     warningSoft to Shadcn.WarningLight.copy(alpha = 0.10f),
 )
 
+/**
+ * Catppuccin, as its own selectable look: Latte on light and Mocha on dark, with a Mauve accent. Values are the
+ * palette's published ones; the surfaces follow Catppuccin's own layering (base, then the surface steps), so
+ * cards sit a step above the ground in dark and a step below it in light.
+ */
+internal object Catppuccin {
+    // Latte
+    val LatteBase = Color(0xFFEFF1F5)
+    val LatteMantle = Color(0xFFE6E9EF)
+    val LatteCrust = Color(0xFFDCE0E8)
+    val LatteSurface0 = Color(0xFFCCD0DA)
+    val LatteSurface1 = Color(0xFFBCC0CC)
+    val LatteOverlay0 = Color(0xFF9CA0B0)
+    val LatteSubtext0 = Color(0xFF6C6F85)
+    val LatteSubtext1 = Color(0xFF5C5F77)
+    val LatteText = Color(0xFF4C4F69)
+    val LatteMauve = Color(0xFF8839EF)
+    val LatteRed = Color(0xFFD20F39)
+    val LatteGreen = Color(0xFF40A02B)
+    val LatteYellow = Color(0xFFDF8E1D)
+
+    // Mocha
+    val MochaBase = Color(0xFF1E1E2E)
+    val MochaMantle = Color(0xFF181825)
+    val MochaCrust = Color(0xFF11111B)
+    val MochaSurface0 = Color(0xFF313244)
+    val MochaSurface1 = Color(0xFF45475A)
+    val MochaSurface2 = Color(0xFF585B70)
+    val MochaOverlay0 = Color(0xFF6C7086)
+    val MochaSubtext0 = Color(0xFFA6ADC8)
+    val MochaSubtext1 = Color(0xFFBAC2DE)
+    val MochaText = Color(0xFFCDD6F4)
+    val MochaMauve = Color(0xFFCBA6F7)
+    val MochaLavender = Color(0xFFB4BEFE)
+    val MochaRed = Color(0xFFF38BA8)
+    val MochaGreen = Color(0xFFA6E3A1)
+    val MochaYellow = Color(0xFFF9E2AF)
+}
+
+internal fun catppuccinLightColors() = mapOf(
+    background to Catppuccin.LatteBase,
+    surface to Catppuccin.LatteMantle,
+    surface2 to Catppuccin.LatteCrust,
+    surface3 to Catppuccin.LatteSurface0,
+    well to Catppuccin.LatteMantle,
+    thumb to Catppuccin.LatteBase,
+    surfaceElevated to Catppuccin.LatteMantle,
+    input to Catppuccin.LatteMantle,
+    sidebar to Catppuccin.LatteMantle,
+    userBubble to Catppuccin.LatteMauve,
+    userBubbleStroke to Catppuccin.LatteMauve,
+    onUserBubble to Color.White,
+    text to Catppuccin.LatteText,
+    textSecondary to Catppuccin.LatteSubtext1,
+    textTertiary to Catppuccin.LatteSubtext0,
+    textMuted to Catppuccin.LatteOverlay0,
+    accent to Catppuccin.LatteMauve,
+    onAccent to Color.White,
+    accentText to Catppuccin.LatteMauve,
+    accentSoft to Catppuccin.LatteMauve.copy(alpha = 0.10f),
+    inverse to Catppuccin.LatteText,
+    onInverse to Color.White,
+    stroke to Catppuccin.LatteSurface0,
+    strokeStrong to Catppuccin.LatteSurface1,
+    danger to Catppuccin.LatteRed,
+    success to Catppuccin.LatteGreen,
+    warning to Catppuccin.LatteYellow,
+    dangerSoft to Catppuccin.LatteRed.copy(alpha = 0.10f),
+    successSoft to Catppuccin.LatteGreen.copy(alpha = 0.10f),
+    warningSoft to Catppuccin.LatteYellow.copy(alpha = 0.10f),
+)
+
+/** Dark and pure black share every Catppuccin role but the ground they sit on. */
+internal fun catppuccinDarkColors(bg: Color = Catppuccin.MochaBase) = mapOf(
+    background to bg,
+    surface to Catppuccin.MochaSurface0,
+    surface2 to Catppuccin.MochaSurface1,
+    surface3 to Catppuccin.MochaSurface2,
+    well to Catppuccin.MochaMantle,
+    thumb to Catppuccin.MochaSurface2,
+    surfaceElevated to Catppuccin.MochaSurface0,
+    input to Catppuccin.MochaMantle,
+    sidebar to Catppuccin.MochaMantle,
+    userBubble to Catppuccin.MochaMauve,
+    userBubbleStroke to Catppuccin.MochaMauve,
+    onUserBubble to Catppuccin.MochaCrust,
+    text to Catppuccin.MochaText,
+    textSecondary to Catppuccin.MochaSubtext1,
+    textTertiary to Catppuccin.MochaSubtext0,
+    textMuted to Catppuccin.MochaOverlay0,
+    accent to Catppuccin.MochaMauve,
+    onAccent to Catppuccin.MochaCrust,
+    accentText to Catppuccin.MochaMauve,
+    accentSoft to Catppuccin.MochaMauve.copy(alpha = 0.14f),
+    inverse to Catppuccin.MochaLavender,
+    onInverse to Catppuccin.MochaCrust,
+    stroke to Catppuccin.MochaSurface1,
+    strokeStrong to Catppuccin.MochaSurface2,
+    danger to Catppuccin.MochaRed,
+    success to Catppuccin.MochaGreen,
+    warning to Catppuccin.MochaYellow,
+    dangerSoft to Catppuccin.MochaRed.copy(alpha = 0.14f),
+    successSoft to Catppuccin.MochaGreen.copy(alpha = 0.13f),
+    warningSoft to Catppuccin.MochaYellow.copy(alpha = 0.13f),
+)
+
 /** Dark and pure black share every shadcn role but the ground they sit on. */
 internal fun shadcnDarkColors(bg: Color = Shadcn.DarkBackground) = mapOf(
     background to bg,

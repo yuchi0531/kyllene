@@ -54,8 +54,8 @@
     <string name="settings_language_hint">Parts of the app that aren’t translated yet stay in English.</string>
     <string name="settings_pure_black">Pure black</string>
     <string name="settings_pure_black_detail">True black backgrounds in dark mode, easier on OLED screens.</string>
-    <string name="settings_shadcn_look">shadcn-style look</string>
-    <string name="settings_shadcn_look_detail">Neutral zinc colors, compact controls and small rounded corners.</string>
+    <string name="settings_look">Look</string>
+    <string name="settings_look_detail">Herald’s blue, shadcn’s neutrals or Catppuccin Mocha.</string>
     <string name="settings_glow">Glow</string>
     <string name="settings_glow_detail">Soft colored light behind the top of each screen and under your messages and buttons. Off, everything sits flat.</string>
     <string name="settings_text_size">Text size</string>
