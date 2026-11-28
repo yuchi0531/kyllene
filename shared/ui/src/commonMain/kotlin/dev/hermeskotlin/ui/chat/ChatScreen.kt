@@ -293,7 +293,10 @@ import dev.hermeskotlin.core.chat.ToolActivity
 import dev.hermeskotlin.core.chat.TodoList
 import dev.hermeskotlin.core.chat.TodoStatus
 import dev.hermeskotlin.core.chat.TurnOutcome
+import dev.hermeskotlin.core.chat.TurnUsage
 import dev.hermeskotlin.core.chat.compactCount
+import dev.hermeskotlin.core.chat.elapsedLabel
+import dev.hermeskotlin.core.chat.tokenRate
 import dev.hermeskotlin.core.chat.canEdit
 import dev.hermeskotlin.core.chat.discardedAfter
 import dev.hermeskotlin.core.chat.regenerateTarget
@@ -2938,32 +2941,13 @@ internal fun AssistantReply(
                     onRegenerate?.let { ReplyAction(Lucide.RefreshCw, regenerateLabel, it, Modifier) }
                     onBranch?.let { ReplyAction(Lucide.GitBranch, branchLabel, it, Modifier) }
                 }
-                usage?.let {
-                    val spoken = stringResource(Res.string.chat_reply_tokens_spoken, compactCount(it.input), compactCount(it.output))
-                    Text(
-                        replyUsage(it.input, it.output),
-                        style = Theme[typography][caption].copy(fontFamily = Theme[typography][code].fontFamily),
-                        color = Theme[colors][textMuted],
-                        // On one line in a narrow window at the largest text, as on the phone.
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.padding(start = 8.dp).semantics { contentDescription = spoken },
-                    )
-                }
+                usage?.let { ReplyNumbers(it, message, Modifier.padding(start = 8.dp)) }
             }
         } else if (actionable || usage != null) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 // The count takes only what the actions leave: at the largest text it ellipsizes instead of squeezing them out.
                 if (usage != null) {
-                    val spoken = stringResource(Res.string.chat_reply_tokens_spoken, compactCount(usage.input), compactCount(usage.output))
-                    Text(
-                        replyUsage(usage.input, usage.output),
-                        style = Theme[typography][caption].copy(fontFamily = Theme[typography][code].fontFamily),
-                        color = Theme[colors][textMuted],
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        modifier = Modifier.weight(1f).semantics { contentDescription = spoken },
-                    )
+                    ReplyNumbers(usage, message, Modifier.weight(1f))
                 } else {
                     Spacer(Modifier.weight(1f))
                 }
@@ -3003,6 +2987,46 @@ private fun ReplyAction(icon: ImageVector, contentDescription: String, onClick: 
 
 /** A reply's tokens, read in and written out: "18.4k ↓ · 612 ↑". */
 internal fun replyUsage(input: Long, output: Long): String = "${compactCount(input)} ↓ · ${compactCount(output)} ↑"
+
+/**
+ * A reply's numbers: the tokens it read in and wrote out, then — when this device watched the turn — the speed it
+ * wrote them at and how long it took: "18.4k ↓ · 612 ↑ · 175 tok/s · 4s". The speed counts the writing only
+ * ([generationSeconds]), not the wait before it, as providers report it.
+ */
+internal fun replyUsage(input: Long, output: Long, generationSeconds: Double?, totalSeconds: Double?): String = listOfNotNull(
+    replyUsage(input, output),
+    tokenRate(output, generationSeconds?.takeIf { it > 0 }),
+    elapsedLabel(totalSeconds?.takeIf { it > 0 }),
+).joinToString(" · ")
+
+/**
+ * A reply's numbers with everything the line leaves out, for the pointer's tooltip: the count above, and how long
+ * the turn waited for its first token (TTFT) before it began writing.
+ */
+internal fun replyUsageDetail(usage: TurnUsage, reply: ChatMessage.Assistant): String = listOfNotNull(
+    replyUsage(usage.input, usage.output, reply.generationSeconds, reply.seconds),
+    reply.firstTokenSeconds?.let { "TTFT ${elapsedLabel(it)}" },
+).joinToString(" · ")
+
+/** The numbers under a reply, read out for a screen reader and in full under the pointer on a desktop. */
+@Composable
+private fun ReplyNumbers(usage: TurnUsage, reply: ChatMessage.Assistant, modifier: Modifier) {
+    val shown = replyUsage(usage.input, usage.output, reply.generationSeconds, reply.seconds)
+    val spoken = stringResource(Res.string.chat_reply_tokens_spoken, compactCount(usage.input), compactCount(usage.output))
+    val text = @Composable {
+        Text(
+            shown,
+            style = Theme[typography][caption].copy(fontFamily = Theme[typography][code].fontFamily),
+            color = Theme[colors][textMuted],
+            // On one line in a narrow window or phone at the largest text, it ellipsizes rather than wrapping.
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            modifier = modifier.semantics { contentDescription = spoken },
+        )
+    }
+    // A desktop has the room for what the one line leaves out.
+    if (isDesktop) Tooltip(replyUsageDetail(usage, reply)) { text() } else text()
+}
 
 /** When a prompt was sent or a reply finished, in small type; nothing when the setting is off or there's no time. */
 @Composable

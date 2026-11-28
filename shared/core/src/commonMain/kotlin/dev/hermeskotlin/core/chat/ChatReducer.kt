@@ -22,15 +22,19 @@ fun ChatState.reduce(event: GatewayEvent, now: Double? = null): ChatState {
             todosLive = todosLive && running,
             // No totals yet means the agent isn't built, and a new one counts from zero.
             turnStartUsage = turnStartUsage.takeIf { running } ?: usage ?: SessionUsage(),
+            // A correction continues its turn, so its start stands; a fresh turn starts the clock here.
+            replyStartedAt = replyStartedAt.takeIf { running } ?: now,
+            replyFirstTokenAt = replyFirstTokenAt.takeIf { running },
         )
         "session.usage" -> copy(usage = SessionUsage.parse(payload?.get("usage") as? JsonObject) ?: usage)
-        "message.delta" -> appendText(payload.string("text"))
+        "message.delta" -> appendText(payload.string("text"), now)
         "message.interim" ->
             // Text next to tool calls; when already streamed it is in the text already. The event doesn't say whether
             // it's Codex commentary (which a loaded chat shows in Reasoning) or a step's own text, so it stays text.
-            if (payload.boolean("already_streamed") == true) this else appendText(payload.string("text")?.let { "$it\n\n" })
+            if (payload.boolean("already_streamed") == true) this else appendText(payload.string("text")?.let { "$it\n\n" }, now)
         "reasoning.delta", "reasoning.available" -> payload.string("text")?.let { chunk ->
-            withOpenReply { it.copy(reasoning = it.reasoning + chunk) }
+            // Reasoning is the turn's first tokens too, so the wait for them ends with it.
+            withOpenReply { it.copy(reasoning = it.reasoning + chunk) }.copy(replyFirstTokenAt = replyFirstTokenAt ?: now)
         } ?: this
         // Not reasoning: each frame is the TUI's spinner rewritten ("(>∀<☆)☆ musing..."), so the latest one
         // labels the live activity. An explained provider wait goes to the status line, like Desktop.
@@ -193,9 +197,10 @@ internal fun ChatState.withInfo(info: JsonObject?): ChatState {
     )
 }
 
-private fun ChatState.appendText(chunk: String?): ChatState {
+private fun ChatState.appendText(chunk: String?, now: Double?): ChatState {
     if (chunk.isNullOrEmpty()) return this
-    return withOpenReply { it.copy(text = it.text + chunk) }.copy(running = true)
+    return withOpenReply { it.copy(text = it.text + chunk) }
+        .copy(running = true, replyFirstTokenAt = replyFirstTokenAt ?: now)
 }
 
 private fun ChatState.complete(payload: JsonObject?, now: Double?): ChatState {
@@ -221,6 +226,13 @@ private fun ChatState.complete(payload: JsonObject?, now: Double?): ChatState {
     }
     val finalReasoning = payload.string("reasoning").orEmpty().takeIf { correctedReplyKey == null }.orEmpty()
     val finalUsage = SessionUsage.parse(payload?.get("usage") as? JsonObject)
+    // Watched here, the turn has a length: its start to this end, and the wait for its first token.
+    val startedAt = replyStartedAt
+    val firstTokenAt = replyFirstTokenAt
+    val seconds = startedAt?.let { start -> now?.takeIf { it >= start }?.minus(start) }
+    val firstTokenSeconds = if (startedAt != null && firstTokenAt != null && firstTokenAt >= startedAt) firstTokenAt - startedAt else null
+    // Tokens a second counts over the writing, not the wait before it.
+    val generationSeconds = firstTokenAt?.let { first -> now?.takeIf { it >= first }?.minus(first) }
     val index = messages.openReplyIndex().takeIf { it >= 0 }
         ?: if (finalText.isBlank() && error == null && warning == null) return endTurn(messages, finalUsage) else messages.size
     val base = messages.getOrNull(index) as? ChatMessage.Assistant ?: ChatMessage.Assistant(key = "live-$keySeq")
@@ -234,6 +246,9 @@ private fun ChatState.complete(payload: JsonObject?, now: Double?): ChatState {
         outcome = outcome,
         error = error.takeIf { outcome == TurnOutcome.Error },
         usage = finalUsage?.let { end -> turnStartUsage?.let { end - it } }?.takeIf { it.any },
+        seconds = seconds,
+        generationSeconds = generationSeconds,
+        firstTokenSeconds = firstTokenSeconds,
         warning = warning,
         timestamp = now ?: base.timestamp,
     )
@@ -258,6 +273,8 @@ private fun ChatState.endTurn(messages: List<ChatMessage>, finalUsage: SessionUs
     todosLive = false,
     usage = finalUsage ?: usage,
     turnStartUsage = null,
+    replyStartedAt = null,
+    replyFirstTokenAt = null,
 )
 
 /** The reply still streaming. Not necessarily last: a prompt queued mid-turn sits after it. */

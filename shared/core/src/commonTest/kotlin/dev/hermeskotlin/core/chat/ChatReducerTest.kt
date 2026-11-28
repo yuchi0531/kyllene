@@ -151,6 +151,27 @@ class ChatReducerTest {
     }
 
     @Test
+    fun aWatchedTurnKnowsHowLongItTookAndHowSoonItsFirstTokenCame() {
+        val streaming = ChatState(messages = listOf(ChatMessage.User("u", "hi", timestamp = 99.0)))
+            .reduce(event("message.start"), now = 100.0)
+            .reduce(event("message.delta", """{"text":"H"}"""), now = 100.5)
+        val done = streaming.reduce(event("message.complete", """{"text":"Hello","status":"complete"}"""), now = 104.0)
+        val reply = assertIs<ChatMessage.Assistant>(done.messages.last())
+        assertEquals(4.0, reply.seconds)
+        assertEquals(0.5, reply.firstTokenSeconds)
+        // Writing from the first token to the end: what tokens a second counts over.
+        assertEquals(3.5, reply.generationSeconds)
+        // The clock starts over with the next turn.
+        assertEquals(null, done.replyStartedAt)
+        assertEquals(null, done.replyFirstTokenAt)
+
+        val next = done.reduce(event("message.start"), now = 120.0)
+        assertEquals(120.0, next.replyStartedAt)
+        val unwatched = next.reduce(event("message.complete", """{"text":"Hi","status":"complete"}"""), now = 122.0)
+        assertEquals(2.0, assertIs<ChatMessage.Assistant>(unwatched.messages.last()).seconds)
+    }
+
+    @Test
     fun streamedTurnBuildsOneReplyWithTools() {
         val state = ChatState(messages = listOf(ChatMessage.User("u", "list files"))).apply(
             event("message.start"),

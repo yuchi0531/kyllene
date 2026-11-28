@@ -47,6 +47,22 @@ data class TurnUsage(val input: Long, val output: Long, val reasoning: Long, val
     val any: Boolean get() = input > 0 || output > 0
 }
 
+/**
+ * How fast a reply came out: its output tokens over the seconds it wrote for, "42.1 tok/s"; null when either
+ * isn't known (a reply read from the transcript keeps no timing).
+ */
+fun tokenRate(output: Long, seconds: Double?): String? {
+    if (seconds == null || seconds <= 0 || output <= 0) return null
+    val rate = output / seconds
+    return (if (rate >= 100) kotlin.math.round(rate).toLong().toString() else oneDecimal(rate)) + " tok/s"
+}
+
+/** How long a turn took: "14.5s", or "2m 03s" past a minute; null when unknown. */
+fun elapsedLabel(seconds: Double?): String? {
+    if (seconds == null || seconds < 0) return null
+    return if (seconds < 60) oneDecimal(seconds) + "s" else "${(seconds / 60).toInt()}m ${(seconds % 60).toInt()}s"
+}
+
 /** "950", "12.3k", "1.2M". */
 fun compactCount(n: Long): String = when {
     n < 1_000 -> n.toString()

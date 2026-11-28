@@ -47,4 +47,16 @@ class ReplyPartsTest {
     fun usageReadsInThenOut() {
         assertEquals("18.4k ↓ · 612 ↑", replyUsage(18_400, 612))
     }
+
+    @Test
+    fun usageAddsItsSpeedAndLengthWhenTheTurnWasWatched() {
+        // 612 tokens written over 3.5 s, in a turn of 4 s with the wait before the first one.
+        assertEquals("18.4k ↓ · 612 ↑ · 175 tok/s · 4s", replyUsage(18_400, 612, 3.5, 4.0))
+        // A reply no device watched says only what it read and wrote.
+        assertEquals("18.4k ↓ · 612 ↑", replyUsage(18_400, 612, null, null))
+        // A turn too quick to time says the same.
+        assertEquals("18.4k ↓ · 612 ↑", replyUsage(18_400, 612, 0.0, 0.0))
+        // Under a hundred a second keeps its tenth.
+        assertEquals("18.4k ↓ · 612 ↑ · 42.2 tok/s · 14.5s", replyUsage(18_400, 612, 14.5, 14.5))
+    }
 }

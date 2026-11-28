@@ -116,6 +116,18 @@ sealed interface ChatMessage {
         val error: String? = null,
         /** Tokens the turn took; only for turns watched live (the transcript doesn't keep it). */
         val usage: TurnUsage? = null,
+        /**
+         * How long the turn took, in seconds, when this device watched it: its start to its end. Null for a reply
+         * read from the transcript, which keeps no timing.
+         */
+        val seconds: Double? = null,
+        /**
+         * How long it wrote, in seconds: its first token to its end, the span tokens a second is counted over.
+         * Null when this device didn't see the turn start (an older turn it joined, or the transcript).
+         */
+        val generationSeconds: Double? = null,
+        /** How long until the turn's first token (text or reasoning) arrived, in seconds; null when unwatched. */
+        val firstTokenSeconds: Double? = null,
         /** Something the gateway wants known about the finished turn, e.g. that it wasn't saved. */
         val warning: String? = null,
         /** The bot whose message this answered; such a reply folds away under it, as on Desktop. */
@@ -213,6 +225,10 @@ data class ChatState(
     val usage: SessionUsage? = null,
     /** [usage] when the running turn started, to tell what the turn itself took. */
     val turnStartUsage: SessionUsage? = null,
+    /** When this device heard the open turn start (epoch seconds), for the reply's length and tokens a second. */
+    val replyStartedAt: Double? = null,
+    /** When the open turn's first token arrived (epoch seconds), for its time to first token. */
+    val replyFirstTokenAt: Double? = null,
     /** The agent's latest plan: live while its turn runs, kept afterwards as the last plan (done or not). */
     val todos: TodoList? = null,
     /** [todos] was written by the turn running now, rather than kept from an earlier one. */
