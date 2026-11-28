@@ -267,10 +267,17 @@ class ChatViewModel(
     private var readPositionJob: Job? = null
     private var readTail: Triple<String, String, Double>? = null
 
-    /** The open chat's gateway may keep a read watermark for it (`last_read_at` set, zero included), so reading it is sent there. */
-    private var readTracked = false
+    /**
+     * Whether a read mark is still worth sending. The gateway keeps `last_read_at` per chat for every client to
+     * share, so reading a chat here should stop showing it unread elsewhere; a chat with no mark yet gets one too.
+     * A gateway that turns the write down is left alone until the app restarts.
+     */
+    private var readMarksAccepted = true
 
-    /** The open chat's position has been read for this opening, so [readTracked] is known. */
+    /** The gateway that answer was for: another one is asked again, as it may keep read state of its own. */
+    private var readMarksFor: GatewayUrl? = null
+
+    /** The open chat's position has been read for this opening, so a read can be recorded. */
     private var readResolved = false
 
     private fun resolveReadPosition(owner: ChatTarget) {
@@ -278,7 +285,11 @@ class ChatViewModel(
         // The same chat reopened (a notification for it) keeps its transcript on screen while the new position is read.
         if (_readPosition.value?.target?.copy(readUpTo = null) != owner.copy(readUpTo = null)) _readPosition.value = null
         readTail = null
-        readTracked = false
+        // A gateway that turned a read mark down once is left alone until another one is opened.
+        if (readMarksFor != owner.gateway.gatewayUrl) {
+            readMarksAccepted = true
+            readMarksFor = owner.gateway.gatewayUrl
+        }
         // The kept position may be for this very target (reopened after signing in again); reads wait for the new one.
         readResolved = false
         releaseCaughtUp()
@@ -293,8 +304,7 @@ class ChatViewModel(
             } else null
             val shared = answer?.value?.lastReadAt?.takeIf { it.isFinite() && it >= 0 }
             if (target != owner) return@launch
-            // Only a clear answer without one (an older gateway, an untracked chat) is left alone; an unknown one is sent.
-            readTracked = answer == null || shared != null
+            // A chat without a mark yet isn't ruled out: its first read here gives it one, for every device to see.
             readResolved = true
             _readPosition.value = ChatReadPosition(owner, shared?.takeIf { it > 0 } ?: fallback)
         }
@@ -313,15 +323,25 @@ class ChatViewModel(
         // Back on a chat already read to this end (the screen shown again): still caught up, nothing to send.
         if (readTail == tail) return holdCaughtUp(caughtUp)
         readTail = tail
-        val tracked = readTracked
         viewModelScope.launch {
             seen?.markLooked(owner.gateway.gatewayUrl, id, tail.third, owner.profile)
             val stillAtIt = session.value?.state?.value?.takeIf { !it.running }?.let(::endOf) == tail
             if (target == owner && readTail == tail && shown.value && stillAtIt) holdCaughtUp(caughtUp)
-            // The protocol only supports read-now, not an arbitrary timestamp or partial-read cursor. A gateway that
-            // keeps no watermark for the chat has nothing to clear.
-            if (tracked && target == owner && shown.value) sessions.setUnread(owner.gateway.gatewayUrl, id, unread = false, profile = owner.profile)
+            if (target == owner && shown.value) markReadOnGateway(owner, id)
         }
+    }
+
+    /**
+     * Tells the gateway the chat is read to its end (`last_read_at`), the mark every client shares: reading it here
+     * clears it elsewhere, as reading it elsewhere clears it here. The protocol has read-now only, no timestamp or
+     * cursor, so this goes out as the end is reached rather than as the reader scrolls. A gateway that keeps no
+     * read state refuses it, and that chat goes unasked from then on.
+     */
+    private suspend fun markReadOnGateway(owner: ChatTarget, id: String) {
+        if (!readMarksAccepted) return
+        val result = sessions.setUnread(owner.gateway.gatewayUrl, id, unread = false, profile = owner.profile)
+        // A refusal of the request itself (not a race, a rate limit, or a wait), so the gateway has no read state.
+        if (result is ApiResult.Failed && result.status in 400..499 && result.status !in setOf(408, 409, 429)) readMarksAccepted = false
     }
 
     /** The chat's end: its stored id, last message and newest timestamp (the machinery's rows count too). */

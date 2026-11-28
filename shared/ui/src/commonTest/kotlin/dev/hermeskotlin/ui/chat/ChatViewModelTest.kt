@@ -743,7 +743,13 @@ class ChatViewModelTest {
     }
 
     /** A chat with a prompt at 1100 and a reply at 1300; the detail route answers [detail], PATCHes go to [writes]. */
-    private fun readableChat(seen: SeenStore, detail: String, writes: MutableList<String>, pending: () -> CompletableDeferred<Unit>? = { null }) =
+    private fun readableChat(
+        seen: SeenStore,
+        detail: String,
+        writes: MutableList<String>,
+        patchStatus: HttpStatusCode = HttpStatusCode.OK,
+        pending: () -> CompletableDeferred<Unit>? = { null },
+    ) =
         viewModel(seenStore = seen, readState = { request ->
             when {
                 request.url.encodedPath.endsWith("/messages") -> respond(
@@ -753,7 +759,7 @@ class ChatViewModelTest {
                 request.url.encodedPath.endsWith("/mutation-snapshot") -> respond("""{"detail":"No such API endpoint"}""", HttpStatusCode.NotFound, json)
                 request.method == HttpMethod.Patch -> {
                     writes += request.url.encodedPath
-                    respond("{}", HttpStatusCode.OK, json)
+                    respond("{}", patchStatus, json)
                 }
                 request.url.encodedPath == "/api/sessions/s1" -> {
                     pending()?.await()
@@ -777,9 +783,10 @@ class ChatViewModelTest {
     }
 
     @Test
-    fun aGatewayWithoutReadTrackingIsNotWrittenTo() = runTest(dispatcher) {
+    fun aChatWithoutAReadMarkGetsOneSoEveryDeviceSeesIt() = runTest(dispatcher) {
         val seen = SeenStore(InMemoryKeyValueStore()) { 1000.0 }
         val writes = mutableListOf<String>()
+        // No `last_read_at` yet: the chat has never been read by any client.
         val (vm, host) = readableChat(seen, """{"id":"s1"}""", writes)
         connection.start(gateway.gatewayUrl)
         connection.state.first { it is ConnectionState.Connected }
@@ -789,8 +796,30 @@ class ChatViewModelTest {
         vm.readLatest(target, assertNotNull(host.session.value).state.value)
         runCurrent()
 
-        assertTrue(writes.isEmpty(), writes.toString())
+        assertEquals(listOf("/api/sessions/s1"), writes)
         // Read here all the same.
+        assertEquals(1300.0, seen.lastLook(gateway.gatewayUrl, "s1"))
+        // Reaching the same end again sends nothing more.
+        vm.readLatest(target, assertNotNull(host.session.value).state.value)
+        runCurrent()
+        assertEquals(listOf("/api/sessions/s1"), writes)
+    }
+
+    @Test
+    fun aGatewayThatRefusesAReadMarkIsAskedOnlyOnce() = runTest(dispatcher) {
+        val seen = SeenStore(InMemoryKeyValueStore()) { 1000.0 }
+        val writes = mutableListOf<String>()
+        val (vm, host) = readableChat(seen, """{"id":"s1"}""", writes, patchStatus = HttpStatusCode.BadRequest)
+        connection.start(gateway.gatewayUrl)
+        connection.state.first { it is ConnectionState.Connected }
+        val target = ChatTarget(gateway, "s1", "Chat")
+        vm.open(target)
+        runCurrent()
+        vm.readLatest(target, assertNotNull(host.session.value).state.value)
+        runCurrent()
+
+        assertEquals(listOf("/api/sessions/s1"), writes)
+        // Read here all the same: the mark this device keeps is what shows it as read until a gateway takes one.
         assertEquals(1300.0, seen.lastLook(gateway.gatewayUrl, "s1"))
     }
 
