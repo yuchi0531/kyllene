@@ -270,11 +270,11 @@ class ChatViewModel(
     /**
      * Whether a read mark is still worth sending. The gateway keeps `last_read_at` per chat for every client to
      * share, so reading a chat here should stop showing it unread elsewhere; a chat with no mark yet gets one too.
-     * A gateway that turns the write down is left alone until the app restarts.
+     * One turns the write down, and is left alone until a gateway with read state of its own is opened.
      */
     private var readMarksAccepted = true
 
-    /** The gateway that answer was for: another one is asked again, as it may keep read state of its own. */
+    /** The gateway [readMarksAccepted] speaks for: another one is asked again. */
     private var readMarksFor: GatewayUrl? = null
 
     /** The open chat's position has been read for this opening, so a read can be recorded. */
